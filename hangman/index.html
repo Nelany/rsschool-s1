@@ -1,18 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hangman</title>
-</head>
-<body>
-  <aside>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hangman</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="body">
+    <div class="content">
+      <aside class="aside">
+        <div class="aside__img-container">
+          <img
+            class="aside__img-gallows"
+            src="./assets/gallows.svg"
+            alt="gallows" />
+          <img
+            class="aside__img-head aside__img--small"
+            src="./assets/head.svg"
+            alt="head" />
+          <img
+            class="aside__img-body aside__img--small"
+            src="./assets/body.svg"
+            alt="body" />
+          <img
+            class="aside__img-hand-one aside__img--small"
+            src="./assets/hand-one.svg"
+            alt="hand-one" />
+          <img
+            class="aside__img-hand-two aside__img--small"
+            src="./assets/hand-two.svg"
+            alt="hand-two" />
+          <img
+            class="aside__img-leg-one aside__img--small"
+            src="./assets/leg-one.svg"
+            alt="leg-one" />
+          <img
+            class="aside__img-leg-two aside__img--small"
+            src="./assets/leg-two.svg"
+            alt="leg-two" />
+        </div>
 
-  </aside>
-  
-  <main>
+        <h2 class="aside__tittle">HANGMAN GAME</h2>
+      </aside>
 
-  </main>
+      <main class="main">
+        <div class="word">
+          <div class="word__letter">H</div>
+          <div class="word__letter">A</div>
+          <div class="word__letter">N</div>
+          <div class="word__letter word__letter--open">g</div>
+          <div class="word__letter">M</div>
+          <div class="word__letter">A</div>
+          <div class="word__letter">N</div>
+          <div class="word__letter">A</div>
+          <div class="word__letter">N</div>
+        </div>
 
-</body>
+        <div class="hint">
+          Hint:
+          <span class="hint__text"
+            >gchfgj kklkhjgfjdrshd ghjkhgfdijf hdfghjkljhgfdg hjkljhgfcgh
+            jkhgfc gchfgj kklkhjgfjdrshd ghjkhgfdijf hdfghjkljhgfdg hjkljhgfcgh
+            jkhgfc</span
+          >
+        </div>
+
+        <div class="mistakes">
+          Incorrect guesses:
+          <span class="mistakes__number" id="number">0</span>
+          <span class="mistakes__number">/ 6</span>
+        </div>
+
+        <div class="alphabet">
+          <div class="alphabet__letter">a</div>
+          <div class="alphabet__letter">b</div>
+          <div class="alphabet__letter">c</div>
+          <div class="alphabet__letter">d</div>
+          <div class="alphabet__letter">e</div>
+          <div class="alphabet__letter">f</div>
+          <div class="alphabet__letter alphabet__letter--disabled">g</div>
+          <div class="alphabet__letter">h</div>
+          <div class="alphabet__letter">i</div>
+          <div class="alphabet__letter">a</div>
+          <div class="alphabet__letter">b</div>
+          <div class="alphabet__letter">c</div>
+          <div class="alphabet__letter">d</div>
+          <div class="alphabet__letter">e</div>
+          <div class="alphabet__letter">f</div>
+          <div class="alphabet__letter alphabet__letter--disabled">g</div>
+          <div class="alphabet__letter">h</div>
+          <div class="alphabet__letter">i</div>
+          <div class="alphabet__letter">b</div>
+          <div class="alphabet__letter">c</div>
+          <div class="alphabet__letter">d</div>
+          <div class="alphabet__letter">e</div>
+          <div class="alphabet__letter">f</div>
+          <div class="alphabet__letter alphabet__letter--disabled">g</div>
+          <div class="alphabet__letter">h</div>
+          <div class="alphabet__letter">i</div>
+        </div>
+      </main>
+    </div>
+
+    <div class="popup">
+      <div class="popup__content">
+        <h2 class="popup__result">You Win!</h2>
+        <h3 class="popup__answer-text">
+          The answer is: <span class="popup__answer">hangman</span>
+        </h3>
+        <button class="popup__button">play again</button>
+      </div>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
 </html>
