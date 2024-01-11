@@ -1,4 +1,4 @@
-  // Фун.для создания HTML-элементов.___________________________________________________________
+// Фун.для создания HTML-элементов.___________________________________________________________
 function createHTMLEl(
   tagName,
   parentElementName,
@@ -32,10 +32,102 @@ function createHTMLEl(
   return undefined;
 }
 
-  // Фун.для создания HTML.______________________________________________________________________________
+// Массив, фун.для выбора загадок, заполнения соответствующих элементов HTML.__________________________________
+const riddlesArray = [
+  {
+    question: 'What is something that can speak every language in the world?',
+    answer: 'tongue',
+  },
+
+  {
+    question: 'What can travel around the world while staying in a corner?',
+    answer: 'stamp',
+  },
+
+  {
+    question: 'What invention lets you look right through a wall?',
+    answer: 'window',
+  },
+
+  {
+    question:
+      'What do you throw out when you want to use it, but take in when you do not want to use it?',
+    answer: 'anchor',
+  },
+
+  { question: 'What thing you can never eat for breakfast?', answer: 'dinner' },
+
+  {
+    question: 'What belongs to you but others use it more than you do?',
+    answer: 'name',
+  },
+
+  {
+    question: 'What is so delicate that even saying its name will break it?',
+    answer: 'silence',
+  },
+
+  {
+    question:
+      'I have keys but no locks. I have space but no room. You can enter, but you can not go inside. What am I?',
+    answer: 'keyboard',
+  },
+
+  {
+    question: 'The more you have of it, the less you see. What is it?',
+    answer: 'darkness',
+  },
+
+  {
+    question:
+      'I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?',
+    answer: 'map',
+  },
+
+  {
+    question:
+      'I fly without wings. I cry without eyes. Wherever I go, darkness follows me. What am I?',
+    answer: 'cloud',
+  },
+
+  {
+    question:
+      "What has a heart that doesn't beat, a mouth that doesn't speak, and a head that doesn't think?",
+    answer: 'artichoke',
+  },
+
+  {
+    question: 'I shave every day but my beard never changes. What am I?',
+    answer: 'barber',
+  },
+];
+
+let wordLettersArray;
+
+function setRiddles() {
+  const riddle = riddlesArray[Math.floor(Math.random() * riddlesArray.length)];
+
+  createHTMLEl('span', '.hint', 'hint__text', riddle.question);
+  createHTMLEl('span', '.popup__answer-text', 'popup__answer', riddle.answer);
+  console.log(riddle.answer);
+
+  const word = riddle.answer;
+
+  wordLettersArray = word.split('');
+
+  wordLettersArray.forEach((letter) => {
+    createHTMLEl('div', '.word', 'word__letter', letter);
+  });
+
+  return wordLettersArray;
+}
+
+// параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
+
+// Фун.для создания HTML.______________________________________________________________________________
 function createHTML() {
   const body = document.querySelector('.body');
-  body.innerHTML = "";
+  body.innerHTML = '';
   // Создаем элементы. Параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
   createHTMLEl('div', '.body', 'content');
   createHTMLEl('aside', '.content', 'aside');
@@ -66,7 +158,6 @@ function createHTML() {
   createHTMLEl('main', '.content', 'main');
   createHTMLEl('div', '.main', 'word');
   createHTMLEl('div', '.main', 'hint', 'Hint:');
-  createHTMLEl('span', '.hint', 'hint__text');
   createHTMLEl('div', '.main', 'mistakes', 'Incorrect guesses:');
   createHTMLEl('span', '.mistakes', 'mistakes__number', '0', { id: 'number' });
   createHTMLEl('span', '.mistakes', 'mistakes__number', '/ 6');
@@ -85,9 +176,9 @@ function createHTML() {
   createHTMLEl('div', '.popup', 'popup__content');
   createHTMLEl('h2', '.popup__content', 'popup__result', 'You Win!');
   createHTMLEl('h3', '.popup__content', 'popup__answer-text', 'The answer is:');
-  createHTMLEl('span', '.popup__answer-text', 'popup__answer');
   createHTMLEl('button', '.popup__content', 'popup__button', 'play again');
+
+  setRiddles();
 }
-// параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
 
 createHTML();

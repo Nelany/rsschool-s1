@@ -44,36 +44,54 @@
   position: absolute;
   right: 0;
   top: 150px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s;
 }
 
 .aside__img-body {
   position: absolute;
   right: 47px;
   top: 251px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s;
 }
 
 .aside__img-hand-one {
   position: absolute;
   right: 47px;
   top: 255px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s;
 }
 
 .aside__img-hand-two {
   position: absolute;
   right: -17px;
   top: 255px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s;
 }
 
 .aside__img-leg-one {
   position: absolute;
   right: 47px;
   top: 380px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s;
 }
 
 .aside__img-leg-two {
   position: absolute;
   right: -17px;
   top: 380px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s;
 }
 
 .aside__tittle {
