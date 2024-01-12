@@ -1,3 +1,10 @@
+let wordLettersArray;
+let alphabetArray;
+let errors = 0;
+let human;
+let restartButton;
+let alphabet;
+
 // Фун.для создания HTML-элементов.___________________________________________________________
 function createHTMLEl(
   tagName,
@@ -32,7 +39,7 @@ function createHTMLEl(
   return undefined;
 }
 
-// Массив, фун.для выбора загадок, заполнения соответствующих элементов HTML.__________________________________
+// Массив загадок_____________________________________________________________________
 const riddlesArray = [
   {
     question: 'What is something that can speak every language in the world?',
@@ -102,12 +109,10 @@ const riddlesArray = [
   },
 ];
 
-let wordLettersArray;
-let alphabetArray;
-let errors = 0;
-let human;
+// Фун.для выбора загадок, заполнения соответствующих элементов HTML.__________________________________
 
 function setRiddles() {
+  const lastRiddle = document.querySelector('.hint__text');
   const riddle = riddlesArray[Math.floor(Math.random() * riddlesArray.length)];
 
   createHTMLEl('span', '.hint', 'hint__text', riddle.question);
@@ -120,12 +125,16 @@ function setRiddles() {
     createHTMLEl('div', '.word', 'word__letter', letter);
   });
 
+  if (lastRiddle && lastRiddle.textContent === riddle.question) {
+    setRiddles();
+  }
+
   wordLettersArray = document.querySelectorAll('.word__letter');
 }
 
 // параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
 
-// Фун.для создания HTML.______________________________________________________________________________
+// ________________________________Фун.ДЛЯ СОЗДАНИЯ HTML.___________________________________________
 
 function createHTML() {
   const body = document.querySelector('.body');
@@ -166,6 +175,7 @@ function createHTML() {
   createHTMLEl('span', '.mistakes', 'mistakes__number', '0', { id: 'number' });
   createHTMLEl('span', '.mistakes', 'mistakes__number', '/ 6');
   createHTMLEl('div', '.main', 'alphabet');
+  alphabet = document.querySelector('.alphabet');
 
   for (let i = 97; i <= 122; i += 1) {
     createHTMLEl(
@@ -184,26 +194,38 @@ function createHTML() {
   createHTMLEl('h3', '.popup__content', 'popup__answer-text', 'The answer is:');
   createHTMLEl('button', '.popup__content', 'popup__button', 'play again');
 
+  restartButton = document.querySelector('.popup__button');
+  restartButton.addEventListener('click', createHTML);
+
   setRiddles();
 }
 
 createHTML();
+//________________________________________________________________________________
 
-// Рисование человека______________________________________________________________________________
-
+// Рисование человека____________________________________________________________
 function drawHuman(errorNumber) {
-  for(let i=0; i<=human.length; i+=1){
+  for (let i = 0; i <= human.length; i += 1) {
     if (errorNumber === i) {
       human[i].classList.add('open');
     }
   }
 }
 
-// POPUP______________________________________________________________________________
+// POPUP open______________________________________________________________________________
 
-function openPopup(){}
+function openPopup(text) {
+  const popup = document.querySelector('.popup');
+  popup.classList.add('open');
+  const message = document.querySelector('.popup__result');
+  if (text) {
+    message.textContent = text;
+  }
+}
 
-// Счетчик ошибок______________________________________________________________________________
+// POPUP close, restart game_______________________________________________________________
+
+// Счетчик ошибок_______________________________________________________________________
 
 function incrementErrors() {
   errors += 1;
@@ -211,25 +233,34 @@ function incrementErrors() {
   mistakesNumber.textContent = errors;
   drawHuman(errors);
   if (errors === 6) {
-    openPopup();
+    openPopup('GAME OVER!');
     errors = 0;
   }
 }
 
 // Обработка ответов______________________________________________________________________________
 
-function chooseLetter(event) {
+function chooseLetter(letterItem) {
   let inTheWord = false;
 
   wordLettersArray.forEach((letter) => {
-    if (letter.textContent.toLowerCase() === event.key.toLowerCase()) {
+    if (letter.textContent.toLowerCase() === letterItem.toLowerCase()) {
       letter.classList.add('word__letter--open');
       inTheWord = true;
+      let openLetters = 0;
+      wordLettersArray.forEach((openLetter) => {
+        if (openLetter.classList.contains('word__letter--open')) {
+          openLetters += 1;
+          if (openLetters === wordLettersArray.length) {
+            openPopup();
+          }
+        }
+      });
     }
   });
 
   alphabetArray.forEach((letter) => {
-    if (letter.textContent.toLowerCase() === event.key.toLowerCase()) {
+    if (letter.textContent.toLowerCase() === letterItem.toLowerCase()) {
       if (
         !letter.classList.contains('alphabet__letter--disabled') &&
         !inTheWord
@@ -243,4 +274,17 @@ function chooseLetter(event) {
   inTheWord = false;
 }
 
-document.addEventListener('keydown', chooseLetter);
+function chooseLetterKeyboard(event) {
+  // при нажатии на клавиши клавиатуры
+  chooseLetter(event.key);
+}
+
+function chooseLetterVirtual(event) {
+  // при нажатии на виртуальные клавиши
+  if (event.target.classList.contains('alphabet__letter')) {
+    chooseLetter(event.target.textContent);
+  }
+}
+
+document.addEventListener('keydown', chooseLetterKeyboard);
+alphabet.addEventListener('click', chooseLetterVirtual);
