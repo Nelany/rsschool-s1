@@ -103,6 +103,9 @@ const riddlesArray = [
 ];
 
 let wordLettersArray;
+let alphabetArray;
+let errors = 0;
+let human;
 
 function setRiddles() {
   const riddle = riddlesArray[Math.floor(Math.random() * riddlesArray.length)];
@@ -113,18 +116,17 @@ function setRiddles() {
 
   const word = riddle.answer;
 
-  wordLettersArray = word.split('');
-
-  wordLettersArray.forEach((letter) => {
+  word.split('').forEach((letter) => {
     createHTMLEl('div', '.word', 'word__letter', letter);
   });
 
-  return wordLettersArray;
+  wordLettersArray = document.querySelectorAll('.word__letter');
 }
 
 // параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
 
 // Фун.для создания HTML.______________________________________________________________________________
+
 function createHTML() {
   const body = document.querySelector('.body');
   body.innerHTML = '';
@@ -154,6 +156,8 @@ function createHTML() {
     );
   });
 
+  human = document.querySelectorAll('.aside__img--small');
+
   createHTMLEl('h2', '.aside', 'aside__tittle', 'HANGMAN GAME');
   createHTMLEl('main', '.content', 'main');
   createHTMLEl('div', '.main', 'word');
@@ -172,6 +176,8 @@ function createHTML() {
     );
   }
 
+  alphabetArray = document.querySelectorAll('.alphabet__letter');
+
   createHTMLEl('div', '.body', 'popup');
   createHTMLEl('div', '.popup', 'popup__content');
   createHTMLEl('h2', '.popup__content', 'popup__result', 'You Win!');
@@ -182,3 +188,59 @@ function createHTML() {
 }
 
 createHTML();
+
+// Рисование человека______________________________________________________________________________
+
+function drawHuman(errorNumber) {
+  for(let i=0; i<=human.length; i+=1){
+    if (errorNumber === i) {
+      human[i].classList.add('open');
+    }
+  }
+}
+
+// POPUP______________________________________________________________________________
+
+function openPopup(){}
+
+// Счетчик ошибок______________________________________________________________________________
+
+function incrementErrors() {
+  errors += 1;
+  const mistakesNumber = document.getElementById('number');
+  mistakesNumber.textContent = errors;
+  drawHuman(errors);
+  if (errors === 6) {
+    openPopup();
+    errors = 0;
+  }
+}
+
+// Обработка ответов______________________________________________________________________________
+
+function chooseLetter(event) {
+  let inTheWord = false;
+
+  wordLettersArray.forEach((letter) => {
+    if (letter.textContent.toLowerCase() === event.key.toLowerCase()) {
+      letter.classList.add('word__letter--open');
+      inTheWord = true;
+    }
+  });
+
+  alphabetArray.forEach((letter) => {
+    if (letter.textContent.toLowerCase() === event.key.toLowerCase()) {
+      if (
+        !letter.classList.contains('alphabet__letter--disabled') &&
+        !inTheWord
+      ) {
+        incrementErrors();
+      }
+      letter.classList.add('alphabet__letter--disabled');
+    }
+  });
+
+  inTheWord = false;
+}
+
+document.addEventListener('keydown', chooseLetter);
