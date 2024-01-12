@@ -4,6 +4,7 @@ let errors = 0;
 let human;
 let restartButton;
 let alphabet;
+let stopClicks = false;
 
 // Фун.для создания HTML-элементов.___________________________________________________________
 function createHTMLEl(
@@ -147,6 +148,7 @@ function drawHuman(errorNumber) {
 // POPUP open______________________________________________________________________________
 
 function openPopup(text) {
+  stopClicks = true;
   const popup = document.querySelector('.popup');
   popup.classList.add('open');
   const message = document.querySelector('.popup__result');
@@ -154,8 +156,6 @@ function openPopup(text) {
     message.textContent = text;
   }
 }
-
-// POPUP close, restart game_______________________________________________________________
 
 // Счетчик ошибок_______________________________________________________________________
 
@@ -208,7 +208,8 @@ function chooseLetter(letterItem) {
 
 function chooseLetterKeyboard(event) {
   // при нажатии на клавиши клавиатуры
-  chooseLetter(event.key);
+  if (!stopClicks) {
+  chooseLetter(event.key);}
 }
 
 function chooseLetterVirtual(event) {
@@ -295,6 +296,7 @@ function createHTML() {
   restartButton.addEventListener('click', createHTML);
 
   setRiddles();
+  stopClicks = false;
 }
 
 createHTML();
