@@ -132,76 +132,8 @@ function setRiddles() {
   wordLettersArray = document.querySelectorAll('.word__letter');
 }
 
-// параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
 
-// ________________________________Фун.ДЛЯ СОЗДАНИЯ HTML.___________________________________________
 
-function createHTML() {
-  const body = document.querySelector('.body');
-  body.innerHTML = '';
-  // Создаем элементы. Параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
-  createHTMLEl('div', '.body', 'content');
-  createHTMLEl('aside', '.content', 'aside');
-  createHTMLEl('div', '.aside', 'aside__img-container');
-
-  const imgSrcArray = [
-    'gallows.svg',
-    'head.svg',
-    'body.svg',
-    'hand-one.svg',
-    'hand-two.svg',
-    'leg-one.svg',
-    'leg-two.svg',
-  ];
-
-  imgSrcArray.forEach((src) => {
-    const name = src.split('.')[0];
-    createHTMLEl(
-      'img',
-      '.aside__img-container',
-      `aside__img-${name} aside__img--small`,
-      null,
-      { src: `./assets/${src}`, alt: name }
-    );
-  });
-
-  human = document.querySelectorAll('.aside__img--small');
-
-  createHTMLEl('h2', '.aside', 'aside__tittle', 'HANGMAN GAME');
-  createHTMLEl('main', '.content', 'main');
-  createHTMLEl('div', '.main', 'word');
-  createHTMLEl('div', '.main', 'hint', 'Hint:');
-  createHTMLEl('div', '.main', 'mistakes', 'Incorrect guesses:');
-  createHTMLEl('span', '.mistakes', 'mistakes__number', '0', { id: 'number' });
-  createHTMLEl('span', '.mistakes', 'mistakes__number', '/ 6');
-  createHTMLEl('div', '.main', 'alphabet');
-  alphabet = document.querySelector('.alphabet');
-
-  for (let i = 97; i <= 122; i += 1) {
-    createHTMLEl(
-      'div',
-      '.alphabet',
-      'alphabet__letter',
-      String.fromCharCode(i)
-    );
-  }
-
-  alphabetArray = document.querySelectorAll('.alphabet__letter');
-
-  createHTMLEl('div', '.body', 'popup');
-  createHTMLEl('div', '.popup', 'popup__content');
-  createHTMLEl('h2', '.popup__content', 'popup__result', 'You Win!');
-  createHTMLEl('h3', '.popup__content', 'popup__answer-text', 'The answer is:');
-  createHTMLEl('button', '.popup__content', 'popup__button', 'play again');
-
-  restartButton = document.querySelector('.popup__button');
-  restartButton.addEventListener('click', createHTML);
-
-  setRiddles();
-}
-
-createHTML();
-//________________________________________________________________________________
 
 // Рисование человека____________________________________________________________
 function drawHuman(errorNumber) {
@@ -287,4 +219,84 @@ function chooseLetterVirtual(event) {
 }
 
 document.addEventListener('keydown', chooseLetterKeyboard);
-alphabet.addEventListener('click', chooseLetterVirtual);
+
+// параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
+
+// ________________________________Фун.ДЛЯ СОЗДАНИЯ HTML.___________________________________________
+
+function createHTML() {
+  const body = document.querySelector('.body');
+  body.innerHTML = '';
+  // Создаем элементы. Параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
+  createHTMLEl('div', '.body', 'content');
+  createHTMLEl('aside', '.content', 'aside');
+  createHTMLEl('div', '.aside', 'aside__img-container');
+
+  createHTMLEl('img', '.aside__img-container', `aside__img-gallows img`, null, {
+    src: './assets/gallows.svg',
+    alt: 'gallows',
+  });
+  const imgSrcArray = [
+    'head.svg',
+    'body.svg',
+    'hand-one.svg',
+    'hand-two.svg',
+    'leg-one.svg',
+    'leg-two.svg',
+  ];
+
+  imgSrcArray.forEach((src) => {
+    const name = src.split('.')[0];
+    createHTMLEl(
+      'img',
+      '.aside__img-container',
+      `aside__img-${name} aside__img--small img`,
+      null,
+      { src: `./assets/${src}`, alt: name }
+    );
+  });
+
+  human = document.querySelectorAll('.img');
+
+  createHTMLEl('h2', '.aside', 'aside__tittle', 'HANGMAN GAME');
+  createHTMLEl('main', '.content', 'main');
+  createHTMLEl('div', '.main', 'word');
+  createHTMLEl('div', '.main', 'hint', 'Hint: ');
+  createHTMLEl('div', '.main', 'mistakes', 'Incorrect guesses: ');
+  createHTMLEl('span', '.mistakes', 'mistakes__number', '0', { id: 'number' });
+  createHTMLEl('span', '.mistakes', 'mistakes__number', ' / 6');
+  createHTMLEl('div', '.main', 'alphabet');
+  alphabet = document.querySelector('.alphabet');
+  alphabet.addEventListener('click', chooseLetterVirtual);
+
+  for (let i = 97; i <= 122; i += 1) {
+    createHTMLEl(
+      'div',
+      '.alphabet',
+      'alphabet__letter',
+      String.fromCharCode(i)
+    );
+  }
+
+  alphabetArray = document.querySelectorAll('.alphabet__letter');
+
+  createHTMLEl('div', '.body', 'popup');
+  createHTMLEl('div', '.popup', 'popup__content');
+  createHTMLEl('h2', '.popup__content', 'popup__result', 'You Win!');
+  createHTMLEl(
+    'h3',
+    '.popup__content',
+    'popup__answer-text',
+    'The answer is: '
+  );
+  createHTMLEl('button', '.popup__content', 'popup__button', 'play again');
+
+  restartButton = document.querySelector('.popup__button');
+  restartButton.addEventListener('click', createHTML);
+
+  setRiddles();
+}
+
+createHTML();
+//________________________________________________________________________________
+
