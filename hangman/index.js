@@ -5,6 +5,7 @@ let human;
 let restartButton;
 let alphabet;
 let stopClicks = false;
+let lastRiddle;
 
 // Фун.для создания HTML-элементов.___________________________________________________________
 function createHTMLEl(
@@ -110,15 +111,19 @@ const riddlesArray = [
   },
 ];
 
+// // Функция для генерации случайного числа в заданном диапазоне_________________________
+// function getRandomIndex(min, max) {
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
+
 // Фун.для выбора загадок, заполнения соответствующих элементов HTML.__________________________________
 
 function setRiddles() {
-  const lastRiddle = document.querySelector('.hint__text');
   const riddle = riddlesArray[Math.floor(Math.random() * riddlesArray.length)];
 
   createHTMLEl('span', '.hint', 'hint__text', riddle.question);
   createHTMLEl('span', '.popup__answer-text', 'popup__answer', riddle.answer);
-  console.log(riddle.answer);
+  console.log(riddle.answer); //ДЛЯ ПРОВЕРКИ
 
   const word = riddle.answer;
 
@@ -132,9 +137,6 @@ function setRiddles() {
 
   wordLettersArray = document.querySelectorAll('.word__letter');
 }
-
-
-
 
 // Рисование человека____________________________________________________________
 function drawHuman(errorNumber) {
@@ -209,7 +211,8 @@ function chooseLetter(letterItem) {
 function chooseLetterKeyboard(event) {
   // при нажатии на клавиши клавиатуры
   if (!stopClicks) {
-  chooseLetter(event.key);}
+    chooseLetter(event.key);
+  }
 }
 
 function chooseLetterVirtual(event) {
@@ -226,6 +229,7 @@ document.addEventListener('keydown', chooseLetterKeyboard);
 // ________________________________Фун.ДЛЯ СОЗДАНИЯ HTML.___________________________________________
 
 function createHTML() {
+  lastRiddle = document.querySelector('.hint__text');
   const body = document.querySelector('.body');
   body.innerHTML = '';
   // Создаем элементы. Параметры: createHTMLEl(tagName, parentElementName, classes, textContent, attributes);
