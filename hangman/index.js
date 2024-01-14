@@ -240,6 +240,7 @@ document.addEventListener('keydown', chooseLetterKeyboard);
 // ________________________________Фун.ДЛЯ СОЗДАНИЯ HTML.___________________________________________
 
 function createHTML() {
+  errors = 0;
   lastRiddle = document.querySelector('.hint__text');
   const body = document.querySelector('.body');
   body.innerHTML = '';
