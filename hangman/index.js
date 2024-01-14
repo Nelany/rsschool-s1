@@ -6,6 +6,7 @@ let restartButton;
 let alphabet;
 let stopClicks = false;
 let lastRiddle;
+let riddleNumber = 0;
 
 // Фун.для создания HTML-элементов.___________________________________________________________
 function createHTMLEl(
@@ -111,19 +112,29 @@ const riddlesArray = [
   },
 ];
 
-// // Функция для генерации случайного числа в заданном диапазоне_________________________
-// function getRandomIndex(min, max) {
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
+function shuffleRiddlesArray(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
+shuffleRiddlesArray(riddlesArray);
 
 // Фун.для выбора загадок, заполнения соответствующих элементов HTML.__________________________________
 
 function setRiddles() {
-  const riddle = riddlesArray[Math.floor(Math.random() * riddlesArray.length)];
+  // const riddle = riddlesArray[Math.floor(Math.random() * riddlesArray.length)];
+
+  if (riddleNumber === 12) {
+    shuffleRiddlesArray(riddlesArray);
+    riddleNumber = 0;
+  } else {
+    riddleNumber += 1;
+  }
+
+  const riddle = riddlesArray[riddleNumber];
 
   createHTMLEl('span', '.hint', 'hint__text', riddle.question);
   createHTMLEl('span', '.popup__answer-text', 'popup__answer', riddle.answer);
-  console.log(riddle.answer); //ДЛЯ ПРОВЕРКИ
+  console.log('%c' + riddle.answer, 'color: yellow; font-size: 15px'); // ДЛЯ ПРОВЕРКИ
 
   const word = riddle.answer;
 
@@ -304,5 +315,8 @@ function createHTML() {
 }
 
 createHTML();
+console.log(
+  '%cНе забудьте, пожалуйста, включить английский язык клавиатуры!',
+  'color: red; font-size: 20px'
+);
 //________________________________________________________________________________
-
