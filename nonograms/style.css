@@ -1,5 +1,190 @@
-.macondo-regular {
+.body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
   font-family: "Macondo", cursive;
-  font-weight: 400;
+  font-weight: 600;
   font-style: normal;
+  font-size: 25px;
+}
+
+.body.light {
+  background-color: rgb(255, 255, 255);
+  color: rgb(93, 17, 0);
+}
+
+.body.dark {
+  background-color: rgb(0, 0, 0);
+  color: rgb(0, 186, 12);
+}
+
+.body.medium {
+  background-color: rgb(97, 69, 41);
+  color: rgb(64, 13, 1);
+}
+
+.content {
+  max-width: 1400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.body.light .content {
+  background-color: rgb(237, 237, 237);
+  border: 2px solid rgba(27, 20, 14, 0.767);
+  box-shadow: 0 0 10px rgba(27, 20, 14, 0.767);
+}
+
+.body.dark .content {
+  background-color: rgb(0, 0, 0);
+  border: 2px solid rgb(0, 186, 12);
+  box-shadow: 0 0 10px rgb(0, 186, 12);
+}
+
+.body.medium .content {
+  background-color: rgb(172, 160, 130);
+  border: 2px solid rgba(27, 20, 14, 0.767);
+  box-shadow: 0 0 10px rgba(27, 20, 14, 0.767);
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.numbers-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.body.light .sector {
+  border: 2px solid rgb(124, 60, 0);
+}
+
+.body.dark .sector {
+  border: 2px solid rgb(174, 186, 0);
+}
+
+.body.medium .sector {
+  border: 2px solid rgb(27, 20, 14);
+}
+
+.field-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: content-box;
+}
+
+.square {
+  width: 35vh;
+  height: 35vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body.light .square {
+  border: 2px solid rgb(124, 60, 0);
+}
+
+.body.dark .square {
+  border: 2px solid rgb(174, 186, 0);
+}
+
+.body.medium .square {
+  border: 2px solid rgb(27, 20, 14);
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 7vh;
+  height: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 30px;
+}
+
+.body.light .cell {
+  border: 1px solid rgba(124, 60, 0, 0.27);
+}
+
+.body.dark .cell {
+  border: 1px solid rgba(174, 186, 0, 0.27);
+}
+
+.body.medium .cell {
+  border: 1px solid rgba(27, 20, 14, 0.493);
+}
+
+.body.light .cell-shaded {
+  background-color: rgb(27, 10, 0);
+}
+
+.body.dark .cell-shaded {
+  background-color: rgb(189, 76, 0);
+}
+
+.body.medium .cell-shaded {
+  background-color: rgb(10, 8, 5);
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.button {
+  transition: all 0.4s;
+  border: 2px solid rgba(121, 2, 0, 0);
+  border-radius: 7px;
+  padding: 5px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.body.light .button:hover {
+  color: rgb(185, 83, 0);
+  border: 2px solid rgb(185, 83, 0);
+}
+
+.body.dark .button:hover {
+  color: rgb(174, 186, 0);
+  border: 2px solid rgb(174, 186, 0);
+}
+
+.body.medium .button:hover {
+  color: rgb(73, 1, 0);
+  border: 2px solid rgb(73, 1, 0);
 }
