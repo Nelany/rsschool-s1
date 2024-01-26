@@ -1,6 +1,3 @@
-const body = document.querySelector("body");
-let popup;
-
 const beginnerMatrixes = {
   mood: [
     [0, 0, 0, 0, 0],
@@ -39,11 +36,31 @@ const beginnerMatrixes = {
   ],
 };
 
+const intermediateMatrixes = {};
+const advancedMatrixes = {};
+
+const levelsMatrixes = {
+  beginner: beginnerMatrixes,
+  intermediate: intermediateMatrixes,
+  advanced: advancedMatrixes,
+};
+
+const body = document.querySelector("body");
+let popup;
+let currentLevel = "beginner";
+let currentKey = "mood";
+let checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+let isEndGame = false;
+
+//_________________________________________________________________________________________________________
+
+//____________________________________createHTML__________________________________________________________
 function createHTML() {
+  isEndGame = false;
   body.innerHTML = `
       <div class="content">
         <header class="header">
-          <h2 class="button level-button">Level: <span>beginner</span></h2>
+          <h2 class="button level-button">Level: <span class="level">beginner</span></h2>
           <h2 class="timer">00:00</h2>
           <h2 class="button menu-button">Menu</h2>
         </header>
@@ -51,31 +68,31 @@ function createHTML() {
         <main class="main">
           <div class="numbers-left">
             <div class="sector">
-              <div class="row">
+              <div class="row row--number">
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number"></div>
               </div>
 
-              <div class="row">
+              <div class="row row--number">
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number">1</div>
                 <div class="cell cell--number">1</div>
               </div>
 
-              <div class="row">
+              <div class="row row--number">
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number"></div>
               </div>
 
-              <div class="row">
+              <div class="row row--number">
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number">1</div>
                 <div class="cell cell--number">1</div>
               </div>
 
-              <div class="row">
+              <div class="row row--number">
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number"></div>
                 <div class="cell cell--number">5</div>
@@ -86,7 +103,7 @@ function createHTML() {
           <div class="field-container">
             <div class="numbers-top">
               <div class="sector">
-                <div class="row">
+                <div class="row row--number">
                   <div class="cell cell--number"></div>
                   <div class="cell cell--number"></div>
                   <div class="cell cell--number"></div>
@@ -94,7 +111,7 @@ function createHTML() {
                   <div class="cell cell--number"></div>
                 </div>
 
-                <div class="row">
+                <div class="row row--number">
                   <div class="cell cell--number"></div>
                   <div class="cell cell--number">1</div>
                   <div class="cell cell--number"></div>
@@ -102,7 +119,7 @@ function createHTML() {
                   <div class="cell cell--number"></div>
                 </div>
 
-                <div class="row">
+                <div class="row row--number">
                   <div class="cell cell--number">2</div>
                   <div class="cell cell--number">1</div>
                   <div class="cell cell--number">1</div>
@@ -114,7 +131,7 @@ function createHTML() {
 
             <div class="field">
               <div class="square">
-                <div class="row">
+                <div class="row row--picture">
                   <div class="cell cell--picture"></div>
                   <div class="cell cell--picture"></div>
                   <div class="cell cell--picture"></div>
@@ -122,15 +139,7 @@ function createHTML() {
                   <div class="cell cell--picture"></div>
                 </div>
 
-                <div class="row">
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture cell-shaded"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture cell-shaded"></div>
-                  <div class="cell cell--picture"></div>
-                </div>
-
-                <div class="row">
+                <div class="row row--picture">
                   <div class="cell cell--picture"></div>
                   <div class="cell cell--picture"></div>
                   <div class="cell cell--picture"></div>
@@ -138,20 +147,28 @@ function createHTML() {
                   <div class="cell cell--picture"></div>
                 </div>
 
-                <div class="row">
-                  <div class="cell cell--picture cell-shaded"></div>
+                <div class="row row--picture">
                   <div class="cell cell--picture"></div>
                   <div class="cell cell--picture"></div>
                   <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture cell-shaded"></div>
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
                 </div>
 
-                <div class="row">
-                  <div class="cell cell--picture cell-shaded"></div>
-                  <div class="cell cell--picture cell-shaded"></div>
-                  <div class="cell cell--picture cell-shaded"></div>
-                  <div class="cell cell--picture cell-shaded"></div>
-                  <div class="cell cell--picture cell-shaded"></div>
+                <div class="row row--picture">
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
+                </div>
+
+                <div class="row row--picture">
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
+                  <div class="cell cell--picture"></div>
                 </div>
               </div>
             </div>
@@ -160,6 +177,7 @@ function createHTML() {
 
         <footer class="footer">
           <div class="reset button">Reset game</div>
+          <div class="autocomplete button">Autocomplete</div>
           <div class="save button">Save game</div>
           <div class="continue button">Continue last game</div>
         </footer>
@@ -185,24 +203,102 @@ function createHTML() {
 
 createHTML();
 
-function shadeCell(event) {
-  console.log(event.target);
-  if (event.target.classList.contains("cell--picture")) {
-    event.target.classList.toggle("cell-shaded");
+//________________________________shadeCell_____________________________________________
+
+function shadeCell(event, popupMenu, tittle) {
+  event.target.classList.toggle("cell-shaded");
+
+  const shadedCells = document.querySelectorAll(".cell-shaded");
+  const shadedCorrectCells = document.querySelectorAll(".correct.cell-shaded");
+  const correctCells = document.querySelectorAll(".correct");
+  console.log(shadedCorrectCells.length);
+  console.log(correctCells.length);
+  console.log(shadedCells.length);
+
+  if (shadedCells.length === shadedCorrectCells.length && shadedCells.length === correctCells.length) {
+    tittle.textContent = "Great! You have solved the nonogram in ## seconds!";
+    popupMenu.innerHTML = `
+    <li class="popup__menu-item menu-record-table">Record table</li>
+    <li class="popup__menu-item menu-random-picture">Choose a random picture</li>`;''
+
+    popupMenu.innerHTML +=
+      '<li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>';
+
+    popup.classList.add("open");
+    isEndGame = true;
   }
 }
 
-body.addEventListener("click", shadeCell);
+//___________________________applyMatrixToCells_____________________________________________________________
+
+function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
+  isEndGame = false;
+  const rows = document.querySelectorAll(rowSelector);
+
+  for (let i = 0; i < matrix.length; i++) {
+    let cells = Array.from(rows[i].querySelectorAll(".cell--picture"));
+
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j] === 1) {
+        cells[j].classList.add("correct");
+        if (isAutocomplete) {
+          cells[j].classList.add("cell-shaded");
+        }
+      }
+    }
+  }
+}
+
+applyMatrixToCells(checkedMatrix, ".row--picture", false);
+
+//___________________________________resetGame_________________________________________________________
+
+function resetGame(isDeleteCorrect) {
+  const cells = document.querySelectorAll(".cell--picture");
+  if (isDeleteCorrect) {
+    cells.forEach((cell) => {
+      cell.classList.remove("cell-shaded", "correct");
+    });
+  } else {
+    cells.forEach((cell) => {
+      cell.classList.remove("cell-shaded");
+    });
+  }
+  isEndGame = false;
+}
+
+//___________________________________updatePicturesList_________________________________________________________
+
+function updatePicturesList(popupMenu) {
+  let objMatrixes = levelsMatrixes[currentLevel];
+  const keys = Object.keys(objMatrixes);
+  popupMenu.innerHTML = keys
+    .map((key) => {
+      if (key === currentKey) {
+        return `<li class="popup__menu-item popup__menu-picture checked ${key}">${key}</li>`;
+      }
+      return `<li class="popup__menu-item popup__menu-picture ${key}">${key}</li>`;
+    })
+    .join("");
+  popupMenu.innerHTML +=
+    '<li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>';
+}
+
+// ______________________________________________________________________________________________________
+//___________________________________manageModal_________________________________________________________
+// ______________________________________________________________________________________________________
 
 function manageModal(event) {
+  console.log(event.target);
   const tittle = document.querySelector(".popup__tittle");
   const popupMenu = document.querySelector(".popup__menu");
+  const levelOnScreen = document.querySelector(".level");
 
   if (event.target.closest(".menu-button")) {
     tittle.textContent = "Menu";
     popupMenu.innerHTML = `
-  <li class="popup__menu-item menu-pictures">New Picture</li>
-  <li class="popup__menu-item menu-themes">New Theme</li>`;
+  <li class="popup__menu-item menu-pictures">Picture</li>
+  <li class="popup__menu-item menu-themes">Theme</li>`;
 
     popup.classList.add("open");
   }
@@ -211,13 +307,8 @@ function manageModal(event) {
   }
   if (event.target.closest(".menu-pictures")) {
     tittle.textContent = "Pictures:";
-    popupMenu.innerHTML = `
-  <li class="popup__menu-item picture1">Picture 1</li>
-  <li class="popup__menu-item picture2">Picture 2</li>
-  <li class="popup__menu-item picture1">Picture 3</li>
-  <li class="popup__menu-item picture1">Picture 4</li>
-  <li class="popup__menu-item picture1">Picture 5</li>
-  <li class="popup__menu-item menu-button">Back to main MENU</li>`;
+
+    updatePicturesList(popupMenu);
   }
   if (event.target.closest(".menu-themes")) {
     tittle.textContent = "Themes:";
@@ -225,23 +316,64 @@ function manageModal(event) {
   <li class="popup__menu-item light-theme">Light theme</li>
   <li class="popup__menu-item medium-theme">Medium theme</li>
   <li class="popup__menu-item dark-theme">Dark theme</li>
-  <li class="popup__menu-item menu-button">Back to main MENU</li>`;
+  <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
   }
   if (event.target.closest(".light-theme")) {
-      body.classList.add('light');
-      body.classList.remove('medium');
-      body.classList.remove('dark');
+    body.classList.add("light");
+    body.classList.remove("medium");
+    body.classList.remove("dark");
   }
   if (event.target.closest(".medium-theme")) {
-    body.classList.add('medium');
-    body.classList.remove('light');
-    body.classList.remove('dark');
-}
-if (event.target.closest(".dark-theme")) {
-  body.classList.add('dark');
-  body.classList.remove('medium');
-  body.classList.remove('light');
-}
+    body.classList.add("medium");
+    body.classList.remove("light");
+    body.classList.remove("dark");
+  }
+  if (event.target.closest(".dark-theme")) {
+    body.classList.add("dark");
+    body.classList.remove("medium");
+    body.classList.remove("light");
+  }
+  if (event.target.closest(".level-button")) {
+    tittle.textContent = "Levels:";
+    popupMenu.innerHTML = `
+<li class="popup__menu-item level-beginner">Beginner</li>
+<li class="popup__menu-item level-intermediate">Intermediate</li>
+<li class="popup__menu-item level-advanced">Advanced</li>`;
+
+    popup.classList.add("open");
+  }
+  if (event.target.closest(".level-beginner")) {
+    levelOnScreen.textContent = "beginner";
+    currentLevel = "beginner";
+  }
+  // if (event.target.closest(".level-intermediate")) {
+  //   levelOnScreen.textContent = "intermediate";
+  //   currentLevel = "intermediate";
+  // }
+  // if (event.target.closest(".level-advanced")) {
+  //   levelOnScreen.textContent = "advanced";
+  //   currentLevel = "advanced";
+  // }
+  if (event.target.closest(".reset")) {
+    resetGame(false);
+  }
+  if (event.target.closest(".autocomplete")) {
+    resetGame(false);
+    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    applyMatrixToCells(checkedMatrix, ".row--picture", true);
+  }
+  if (event.target.closest(".popup__menu-picture")) {
+    resetGame(true);
+
+    currentKey = event.target.closest(".popup__menu-picture").textContent;
+    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    applyMatrixToCells(checkedMatrix, ".row--picture", false);
+
+    updatePicturesList(popupMenu);
+  }
+  if (event.target.closest(".cell--picture") && !isEndGame) {
+    shadeCell(event, popupMenu, tittle);
+  }
 }
 
 body.addEventListener("click", manageModal);

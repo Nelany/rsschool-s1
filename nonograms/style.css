@@ -174,6 +174,21 @@
   cursor: pointer;
 }
 
+.body.light .checked {
+  color: rgb(185, 83, 0);
+  border: 2px solid rgb(185, 83, 0);
+}
+
+.body.dark .checked{
+  color: rgb(174, 186, 0);
+  border: 2px solid rgb(174, 186, 0);
+}
+
+.body.medium .checked {
+  color: rgb(73, 1, 0);
+  border: 2px solid rgb(73, 1, 0);
+}
+
 .body.light .button:hover {
   color: rgb(185, 83, 0);
   border: 2px solid rgb(185, 83, 0);
@@ -218,7 +233,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 30px;
   border-radius: 20px;
   transition: all 0.7s;
   transform: scale(0);
