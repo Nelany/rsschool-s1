@@ -52,6 +52,14 @@ let currentKey = "inspiration";
 let checkedMatrix = levelsMatrixes[currentLevel][currentKey];
 let isEndGame = false;
 
+//__________________выбрать случайную картинку из объекта с матрицами______________________________________________
+
+function getRandomKey(matrixes) {
+  const keys = Object.keys(matrixes);
+  const randomIndex = Math.floor(Math.random() * keys.length);
+  return keys[randomIndex];
+}
+
 //_________________________________________________________________________________________________________
 
 //____________________________________createHTML__________________________________________________________
@@ -221,11 +229,14 @@ function shadeCell(event, popupMenu, tittle) {
   console.log(correctCells.length);
   console.log(shadedCells.length);
 
-  if (shadedCells.length === shadedCorrectCells.length && shadedCells.length === correctCells.length) {
+  if (
+    shadedCells.length === shadedCorrectCells.length &&
+    shadedCells.length === correctCells.length
+  ) {
     tittle.textContent = "Great! You have solved the nonogram in ## seconds!";
     popupMenu.innerHTML = `
     <li class="popup__menu-item menu-record-table">Record table</li>
-    <li class="popup__menu-item menu-random-picture">Choose a random picture</li>`;''
+    <li class="popup__menu-item menu-random-picture">Choose a random picture</li>`;
 
     popupMenu.innerHTML +=
       '<li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>';
@@ -235,7 +246,6 @@ function shadeCell(event, popupMenu, tittle) {
   }
 }
 
-
 //___________________________________resetNumbers_________________________________________________________
 
 function resetNumbers() {
@@ -244,7 +254,6 @@ function resetNumbers() {
     cell.textContent = "";
   });
 }
-
 
 //___________________________applyMatrixToCells_____________________________________________________________
 
@@ -270,7 +279,6 @@ function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
 }
 
 applyMatrixToCells(checkedMatrix, ".row--picture", false);
-
 
 //___________________________________resetGame_________________________________________________________
 
@@ -301,8 +309,10 @@ function updatePicturesList(popupMenu) {
       return `<li class="popup__menu-item popup__menu-picture ${key}">${key}</li>`;
     })
     .join("");
-  popupMenu.innerHTML +=
-    '<li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>';
+  popupMenu.innerHTML += `
+  <li class="popup__menu-item menu-random-picture">Choose a random picture</li>
+  <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
+
 }
 
 // ______________________________________________________________________________________________________
@@ -391,17 +401,30 @@ function manageModal(event) {
     applyMatrixToCells(checkedMatrix, ".row--picture", false);
 
     updatePicturesList(popupMenu);
+    popup.classList.remove("open");
+
   }
   if (event.target.closest(".cell--picture") && !isEndGame) {
     shadeCell(event, popupMenu, tittle);
+  }
+  if (event.target.closest(".menu-random-picture")) {
+    resetGame(true);
+    currentKey = getRandomKey(levelsMatrixes[currentLevel]);
+    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    applyMatrixToCells(checkedMatrix, ".row--picture", false);
+
+    updatePicturesList(popupMenu);
+    popup.classList.remove("open");
   }
 }
 
 body.addEventListener("click", manageModal);
 
+// ____________________________________________________________________________________________
 
+// _________функции для подсчета и заполнения цифр-подсказок:______________________________________
 
-// ______________________________________________________________________________________________________
+// _________1. создать массив с количеством единиц в ряду матрицы______________________________________
 
 function countRowCells(matrixKey) {
   const matrix = matrixKey;
@@ -433,20 +456,22 @@ function countRowCells(matrixKey) {
   return consecutiveCounts;
 }
 
-
+// _________2. заполнить цифрами ряды на странице______________________________________
 
 function updateNumberRows(matrixKey) {
   const counts = countRowCells(matrixKey);
 
-  const numbersContainer = document.querySelector('.numbers-left .sector');
+  const numbersContainer = document.querySelector(".numbers-left .sector");
 
   counts.forEach((rowCounts, rowIndex) => {
-    const rowElement = numbersContainer.querySelector(`.row--number:nth-child(${rowIndex + 1})`);
+    const rowElement = numbersContainer.querySelector(
+      `.row--number:nth-child(${rowIndex + 1})`
+    );
 
     if (rowElement) {
-      const cellElements = rowElement.querySelectorAll('.cell--number');
-
-      rowCounts.forEach((count, countIndex) => {
+      const cellElements = rowElement.querySelectorAll(".cell--number");
+      reverseRowCounts = rowCounts.reverse();
+      reverseRowCounts.forEach((count, countIndex) => {
         const cellElement = cellElements[cellElements.length - countIndex - 1];
 
         if (cellElement) {
@@ -457,8 +482,7 @@ function updateNumberRows(matrixKey) {
   });
 }
 
-// updateNumberRows('inspiration');
-
+// _________3. создать массив с количеством единиц в столбце матрицы______________________________________
 
 function countColumnCells(matrixKey) {
   const matrix = matrixKey;
@@ -491,20 +515,22 @@ function countColumnCells(matrixKey) {
   return consecutiveCountsInColumns;
 }
 
-
+// _________4. заполнить цифрами столбцы на странице______________________________________
 
 function updateNumberColumns(matrixKey) {
   const countsInColumns = countColumnCells(matrixKey);
 
-  const numbersContainer = document.querySelector('.numbers-top .sector-top');
+  const numbersContainer = document.querySelector(".numbers-top .sector-top");
 
   countsInColumns.forEach((columnCounts, columnIndex) => {
-    const columnElement = numbersContainer.querySelector(`.row--number:nth-child(${columnIndex + 1})`);
+    const columnElement = numbersContainer.querySelector(
+      `.row--number:nth-child(${columnIndex + 1})`
+    );
 
     if (columnElement) {
-      const cellElements = columnElement.querySelectorAll('.cell--number');
-
-      columnCounts.forEach((count, countIndex) => {
+      const cellElements = columnElement.querySelectorAll(".cell--number");
+      reverseColumnCounts = columnCounts.reverse();
+      reverseColumnCounts.forEach((count, countIndex) => {
         const cellElement = cellElements[cellElements.length - countIndex - 1];
 
         if (cellElement) {
@@ -514,5 +540,4 @@ function updateNumberColumns(matrixKey) {
     }
   });
 }
-
-// updateNumberColumns('inspiration');
+// ____________________________________________________________________________________________
