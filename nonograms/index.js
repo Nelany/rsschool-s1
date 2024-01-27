@@ -48,7 +48,7 @@ const levelsMatrixes = {
 const body = document.querySelector("body");
 let popup;
 let currentLevel = "beginner";
-let currentKey = "mood";
+let currentKey = "inspiration";
 let checkedMatrix = levelsMatrixes[currentLevel][currentKey];
 let isEndGame = false;
 
@@ -102,29 +102,35 @@ function createHTML() {
 
           <div class="field-container">
             <div class="numbers-top">
-              <div class="sector">
-                <div class="row row--number">
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
+              <div class="sector sector-top">
+                <div class="row row-vertical row--number">
                   <div class="cell cell--number"></div>
                   <div class="cell cell--number"></div>
                   <div class="cell cell--number"></div>
                 </div>
 
-                <div class="row row--number">
+                <div class="row row-vertical row--number">
                   <div class="cell cell--number"></div>
-                  <div class="cell cell--number">1</div>
                   <div class="cell cell--number"></div>
-                  <div class="cell cell--number">1</div>
                   <div class="cell cell--number"></div>
                 </div>
 
-                <div class="row row--number">
-                  <div class="cell cell--number">2</div>
-                  <div class="cell cell--number">1</div>
-                  <div class="cell cell--number">1</div>
-                  <div class="cell cell--number">1</div>
-                  <div class="cell cell--number">2</div>
+                <div class="row row-vertical row--number">
+                  <div class="cell cell--number"></div>
+                  <div class="cell cell--number"></div>
+                  <div class="cell cell--number"></div>
+                </div>
+
+                <div class="row row-vertical row--number">
+                  <div class="cell cell--number"></div>
+                  <div class="cell cell--number"></div>
+                  <div class="cell cell--number"></div>
+                </div>
+
+                <div class="row row-vertical row--number">
+                  <div class="cell cell--number"></div>
+                  <div class="cell cell--number"></div>
+                  <div class="cell cell--number"></div>
                 </div>
               </div>
             </div>
@@ -229,6 +235,17 @@ function shadeCell(event, popupMenu, tittle) {
   }
 }
 
+
+//___________________________________resetNumbers_________________________________________________________
+
+function resetNumbers() {
+  const cells = document.querySelectorAll(".cell--number");
+  cells.forEach((cell) => {
+    cell.textContent = "";
+  });
+}
+
+
 //___________________________applyMatrixToCells_____________________________________________________________
 
 function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
@@ -247,9 +264,13 @@ function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
       }
     }
   }
+  resetNumbers();
+  updateNumberColumns(checkedMatrix);
+  updateNumberRows(checkedMatrix);
 }
 
 applyMatrixToCells(checkedMatrix, ".row--picture", false);
+
 
 //___________________________________resetGame_________________________________________________________
 
@@ -377,3 +398,121 @@ function manageModal(event) {
 }
 
 body.addEventListener("click", manageModal);
+
+
+
+// ______________________________________________________________________________________________________
+
+function countRowCells(matrixKey) {
+  const matrix = matrixKey;
+
+  const consecutiveCounts = [];
+
+  for (let i = 0; i < matrix.length; i++) {
+    let count = 0;
+    const rowCounts = [];
+
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j] === 1) {
+        count++;
+      } else {
+        if (count > 0) {
+          rowCounts.push(count);
+          count = 0;
+        }
+      }
+    }
+
+    if (count > 0) {
+      rowCounts.push(count);
+    }
+
+    consecutiveCounts.push(rowCounts);
+  }
+
+  return consecutiveCounts;
+}
+
+
+
+function updateNumberRows(matrixKey) {
+  const counts = countRowCells(matrixKey);
+
+  const numbersContainer = document.querySelector('.numbers-left .sector');
+
+  counts.forEach((rowCounts, rowIndex) => {
+    const rowElement = numbersContainer.querySelector(`.row--number:nth-child(${rowIndex + 1})`);
+
+    if (rowElement) {
+      const cellElements = rowElement.querySelectorAll('.cell--number');
+
+      rowCounts.forEach((count, countIndex) => {
+        const cellElement = cellElements[cellElements.length - countIndex - 1];
+
+        if (cellElement) {
+          cellElement.textContent = count;
+        }
+      });
+    }
+  });
+}
+
+// updateNumberRows('inspiration');
+
+
+function countColumnCells(matrixKey) {
+  const matrix = matrixKey;
+
+  const consecutiveCountsInColumns = [];
+
+  for (let i = 0; i < matrix[0].length; i++) {
+    consecutiveCountsInColumns.push([]);
+  }
+
+  for (let j = 0; j < matrix[0].length; j++) {
+    let count = 0;
+
+    for (let i = 0; i < matrix.length; i++) {
+      if (matrix[i][j] === 1) {
+        count++;
+      } else {
+        if (count > 0) {
+          consecutiveCountsInColumns[j].push(count);
+          count = 0;
+        }
+      }
+    }
+
+    if (count > 0) {
+      consecutiveCountsInColumns[j].push(count);
+    }
+  }
+
+  return consecutiveCountsInColumns;
+}
+
+
+
+function updateNumberColumns(matrixKey) {
+  const countsInColumns = countColumnCells(matrixKey);
+
+  const numbersContainer = document.querySelector('.numbers-top .sector-top');
+
+  countsInColumns.forEach((columnCounts, columnIndex) => {
+    const columnElement = numbersContainer.querySelector(`.row--number:nth-child(${columnIndex + 1})`);
+
+    if (columnElement) {
+      const cellElements = columnElement.querySelectorAll('.cell--number');
+
+      columnCounts.forEach((count, countIndex) => {
+        const cellElement = cellElements[cellElements.length - countIndex - 1];
+
+        if (cellElement) {
+          cellElement.textContent = count;
+        }
+      });
+    }
+  });
+}
+
+// updateNumberColumns('inspiration');
