@@ -51,7 +51,11 @@ let currentLevel = "beginner";
 let currentKey = "inspiration";
 let checkedMatrix = levelsMatrixes[currentLevel][currentKey];
 let isEndGame = false;
-
+let timer;
+let startTime;
+let elapsedTime = 0;
+let elapsedSeconds = 0;
+let timerRunning = false;
 //__________________выбрать случайную картинку из объекта с матрицами______________________________________________
 
 function getRandomKey(matrixes) {
@@ -217,9 +221,46 @@ function createHTML() {
 
 createHTML();
 
+
+// ______________________________TIMER________________________________________________________
+
+
+
+function padNumber(num) {
+  return num < 10 ? "0" + num : num;
+}
+
+function updateTimer() {
+  const currentTime = Date.now();
+  const deltaTime = currentTime - startTime;
+  const seconds = Math.floor(deltaTime / 1000);
+  const minutes = Math.floor(seconds / 60);
+
+  const formattedTime = padNumber(minutes) + ":" + padNumber(seconds % 60);
+  document.querySelector(".timer").textContent = formattedTime;
+}
+
+function startTimer() {
+  if (!timerRunning) {
+    startTime = Date.now() - elapsedTime;
+    timer = setInterval(updateTimer, 1000);
+    timerRunning = true;
+  }
+}
+
+function stopTimer() {
+  clearInterval(timer);
+  elapsedTime = Date.now() - startTime;
+  elapsedSeconds = Math.floor(elapsedTime / 1000);
+  timerRunning = false;
+  document.querySelector(".timer").textContent = '00:00';
+  elapsedTime = 0;
+}
+
 //________________________________shadeCell_____________________________________________
 
 function shadeCell(event, popupMenu, tittle) {
+  startTimer();
   event.target.classList.toggle("cell-shaded");
 
   const shadedCells = document.querySelectorAll(".cell-shaded");
@@ -233,7 +274,8 @@ function shadeCell(event, popupMenu, tittle) {
     shadedCells.length === shadedCorrectCells.length &&
     shadedCells.length === correctCells.length
   ) {
-    tittle.textContent = "Great! You have solved the nonogram in ## seconds!";
+    stopTimer();
+    tittle.textContent = `Great! You have solved the nonogram in ${elapsedSeconds} seconds!`;
     popupMenu.innerHTML = `
     <li class="popup__menu-item menu-record-table">Record table</li>
     <li class="popup__menu-item menu-random-picture">Choose a random picture</li>`;
@@ -312,7 +354,6 @@ function updatePicturesList(popupMenu) {
   popupMenu.innerHTML += `
   <li class="popup__menu-item menu-random-picture">Choose a random picture</li>
   <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
-
 }
 
 // ______________________________________________________________________________________________________
@@ -402,7 +443,6 @@ function manageModal(event) {
 
     updatePicturesList(popupMenu);
     popup.classList.remove("open");
-
   }
   if (event.target.closest(".cell--picture") && !isEndGame) {
     shadeCell(event, popupMenu, tittle);
