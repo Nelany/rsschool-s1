@@ -262,6 +262,7 @@ function stopTimer() {
 function shadeCell(event, popupMenu, tittle) {
   startTimer();
   event.target.classList.toggle("cell-shaded");
+  event.target.classList.remove("crossed-out");
 
   const shadedCells = document.querySelectorAll(".cell-shaded");
   const shadedCorrectCells = document.querySelectorAll(".correct.cell-shaded");
@@ -300,6 +301,7 @@ function resetNumbers() {
 //___________________________applyMatrixToCells_____________________________________________________________
 
 function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
+  stopTimer();
   isEndGame = false;
   const rows = document.querySelectorAll(rowSelector);
 
@@ -328,11 +330,11 @@ function resetGame(isDeleteCorrect) {
   const cells = document.querySelectorAll(".cell--picture");
   if (isDeleteCorrect) {
     cells.forEach((cell) => {
-      cell.classList.remove("cell-shaded", "correct");
+      cell.classList.remove("cell-shaded", "crossed-out", "correct");
     });
   } else {
     cells.forEach((cell) => {
-      cell.classList.remove("cell-shaded");
+      cell.classList.remove("cell-shaded", "crossed-out");
     });
   }
   isEndGame = false;
@@ -357,10 +359,10 @@ function updatePicturesList(popupMenu) {
 }
 
 // ______________________________________________________________________________________________________
-//___________________________________manageModal_________________________________________________________
+//___________________________________manageClick_________________________________________________________
 // ______________________________________________________________________________________________________
 
-function manageModal(event) {
+function manageClick(event) {
   console.log(event.target);
   const tittle = document.querySelector(".popup__tittle");
   const popupMenu = document.querySelector(".popup__menu");
@@ -458,9 +460,26 @@ function manageModal(event) {
   }
 }
 
-body.addEventListener("click", manageModal);
+body.addEventListener("click", manageClick);
 
 // ____________________________________________________________________________________________
+// ____________________________________________________________________________________________
+
+// ________________________manageRightClick__________________________________________________
+
+
+
+function manageRightClick(event){
+  event.preventDefault();
+  if (event.target.closest(".cell--picture") && !event.target.closest(".cell-shaded")){
+    event.target.classList.toggle('crossed-out');
+  }
+}
+
+body.addEventListener('contextmenu', manageRightClick);
+
+
+
 
 // _________функции для подсчета и заполнения цифр-подсказок:______________________________________
 
