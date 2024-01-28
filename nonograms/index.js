@@ -56,6 +56,8 @@ let startTime;
 let elapsedTime = 0;
 let elapsedSeconds = 0;
 let timerRunning = false;
+let savedTime = 0;
+let currentTheme = "medium";
 //__________________выбрать случайную картинку из объекта с матрицами______________________________________________
 
 function getRandomKey(matrixes) {
@@ -221,10 +223,7 @@ function createHTML() {
 
 createHTML();
 
-
 // ______________________________TIMER________________________________________________________
-
-
 
 function padNumber(num) {
   return num < 10 ? "0" + num : num;
@@ -242,9 +241,18 @@ function updateTimer() {
 
 function startTimer() {
   if (!timerRunning) {
-    startTime = Date.now() - elapsedTime;
-    timer = setInterval(updateTimer, 1000);
-    timerRunning = true;
+    if (savedTime > 0) {
+      startTime = Date.now() - elapsedTime - savedTime;
+      console.log(Date.now() + "HHHHHHHH" + startTime + "WWWWWWWWWWW");
+      updateTimer();
+      timer = setInterval(updateTimer, 1000);
+      timerRunning = true;
+      savedTime = 0;
+    } else {
+      startTime = Date.now() - elapsedTime;
+      timer = setInterval(updateTimer, 1000);
+      timerRunning = true;
+    }
   }
 }
 
@@ -253,7 +261,7 @@ function stopTimer() {
   elapsedTime = Date.now() - startTime;
   elapsedSeconds = Math.floor(elapsedTime / 1000);
   timerRunning = false;
-  document.querySelector(".timer").textContent = '00:00';
+  document.querySelector(".timer").textContent = "00:00";
   elapsedTime = 0;
 }
 
@@ -267,9 +275,6 @@ function shadeCell(event, popupMenu, tittle) {
   const shadedCells = document.querySelectorAll(".cell-shaded");
   const shadedCorrectCells = document.querySelectorAll(".correct.cell-shaded");
   const correctCells = document.querySelectorAll(".correct");
-  console.log(shadedCorrectCells.length);
-  console.log(correctCells.length);
-  console.log(shadedCells.length);
 
   if (
     shadedCells.length === shadedCorrectCells.length &&
@@ -301,6 +306,7 @@ function resetNumbers() {
 //___________________________applyMatrixToCells_____________________________________________________________
 
 function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
+  checkedMatrix = levelsMatrixes[currentLevel][currentKey];
   stopTimer();
   isEndGame = false;
   const rows = document.querySelectorAll(rowSelector);
@@ -340,8 +346,7 @@ function resetGame(isDeleteCorrect) {
   isEndGame = false;
 }
 
-//___________________________________updatePicturesList_________________________________________________________
-
+//___________________________________updatePicturesList__________________________________
 function updatePicturesList(popupMenu) {
   let objMatrixes = levelsMatrixes[currentLevel];
   const keys = Object.keys(objMatrixes);
@@ -356,6 +361,27 @@ function updatePicturesList(popupMenu) {
   popupMenu.innerHTML += `
   <li class="popup__menu-item menu-random-picture">Choose a random picture</li>
   <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
+}
+
+
+
+// _______________updateThemesList_________________________________________________
+
+function updateThemesList(tittle, popupMenu) {
+  tittle.textContent = "Themes:";
+  popupMenu.innerHTML = `
+  <li class="popup__menu-item theme light-theme">Light theme</li>
+  <li class="popup__menu-item theme medium-theme">Medium theme</li>
+  <li class="popup__menu-item theme dark-theme">Dark theme</li>
+  <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
+  const themes = document.querySelectorAll(".theme");
+  themes.forEach((theme) => {
+    if (theme.classList.contains(currentTheme + "-theme")) {
+      theme.classList.add("checked");
+    } else {
+      theme.classList.remove("checked");
+    }
+  });
 }
 
 // ______________________________________________________________________________________________________
@@ -385,27 +411,28 @@ function manageClick(event) {
     updatePicturesList(popupMenu);
   }
   if (event.target.closest(".menu-themes")) {
-    tittle.textContent = "Themes:";
-    popupMenu.innerHTML = `
-  <li class="popup__menu-item light-theme">Light theme</li>
-  <li class="popup__menu-item medium-theme">Medium theme</li>
-  <li class="popup__menu-item dark-theme">Dark theme</li>
-  <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
+    updateThemesList(tittle, popupMenu);
   }
   if (event.target.closest(".light-theme")) {
     body.classList.add("light");
     body.classList.remove("medium");
     body.classList.remove("dark");
+    currentTheme = "light";
+    updateThemesList(tittle, popupMenu);
   }
   if (event.target.closest(".medium-theme")) {
     body.classList.add("medium");
     body.classList.remove("light");
     body.classList.remove("dark");
+    currentTheme = "medium";
+    updateThemesList(tittle, popupMenu);
   }
   if (event.target.closest(".dark-theme")) {
     body.classList.add("dark");
     body.classList.remove("medium");
     body.classList.remove("light");
+    currentTheme = "dark";
+    updateThemesList(tittle, popupMenu);
   }
   if (event.target.closest(".level-button")) {
     tittle.textContent = "Levels:";
@@ -452,11 +479,22 @@ function manageClick(event) {
   if (event.target.closest(".menu-random-picture")) {
     resetGame(true);
     currentKey = getRandomKey(levelsMatrixes[currentLevel]);
-    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
     applyMatrixToCells(checkedMatrix, ".row--picture", false);
 
     updatePicturesList(popupMenu);
     popup.classList.remove("open");
+  }
+  if (event.target.closest(".save")) {
+    saveToLocalStorage();
+  }
+  if (event.target.closest(".continue")) {
+    resetGame(true);
+    loadFromLocalStorage();
+    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    applyMatrixToCells(checkedMatrix, ".row--picture", false);
+    timerRunning = false;
+    startTimer();
   }
 }
 
@@ -467,19 +505,17 @@ body.addEventListener("click", manageClick);
 
 // ________________________manageRightClick__________________________________________________
 
-
-
-function manageRightClick(event){
+function manageRightClick(event) {
   event.preventDefault();
-  if (event.target.closest(".cell--picture") && !event.target.closest(".cell-shaded")){
-    event.target.classList.toggle('crossed-out');
+  if (
+    event.target.closest(".cell--picture") &&
+    !event.target.closest(".cell-shaded")
+  ) {
+    event.target.classList.toggle("crossed-out");
   }
 }
 
-body.addEventListener('contextmenu', manageRightClick);
-
-
-
+body.addEventListener("contextmenu", manageRightClick);
 
 // _________функции для подсчета и заполнения цифр-подсказок:______________________________________
 
@@ -600,3 +636,58 @@ function updateNumberColumns(matrixKey) {
   });
 }
 // ____________________________________________________________________________________________
+
+// ___________________________saveToLocalStorage__________________________________________________
+
+function saveToLocalStorage() {
+  localStorage.setItem("currentLevel", currentLevel);
+  localStorage.setItem("currentKey", currentKey);
+  localStorage.setItem("isEndGame", isEndGame.toString());
+  // localStorage.setItem("timerRunning", timerRunning.toString());
+  localStorage.setItem("savedTime", (Date.now() - startTime).toString());
+  localStorage.setItem("currentTheme", currentTheme);
+
+  saveCellClasses();
+}
+
+// ___________________________loadFromLocalStorage__________________________________________________
+
+function loadFromLocalStorage() {
+  currentLevel = localStorage.getItem("currentLevel") || currentLevel;
+  currentKey = localStorage.getItem("currentKey") || currentKey;
+  isEndGame = JSON.parse(localStorage.getItem("isEndGame")) ?? false;
+  // timerRunning = JSON.parse(localStorage.getItem("timerRunning")) ?? false;
+  savedTime = parseInt(localStorage.getItem("savedTime"), 10) || 0;
+  currentTheme = localStorage.getItem("currentTheme") || currentLevel;
+
+  body.classList.remove("light");
+  body.classList.remove("medium");
+  body.classList.remove("dark");
+  body.classList.add(currentTheme);
+
+  restoreCellClasses();
+}
+
+// ___________________________saveCellClasses to LocalStorage_______________________________________
+
+function saveCellClasses() {
+  const cells = document.querySelectorAll(".cell--picture");
+  const cellClasses = Array.from(cells).map((cell) => cell.className);
+  localStorage.setItem("cellClasses", JSON.stringify(cellClasses));
+}
+
+// ___________________________restoreCellClasses from LocalStorage_______________________________________
+
+function restoreCellClasses() {
+  timerRunning = false;
+  const storedCellClasses = localStorage.getItem("cellClasses");
+
+  if (storedCellClasses) {
+    const cellClasses = JSON.parse(storedCellClasses);
+    const cells = document.querySelectorAll(".cell--picture");
+
+    cells.forEach((cell, index) => {
+      cell.className = cellClasses[index];
+    });
+  }
+}
