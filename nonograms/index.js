@@ -48,7 +48,7 @@ const levelsMatrixes = {
 const body = document.querySelector("body");
 let popup;
 let currentLevel = "beginner";
-let currentKey = "inspiration";
+let currentKey = "mood";
 let checkedMatrix = levelsMatrixes[currentLevel][currentKey];
 let isEndGame = false;
 let timer;
