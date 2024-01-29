@@ -58,6 +58,9 @@ let elapsedSeconds = 0;
 let timerRunning = false;
 let savedTime = 0;
 let currentTheme = "medium";
+let audio1;
+let audio2;
+let audio3;
 //__________________выбрать случайную картинку из объекта с матрицами______________________________________________
 
 function getRandomKey(matrixes) {
@@ -72,6 +75,9 @@ function getRandomKey(matrixes) {
 function createHTML() {
   isEndGame = false;
   body.innerHTML = `
+      <audio class="audio1" src="./audio1.mp3"></audio>
+      <audio class="audio2" src="./audio2.mp3"></audio>
+      <audio class="audio3" src="./audio3.mp3"></audio>
       <div class="content">
         <header class="header">
           <h2 class="button level-button">Level: <span class="level">beginner</span></h2>
@@ -219,9 +225,21 @@ function createHTML() {
 
   body.classList.add("body", "medium");
   popup = document.querySelector(".popup");
+  audio1 = document.querySelector(".audio1");
+  audio2 = document.querySelector(".audio2");
+  audio3 = document.querySelector(".audio3");
 }
 
 createHTML();
+
+// ______________________________playAudio________________________________________________________
+
+function playAudio(audio) {
+  if (audio.readyState > 1) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
 
 // ______________________________TIMER________________________________________________________
 
@@ -268,6 +286,7 @@ function stopTimer() {
 //________________________________shadeCell_____________________________________________
 
 function shadeCell(event, popupMenu, tittle) {
+  playAudio(audio1);
   startTimer();
   event.target.classList.toggle("cell-shaded");
   event.target.classList.remove("crossed-out");
@@ -363,8 +382,6 @@ function updatePicturesList(popupMenu) {
   <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
 }
 
-
-
 // _______________updateThemesList_________________________________________________
 
 function updateThemesList(tittle, popupMenu) {
@@ -384,6 +401,7 @@ function updateThemesList(tittle, popupMenu) {
   });
 }
 
+// ______________________________________________________________________________________________________
 // ______________________________________________________________________________________________________
 //___________________________________manageClick_________________________________________________________
 // ______________________________________________________________________________________________________
@@ -496,6 +514,13 @@ function manageClick(event) {
     timerRunning = false;
     startTimer();
   }
+  if (
+    event.target.closest(".button") ||
+    event.target.closest(".popup__menu-item") ||
+    event.target.closest(".close-menu")
+  ) {
+    playAudio(audio3);
+  }
 }
 
 body.addEventListener("click", manageClick);
@@ -511,6 +536,7 @@ function manageRightClick(event) {
     event.target.closest(".cell--picture") &&
     !event.target.closest(".cell-shaded")
   ) {
+    playAudio(audio2);
     event.target.classList.toggle("crossed-out");
   }
 }
