@@ -62,6 +62,7 @@ let audio1;
 let audio2;
 let audio3;
 let audio4;
+let audio5;
 //__________________выбрать случайную картинку из объекта с матрицами______________________________________________
 
 function getRandomKey(matrixes) {
@@ -80,6 +81,7 @@ function createHTML() {
       <audio class="audio2" src="./audio2.mp3"></audio>
       <audio class="audio3" src="./audio3.mp3"></audio>
       <audio class="audio4" src="./audio4.mp3"></audio>
+      <audio class="audio5" src="./audio5.mp3"></audio>
       <div class="content">
         <header class="header">
           <h2 class="button level-button">Level: <span class="level">beginner</span></h2>
@@ -231,6 +233,8 @@ function createHTML() {
   audio2 = document.querySelector(".audio2");
   audio3 = document.querySelector(".audio3");
   audio4 = document.querySelector(".audio4");
+  audio5 = document.querySelector(".audio5");
+
 }
 
 createHTML();
@@ -264,7 +268,6 @@ function startTimer() {
   if (!timerRunning) {
     if (savedTime > 0) {
       startTime = Date.now() - elapsedTime - savedTime;
-      console.log(Date.now() + "HHHHHHHH" + startTime + "WWWWWWWWWWW");
       updateTimer();
       timer = setInterval(updateTimer, 1000);
       timerRunning = true;
@@ -486,14 +489,10 @@ function manageClick(event) {
   }
   if (event.target.closest(".autocomplete")) {
     resetGame(false);
-    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
     applyMatrixToCells(".row--picture", true);
   }
   if (event.target.closest(".popup__menu-picture")) {
-    // resetGame(true);
-
     currentKey = event.target.closest(".popup__menu-picture").textContent;
-    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
     applyMatrixToCells(".row--picture", false);
 
     updatePicturesList(popupMenu);
@@ -503,21 +502,23 @@ function manageClick(event) {
     shadeCell(event, popupMenu, tittle);
   }
   if (event.target.closest(".menu-random-picture")) {
-    // resetGame(true);
     currentKey = getRandomKey(levelsMatrixes[currentLevel]);
-    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
     console.log(currentKey + "WWWW");
     applyMatrixToCells(".row--picture", false);
 
     updatePicturesList(popupMenu);
     popup.classList.remove("open");
   }
-  if (event.target.closest(".save")) {
+  if (event.target.closest(".save") && timerRunning) {
+    playAudio(audio5);
     saveToLocalStorage();
+    event.target.textContent = "Done!";
+    setTimeout(function(){
+      event.target.textContent = "Save Game";
+    }, 2000);
   }
   if (event.target.closest(".continue")) {
-    // resetGame(true);
-    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+
     applyMatrixToCells(".row--picture", false);
     loadFromLocalStorage();
     timerRunning = false;
