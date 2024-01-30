@@ -565,9 +565,9 @@ function manageClick(event) {
     startTimer();
   }
   if (
-    event.target.closest(".button") ||
-    event.target.closest(".popup__menu-item") ||
-    event.target.closest(".close-menu")
+    event.target.classList.contains("button") ||
+    event.target.classList.contains("popup__menu-item") ||
+    event.target.classList.contains("close-menu")
   ) {
     playAudio(audio3);
   }
