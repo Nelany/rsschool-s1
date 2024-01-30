@@ -61,6 +61,7 @@ let currentTheme = "medium";
 let audio1;
 let audio2;
 let audio3;
+let audio4;
 //__________________выбрать случайную картинку из объекта с матрицами______________________________________________
 
 function getRandomKey(matrixes) {
@@ -78,6 +79,7 @@ function createHTML() {
       <audio class="audio1" src="./audio1.mp3"></audio>
       <audio class="audio2" src="./audio2.mp3"></audio>
       <audio class="audio3" src="./audio3.mp3"></audio>
+      <audio class="audio4" src="./audio4.mp3"></audio>
       <div class="content">
         <header class="header">
           <h2 class="button level-button">Level: <span class="level">beginner</span></h2>
@@ -228,6 +230,7 @@ function createHTML() {
   audio1 = document.querySelector(".audio1");
   audio2 = document.querySelector(".audio2");
   audio3 = document.querySelector(".audio3");
+  audio4 = document.querySelector(".audio4");
 }
 
 createHTML();
@@ -300,6 +303,7 @@ function shadeCell(event, popupMenu, tittle) {
     shadedCells.length === correctCells.length
   ) {
     stopTimer();
+    playAudio(audio4);
     tittle.textContent = `Great! You have solved the nonogram in ${elapsedSeconds} seconds!`;
     popupMenu.innerHTML = `
     <li class="popup__menu-item menu-record-table">Record table</li>
