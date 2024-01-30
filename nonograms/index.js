@@ -518,8 +518,8 @@ function manageClick(event) {
     }, 2000);
   }
   if (event.target.closest(".continue")) {
-
-    applyMatrixToCells(".row--picture", false);
+    loadFromLocalStorage();
+    applyMatrixToCells(isContinue, ".row--picture", false);
     loadFromLocalStorage();
     timerRunning = false;
     startTimer();
