@@ -67,8 +67,12 @@ let audio5;
 
 function getRandomKey(matrixes) {
   const keys = Object.keys(matrixes);
-  const randomIndex = Math.floor(Math.random() * keys.length);
-  return keys[randomIndex];
+  const randomIndex = Math.floor(Math.random() * keys.length - 1);
+  if (keys[randomIndex] === currentKey) {
+    getRandomKey(matrixes);
+  } else {
+    return keys[randomIndex];
+  }
 }
 
 //_________________________________________________________________________________________________________
@@ -234,7 +238,6 @@ function createHTML() {
   audio3 = document.querySelector(".audio3");
   audio4 = document.querySelector(".audio4");
   audio5 = document.querySelector(".audio5");
-
 }
 
 createHTML();
@@ -346,8 +349,10 @@ function applyMatrixToCells(rowSelector, isAutocomplete) {
       if (checkedMatrix[i][j] === 1) {
         cells[j].classList.add("correct");
         if (isAutocomplete) {
-          cells[j].classList.add("cell-shaded");
-          isEndGame = true;
+          setTimeout(() => {
+            cells[j].classList.add("cell-shaded");
+            isEndGame = true;
+          }, 500 * Math.sqrt(j * i));
         }
       }
     }
@@ -513,7 +518,7 @@ function manageClick(event) {
     playAudio(audio5);
     saveToLocalStorage();
     event.target.textContent = "Done!";
-    setTimeout(function(){
+    setTimeout(function () {
       event.target.textContent = "Save Game";
     }, 2000);
   }
