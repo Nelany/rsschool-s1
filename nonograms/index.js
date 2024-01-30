@@ -328,22 +328,23 @@ function resetNumbers() {
 
 //___________________________applyMatrixToCells_____________________________________________________________
 
-function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
-  // resetGame(true);
+function applyMatrixToCells(rowSelector, isAutocomplete) {
+  resetGame(true);
   console.log(currentKey);
-  // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+  checkedMatrix = levelsMatrixes[currentLevel][currentKey];
   stopTimer();
   isEndGame = false;
   const rows = document.querySelectorAll(rowSelector);
 
-  for (let i = 0; i < matrix.length; i++) {
+  for (let i = 0; i < checkedMatrix.length; i++) {
     let cells = Array.from(rows[i].querySelectorAll(".cell--picture"));
 
-    for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j] === 1) {
+    for (let j = 0; j < checkedMatrix[i].length; j++) {
+      if (checkedMatrix[i][j] === 1) {
         cells[j].classList.add("correct");
         if (isAutocomplete) {
           cells[j].classList.add("cell-shaded");
+          isEndGame = true;
         }
       }
     }
@@ -353,11 +354,12 @@ function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
   updateNumberRows(checkedMatrix);
 }
 
-applyMatrixToCells(checkedMatrix, ".row--picture", false);
+applyMatrixToCells(".row--picture", false);
 
 //___________________________________resetGame_________________________________________________________
 
 function resetGame(isDeleteCorrect) {
+  stopTimer();
   const cells = document.querySelectorAll(".cell--picture");
   if (isDeleteCorrect) {
     cells.forEach((cell) => {
@@ -484,15 +486,15 @@ function manageClick(event) {
   }
   if (event.target.closest(".autocomplete")) {
     resetGame(false);
-    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
-    applyMatrixToCells(checkedMatrix, ".row--picture", true);
+    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    applyMatrixToCells(".row--picture", true);
   }
   if (event.target.closest(".popup__menu-picture")) {
-    resetGame(true);
+    // resetGame(true);
 
     currentKey = event.target.closest(".popup__menu-picture").textContent;
-    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
-    applyMatrixToCells(checkedMatrix, ".row--picture", false);
+    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    applyMatrixToCells(".row--picture", false);
 
     updatePicturesList(popupMenu);
     popup.classList.remove("open");
@@ -501,11 +503,11 @@ function manageClick(event) {
     shadeCell(event, popupMenu, tittle);
   }
   if (event.target.closest(".menu-random-picture")) {
-    resetGame(true);
+    // resetGame(true);
     currentKey = getRandomKey(levelsMatrixes[currentLevel]);
-    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
     console.log(currentKey + "WWWW");
-    applyMatrixToCells(checkedMatrix, ".row--picture", false);
+    applyMatrixToCells(".row--picture", false);
 
     updatePicturesList(popupMenu);
     popup.classList.remove("open");
@@ -514,9 +516,10 @@ function manageClick(event) {
     saveToLocalStorage();
   }
   if (event.target.closest(".continue")) {
-    resetGame(true);
+    // resetGame(true);
+    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    applyMatrixToCells(".row--picture", false);
     loadFromLocalStorage();
-    applyMatrixToCells(checkedMatrix, ".row--picture", false);
     timerRunning = false;
     startTimer();
   }
