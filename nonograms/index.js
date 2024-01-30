@@ -519,7 +519,7 @@ function manageClick(event) {
   }
   if (event.target.closest(".continue")) {
     loadFromLocalStorage();
-    applyMatrixToCells(isContinue, ".row--picture", false);
+    applyMatrixToCells(".row--picture", false);
     loadFromLocalStorage();
     timerRunning = false;
     startTimer();
