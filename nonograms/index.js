@@ -329,7 +329,9 @@ function resetNumbers() {
 //___________________________applyMatrixToCells_____________________________________________________________
 
 function applyMatrixToCells(matrix, rowSelector, isAutocomplete) {
-  checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+  // resetGame(true);
+  console.log(currentKey);
+  // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
   stopTimer();
   isEndGame = false;
   const rows = document.querySelectorAll(rowSelector);
@@ -501,7 +503,8 @@ function manageClick(event) {
   if (event.target.closest(".menu-random-picture")) {
     resetGame(true);
     currentKey = getRandomKey(levelsMatrixes[currentLevel]);
-    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+    console.log(currentKey + "WWWW");
     applyMatrixToCells(checkedMatrix, ".row--picture", false);
 
     updatePicturesList(popupMenu);
@@ -513,7 +516,6 @@ function manageClick(event) {
   if (event.target.closest(".continue")) {
     resetGame(true);
     loadFromLocalStorage();
-    // checkedMatrix = levelsMatrixes[currentLevel][currentKey];
     applyMatrixToCells(checkedMatrix, ".row--picture", false);
     timerRunning = false;
     startTimer();
