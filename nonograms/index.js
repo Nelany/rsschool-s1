@@ -69,10 +69,9 @@ function getRandomKey(matrixes) {
   const keys = Object.keys(matrixes);
   const randomIndex = Math.floor(Math.random() * keys.length);
   if (keys[randomIndex] === currentKey) {
-    getRandomKey(matrixes);
-  } else {
-    return keys[randomIndex];
+    return getRandomKey(matrixes);
   }
+  return keys[randomIndex];
 }
 
 //_________________________________________________________________________________________________________
