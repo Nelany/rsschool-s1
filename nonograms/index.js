@@ -67,7 +67,7 @@ let audio5;
 
 function getRandomKey(matrixes) {
   const keys = Object.keys(matrixes);
-  const randomIndex = Math.floor(Math.random() * keys.length - 1);
+  const randomIndex = Math.floor(Math.random() * keys.length);
   if (keys[randomIndex] === currentKey) {
     getRandomKey(matrixes);
   } else {
@@ -292,6 +292,36 @@ function stopTimer() {
   elapsedTime = 0;
 }
 
+//________________________________рекорды_____________________________________________
+
+function saveRecords(currentKey, elapsedSeconds) {
+  const existingRecords = JSON.parse(localStorage.getItem("records")) || [];
+
+  existingRecords.push({ currentKey, elapsedSeconds });
+  const latestRecords = existingRecords.slice(-5);
+
+  localStorage.setItem("records", JSON.stringify(latestRecords));
+}
+
+function showRecordsInMenu(tittle, popupMenu) {
+  tittle.textContent = "Scores:";
+  const records = JSON.parse(localStorage.getItem("records")) || [];
+  const sortedRecords = records.sort(
+    (a, b) => a.elapsedSeconds - b.elapsedSeconds
+  );
+
+  const listItems = sortedRecords
+    .map(
+      (record) =>
+        `<li class="popup__menu-item menu-records">${record.currentKey}: ${record.elapsedSeconds}</li>`
+    )
+    .join("");
+
+  popupMenu.innerHTML = listItems;
+  popupMenu.innerHTML += `
+  <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
+}
+
 //________________________________shadeCell_____________________________________________
 
 function shadeCell(event, popupMenu, tittle) {
@@ -310,9 +340,10 @@ function shadeCell(event, popupMenu, tittle) {
   ) {
     stopTimer();
     playAudio(audio4);
+    saveRecords(currentKey, elapsedSeconds);
     tittle.textContent = `Great! You have solved the nonogram in ${elapsedSeconds} seconds!`;
     popupMenu.innerHTML = `
-    <li class="popup__menu-item menu-record-table">Record table</li>
+    <li class="popup__menu-item menu-record-table">Score table</li>
     <li class="popup__menu-item menu-random-picture">Choose a random picture</li>`;
 
     popupMenu.innerHTML +=
@@ -432,7 +463,8 @@ function manageClick(event) {
     tittle.textContent = "Menu";
     popupMenu.innerHTML = `
   <li class="popup__menu-item menu-pictures">Picture</li>
-  <li class="popup__menu-item menu-themes">Theme</li>`;
+  <li class="popup__menu-item menu-themes">Theme</li>
+  <li class="popup__menu-item menu-record-table">Score table</li>`;
 
     popup.classList.add("open");
   }
@@ -467,6 +499,9 @@ function manageClick(event) {
     body.classList.remove("light");
     currentTheme = "dark";
     updateThemesList(tittle, popupMenu);
+  }
+  if (event.target.closest(".menu-record-table")) {
+    showRecordsInMenu(tittle, popupMenu);
   }
   if (event.target.closest(".level-button")) {
     tittle.textContent = "Levels:";
