@@ -36,8 +36,155 @@ const beginnerMatrixes = {
   ],
 };
 
-const intermediateMatrixes = {};
-const advancedMatrixes = {};
+const intermediateMatrixes = {
+  mood: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+  ],
+  life: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+  ],
+  beauty: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+  ],
+  money: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+  ],
+  inspiration: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+  ],
+};
+const advancedMatrixes = {
+  mood: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ],
+  life: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ],
+  beauty: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ],
+  money: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ],
+  inspiration: [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ],
+};
 
 const levelsMatrixes = {
   beginner: beginnerMatrixes,
@@ -47,7 +194,7 @@ const levelsMatrixes = {
 
 const body = document.querySelector("body");
 let popup;
-let currentLevel = "beginner";
+let currentLevel = "intermediate";
 let currentKey = "mood";
 let checkedMatrix = levelsMatrixes[currentLevel][currentKey];
 let isEndGame = false;
@@ -63,6 +210,7 @@ let audio2;
 let audio3;
 let audio4;
 let audio5;
+let levelOnScreen;
 //__________________выбрать случайную картинку из объекта с матрицами______________________________________________
 
 function getRandomKey(matrixes) {
@@ -72,6 +220,82 @@ function getRandomKey(matrixes) {
     return getRandomKey(matrixes);
   }
   return keys[randomIndex];
+}
+
+//__________________generateHTMLFromMatrix______________________________________________
+
+function generateHTMLFromMatrix() {
+  checkedMatrix = levelsMatrixes[currentLevel][currentKey];
+  const main = document.querySelector(".main");
+  main.innerHTML = "";
+  const mainContainer = document.createElement("div");
+  mainContainer.classList.add("main-container");
+
+  const numbersLeftContainer = document.createElement("div");
+  numbersLeftContainer.classList.add("numbers-left");
+  const leftSector = document.createElement("div");
+  leftSector.classList.add("sector");
+
+  const fieldContainer = document.createElement("div");
+  fieldContainer.classList.add("field-container");
+
+  const numbersTop = document.createElement("div");
+  numbersTop.classList.add("numbers-top");
+
+  const topSector = document.createElement("div");
+  topSector.classList.add("sector", "sector-top");
+
+  checkedMatrix.forEach((row, rowIndex) => {
+    const numberRow = document.createElement("div");
+    numberRow.classList.add("row", "row--number");
+
+    const numberRowVertical = document.createElement("div");
+    numberRowVertical.classList.add("row", "row-vertical", "row--number");
+
+    row.forEach((cell, cellIndex) => {
+      const numberCell = document.createElement("div");
+      numberCell.classList.add("cell", "cell--number");
+      if (cellIndex < Math.floor((row.length + 1) / 2)) {
+        numberRow.appendChild(numberCell);
+        numberRowVertical.appendChild(numberCell.cloneNode());
+      }
+    });
+
+    leftSector.appendChild(numberRow);
+    topSector.appendChild(numberRowVertical);
+  });
+
+  numbersLeftContainer.appendChild(leftSector);
+  numbersTop.appendChild(topSector);
+  fieldContainer.appendChild(numbersTop);
+
+  const field = document.createElement("div");
+  field.classList.add("field");
+
+  const square = document.createElement("div");
+  square.classList.add("square");
+
+  checkedMatrix.forEach((row, rowIndex) => {
+    const pictureRow = document.createElement("div");
+    pictureRow.classList.add("row", "row--picture");
+
+    row.forEach((cell, cellIndex) => {
+      const pictureCell = document.createElement("div");
+      pictureCell.classList.add("cell", "cell--picture");
+      pictureRow.appendChild(pictureCell);
+    });
+
+    square.appendChild(pictureRow);
+  });
+
+  field.appendChild(square);
+  fieldContainer.appendChild(field);
+
+  mainContainer.appendChild(numbersLeftContainer);
+  mainContainer.appendChild(fieldContainer);
+
+  // return mainContainer;
+  main.appendChild(mainContainer);
 }
 
 //_________________________________________________________________________________________________________
@@ -87,125 +311,12 @@ function createHTML() {
       <audio class="audio5" src="./audio5.mp3"></audio>
       <div class="content">
         <header class="header">
-          <h2 class="button level-button">Level: <span class="level">beginner</span></h2>
+          <h2 class="button level-button">Level: <span class="level">${currentLevel}</span></h2>
           <h2 class="timer">00:00</h2>
           <h2 class="button menu-button">Menu</h2>
         </header>
 
         <main class="main">
-          <div class="numbers-left">
-            <div class="sector">
-              <div class="row row--number">
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number"></div>
-              </div>
-
-              <div class="row row--number">
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number">1</div>
-                <div class="cell cell--number">1</div>
-              </div>
-
-              <div class="row row--number">
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number"></div>
-              </div>
-
-              <div class="row row--number">
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number">1</div>
-                <div class="cell cell--number">1</div>
-              </div>
-
-              <div class="row row--number">
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number"></div>
-                <div class="cell cell--number">5</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="field-container">
-            <div class="numbers-top">
-              <div class="sector sector-top">
-                <div class="row row-vertical row--number">
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                </div>
-
-                <div class="row row-vertical row--number">
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                </div>
-
-                <div class="row row-vertical row--number">
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                </div>
-
-                <div class="row row-vertical row--number">
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                </div>
-
-                <div class="row row-vertical row--number">
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                  <div class="cell cell--number"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="square">
-                <div class="row row--picture">
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                </div>
-
-                <div class="row row--picture">
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                </div>
-
-                <div class="row row--picture">
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                </div>
-
-                <div class="row row--picture">
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                </div>
-
-                <div class="row row--picture">
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                  <div class="cell cell--picture"></div>
-                </div>
-              </div>
-            </div>
-          </div>
         </main>
 
         <footer class="footer">
@@ -230,13 +341,15 @@ function createHTML() {
         </div>
       </div>`;
 
-  body.classList.add("body", "medium");
+  body.classList.add("body", "medium", currentLevel);
   popup = document.querySelector(".popup");
   audio1 = document.querySelector(".audio1");
   audio2 = document.querySelector(".audio2");
   audio3 = document.querySelector(".audio3");
   audio4 = document.querySelector(".audio4");
   audio5 = document.querySelector(".audio5");
+  levelOnScreen = document.querySelector(".level");
+  generateHTMLFromMatrix();
 }
 
 createHTML();
@@ -289,6 +402,31 @@ function stopTimer() {
   timerRunning = false;
   document.querySelector(".timer").textContent = "00:00";
   elapsedTime = 0;
+}
+
+//__________________________выделить пятые ряды и колонки_________________________________________
+
+function drawFifth() {
+  const pictureRows = document.querySelectorAll(".row");
+
+  pictureRows.forEach((row, rowIndex) => {
+    if (!row.classList.contains("row-vertical") && (rowIndex + 1) % 5 === 0) {
+      row.classList.add("fifth-row");
+    }
+
+    if (row.classList.contains("row-vertical") && (rowIndex + 1) % 5 === 0) {
+      row.classList.add("fifth-column");
+    }
+
+    if (row.classList.contains("row--picture")){
+    const cells = row.querySelectorAll(".cell");
+
+    cells.forEach((cell, cellIndex) => {
+      if ((cellIndex + 1) % 5 === 0) {
+        cell.classList.add("fifth-column");
+      }
+    });}
+  });
 }
 
 //________________________________рекорды_____________________________________________
@@ -390,6 +528,7 @@ function applyMatrixToCells(rowSelector, isAutocomplete) {
   resetNumbers();
   updateNumberColumns(checkedMatrix);
   updateNumberRows(checkedMatrix);
+  drawFifth();
 }
 
 applyMatrixToCells(".row--picture", false);
@@ -428,6 +567,21 @@ function updatePicturesList(popupMenu) {
   <li class="popup__menu-item menu-button">BACK TO MAIN MENU</li>`;
 }
 
+//___________________________________updateLevelsList__________________________________
+function updateLevelsList(popupMenu) {
+  const levelButtons = document.querySelectorAll(".level-button");
+
+  levelButtons.forEach((button) => {
+    if (button.classList.contains(`level-${currentLevel}`)) {
+      button.classList.add("checked");
+    } else {
+      button.classList.remove("checked");
+    }
+  });
+
+  levelOnScreen.textContent = currentLevel;
+}
+
 // _______________updateThemesList_________________________________________________
 
 function updateThemesList(tittle, popupMenu) {
@@ -456,7 +610,6 @@ function manageClick(event) {
   console.log(event.target);
   const tittle = document.querySelector(".popup__tittle");
   const popupMenu = document.querySelector(".popup__menu");
-  const levelOnScreen = document.querySelector(".level");
 
   if (event.target.closest(".menu-button")) {
     tittle.textContent = "Menu";
@@ -505,24 +658,38 @@ function manageClick(event) {
   if (event.target.closest(".level-button")) {
     tittle.textContent = "Levels:";
     popupMenu.innerHTML = `
-<li class="popup__menu-item level-beginner">Beginner</li>
-<li class="popup__menu-item level-intermediate">Intermediate</li>
-<li class="popup__menu-item level-advanced">Advanced</li>`;
+<li class="popup__menu-item level-button level-beginner">Beginner</li>
+<li class="popup__menu-item level-button level-intermediate">Intermediate</li>
+<li class="popup__menu-item level-button level-advanced">Advanced</li>`;
+
+    updateLevelsList(popupMenu);
 
     popup.classList.add("open");
   }
   if (event.target.closest(".level-beginner")) {
-    levelOnScreen.textContent = "beginner";
     currentLevel = "beginner";
+    updateLevelsList(popupMenu);
+    generateHTMLFromMatrix();
+    applyMatrixToCells(".row--picture", false);
+    body.classList.add(currentLevel);
+    body.classList.remove("intermediate", "advanced");
   }
-  // if (event.target.closest(".level-intermediate")) {
-  //   levelOnScreen.textContent = "intermediate";
-  //   currentLevel = "intermediate";
-  // }
-  // if (event.target.closest(".level-advanced")) {
-  //   levelOnScreen.textContent = "advanced";
-  //   currentLevel = "advanced";
-  // }
+  if (event.target.closest(".level-intermediate")) {
+    currentLevel = "intermediate";
+    updateLevelsList(popupMenu);
+    generateHTMLFromMatrix();
+    applyMatrixToCells(".row--picture", false);
+    body.classList.add(currentLevel);
+    body.classList.remove("beginner", "advanced");
+  }
+  if (event.target.closest(".level-advanced")) {
+    currentLevel = "advanced";
+    updateLevelsList(popupMenu);
+    generateHTMLFromMatrix();
+    applyMatrixToCells(".row--picture", false);
+    body.classList.add(currentLevel);
+    body.classList.remove("intermediate", "beginner");
+  }
   if (event.target.closest(".reset")) {
     resetGame(false);
   }
@@ -542,7 +709,6 @@ function manageClick(event) {
   }
   if (event.target.closest(".menu-random-picture")) {
     currentKey = getRandomKey(levelsMatrixes[currentLevel]);
-    console.log(currentKey + "WWWW");
     applyMatrixToCells(".row--picture", false);
 
     updatePicturesList(popupMenu);
@@ -557,9 +723,13 @@ function manageClick(event) {
     }, 2000);
   }
   if (event.target.closest(".continue")) {
-    loadFromLocalStorage();
+    loadFromLocalStorage(popupMenu);
+    updateLevelsList(popupMenu);
+    generateHTMLFromMatrix();
     applyMatrixToCells(".row--picture", false);
-    loadFromLocalStorage();
+    loadFromLocalStorage(popupMenu);
+    body.classList.remove("beginner", "intermediate", "advanced");
+    body.classList.add(currentLevel);
     timerRunning = false;
     startTimer();
   }
@@ -731,7 +901,6 @@ function loadFromLocalStorage() {
   currentLevel = localStorage.getItem("currentLevel") || currentLevel;
   currentKey = localStorage.getItem("currentKey") || currentKey;
   isEndGame = JSON.parse(localStorage.getItem("isEndGame")) ?? false;
-  // timerRunning = JSON.parse(localStorage.getItem("timerRunning")) ?? false;
   savedTime = parseInt(localStorage.getItem("savedTime"), 10) || 0;
   currentTheme = localStorage.getItem("currentTheme") || currentLevel;
 
