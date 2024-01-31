@@ -88,6 +88,11 @@
   overflow: hidden;
 }
 
+.body.beginner .sector-top {
+  margin: 0 0 0 2px;
+
+}
+
 .body.light .sector {
   border: 2px solid rgb(124, 60, 0);
 }
@@ -108,12 +113,7 @@
 .field-container {
   display: flex;
   flex-direction: column;
-}
 
-.field {
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: content-box;
 }
 
 .square {
@@ -121,22 +121,29 @@
   height: 35vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
-  border-bottom: 3px;
 }
 
 .body.light .square {
   border: 2px solid rgb(124, 60, 0);
+  border-left: 4px solid rgb(124, 60, 0);
   border-right: 4px solid rgb(124, 60, 0);
+  border-bottom: 5px solid rgb(124, 60, 0);
 }
 
 .body.dark .square {
   border: 2px solid rgb(174, 186, 0);
-    border-bottom: 5px solid rgb(174, 186, 0);
+  border-left: 4px solid rgb(174, 186, 0);
+  border-bottom: 5px solid rgb(174, 186, 0);
+  border-right: 4px solid rgb(174, 186, 0);
+
 }
 
 .body.medium .square {
   border: 2px solid rgb(27, 20, 14);
+  border-left: 4px solid rgb(27, 20, 14);
   border-right: 4px solid rgb(27, 20, 14);
   border-bottom: 5px solid rgb(27, 20, 14);
 }
@@ -466,20 +473,12 @@
     height: 10vw;
   }
 
-  /* .body.intermediate .square {
-    width: 25vw;
-    height: 25vw;
-  } */
 
   .body.intermediate .cell {
     width: 5vw;
     height: 5vw;
   }
 
-  /* .body.advanced .square {
-    width: 16.66vw;
-    height: 16.66vw;
-  } */
 
   .body.advanced .cell {
     width: 3.33vw;
