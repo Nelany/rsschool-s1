@@ -47,7 +47,7 @@ const intermediateMatrixes = {
     [0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
     [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
     [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-    [0, 1, 1, 1, 1, 1,1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
   ],
   life: [
     [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
@@ -211,6 +211,7 @@ let audio3;
 let audio4;
 let audio5;
 let levelOnScreen;
+let sound = true;
 //__________________выбрать случайную картинку из объекта с матрицами______________________________________________
 
 function getRandomKey(matrixes) {
@@ -357,7 +358,7 @@ createHTML();
 // ______________________________playAudio________________________________________________________
 
 function playAudio(audio) {
-  if (audio.readyState > 1) {
+  if (sound && audio.readyState > 1) {
     audio.currentTime = 0;
     audio.play();
   }
@@ -418,21 +419,23 @@ function drawFifth() {
       row.classList.add("fifth-column");
     }
 
-    if (row.classList.contains("row--picture")){
-    const cells = row.querySelectorAll(".cell");
+    if (row.classList.contains("row--picture")) {
+      const cells = row.querySelectorAll(".cell");
 
-    cells.forEach((cell, cellIndex) => {
-      if ((cellIndex + 1) % 5 === 0) {
-        cell.classList.add("fifth-column");
-      }
-    });}
+      cells.forEach((cell, cellIndex) => {
+        if ((cellIndex + 1) % 5 === 0) {
+          cell.classList.add("fifth-column");
+        }
+      });
+    }
   });
 }
 
 //________________________________рекорды_____________________________________________
 
 function saveRecords(currentKey, elapsedSeconds) {
-  const existingRecords = JSON.parse(localStorage.getItem(`records${currentLevel}`)) || [];
+  const existingRecords =
+    JSON.parse(localStorage.getItem(`records${currentLevel}`)) || [];
 
   existingRecords.push({ currentKey, elapsedSeconds });
   const latestRecords = existingRecords.slice(-5);
@@ -442,7 +445,8 @@ function saveRecords(currentKey, elapsedSeconds) {
 
 function showRecordsInMenu(tittle, popupMenu) {
   tittle.textContent = "Scores:";
-  const records = JSON.parse(localStorage.getItem(`records${currentLevel}`)) || [];
+  const records =
+    JSON.parse(localStorage.getItem(`records${currentLevel}`)) || [];
   const sortedRecords = records.sort(
     (a, b) => a.elapsedSeconds - b.elapsedSeconds
   );
@@ -616,7 +620,12 @@ function manageClick(event) {
     popupMenu.innerHTML = `
   <li class="popup__menu-item menu-pictures">Picture</li>
   <li class="popup__menu-item menu-themes">Theme</li>
-  <li class="popup__menu-item menu-record-table">Score table</li>`;
+  <li class="popup__menu-item menu-record-table">Score table</li>
+  `;
+  if(sound){
+    popupMenu.innerHTML += `<li class="popup__menu-item menu-sound">Sound: OFF</li>`
+  }
+  else {popupMenu.innerHTML += `<li class="popup__menu-item menu-sound">Sound: ON</li>`}
 
     popup.classList.add("open");
   }
@@ -740,6 +749,15 @@ function manageClick(event) {
     event.target.classList.contains("level")
   ) {
     playAudio(audio3);
+  }
+  if (event.target.classList.contains("menu-sound")) {
+    if (sound) {
+      event.target.textContent = "Sound: ON";
+      sound = false;
+    } else {
+      event.target.textContent = "Sound: OFF";
+      sound = true;
+    }
   }
 }
 
@@ -892,6 +910,7 @@ function saveToLocalStorage() {
   // localStorage.setItem("timerRunning", timerRunning.toString());
   localStorage.setItem("savedTime", (Date.now() - startTime).toString());
   localStorage.setItem("currentTheme", currentTheme);
+  localStorage.setItem("sound", sound.toString());
 
   saveCellClasses();
 }
@@ -904,6 +923,7 @@ function loadFromLocalStorage() {
   isEndGame = JSON.parse(localStorage.getItem("isEndGame")) ?? false;
   savedTime = parseInt(localStorage.getItem("savedTime"), 10) || 0;
   currentTheme = localStorage.getItem("currentTheme") || currentLevel;
+  sound = JSON.parse(localStorage.getItem("sound"));
 
   body.classList.remove("light");
   body.classList.remove("medium");
