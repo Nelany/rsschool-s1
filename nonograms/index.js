@@ -450,7 +450,7 @@ function showRecordsInMenu(tittle, popupMenu) {
   const listItems = sortedRecords
     .map(
       (record) =>
-        `<li class="popup__menu-item menu-records">${record.currentKey}: ${record.elapsedSeconds}</li>`
+        `<li class="popup__menu-item menu-records">${record.currentKey}: ${record.elapsedSeconds} seconds</li>`
     )
     .join("");
 

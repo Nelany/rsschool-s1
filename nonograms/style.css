@@ -13,6 +13,10 @@
   font-size: 25px;
 }
 
+h2{
+  margin: 15px 0 15px 0;
+}
+
 .body.light {
   background-color: rgb(255, 255, 255);
   color: rgb(93, 17, 0);
@@ -183,11 +187,13 @@
 .body.intermediate .cell {
   width: 3.5vh;
   height: 3.5vh;
+  font-size: 25px;
 }
 
 .body.advanced .cell {
   width: 2.33vh;
   height: 2.33vh;
+  font-size: 20px;
 }
 
 .cell::after {
@@ -455,7 +461,7 @@
 
   .header {
     font-size: 16px;
-    gap: 20px;
+    gap: 0;
     flex-wrap: wrap;
   }
 
