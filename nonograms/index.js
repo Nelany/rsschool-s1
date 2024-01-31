@@ -194,8 +194,8 @@ const levelsMatrixes = {
 
 const body = document.querySelector("body");
 let popup;
-let currentLevel = "intermediate";
-let currentKey = "money";
+let currentLevel = "beginner";
+let currentKey = "mood";
 let checkedMatrix = levelsMatrixes[currentLevel][currentKey];
 let isEndGame = false;
 let timer;
@@ -432,17 +432,17 @@ function drawFifth() {
 //________________________________рекорды_____________________________________________
 
 function saveRecords(currentKey, elapsedSeconds) {
-  const existingRecords = JSON.parse(localStorage.getItem("records")) || [];
+  const existingRecords = JSON.parse(localStorage.getItem(`records${currentLevel}`)) || [];
 
   existingRecords.push({ currentKey, elapsedSeconds });
   const latestRecords = existingRecords.slice(-5);
 
-  localStorage.setItem("records", JSON.stringify(latestRecords));
+  localStorage.setItem(`records${currentLevel}`, JSON.stringify(latestRecords));
 }
 
 function showRecordsInMenu(tittle, popupMenu) {
   tittle.textContent = "Scores:";
-  const records = JSON.parse(localStorage.getItem("records")) || [];
+  const records = JSON.parse(localStorage.getItem(`records${currentLevel}`)) || [];
   const sortedRecords = records.sort(
     (a, b) => a.elapsedSeconds - b.elapsedSeconds
   );
