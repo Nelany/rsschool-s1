@@ -6,28 +6,28 @@ const beginnerMatrixes = {
     [1, 0, 0, 0, 1],
     [1, 1, 1, 1, 1],
   ],
-  life: [
+  sun: [
     [1, 0, 1, 0, 1],
     [0, 1, 1, 1, 0],
     [1, 1, 0, 1, 1],
     [0, 1, 1, 1, 0],
     [1, 0, 1, 0, 1],
   ],
-  beauty: [
+  flower: [
     [1, 0, 1, 0, 1],
     [0, 1, 1, 1, 0],
     [0, 0, 1, 0, 0],
     [1, 0, 1, 0, 1],
     [1, 1, 1, 1, 1],
   ],
-  money: [
+  dollar: [
     [1, 1, 1, 1, 1],
     [1, 0, 1, 0, 0],
     [1, 1, 1, 1, 1],
     [0, 0, 1, 0, 1],
     [1, 1, 1, 1, 1],
   ],
-  inspiration: [
+  heart: [
     [1, 1, 0, 1, 1],
     [1, 0, 1, 0, 1],
     [1, 0, 0, 0, 1],
@@ -37,7 +37,7 @@ const beginnerMatrixes = {
 };
 
 const intermediateMatrixes = {
-  mood: [
+  man: [
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 1, 0, 0, 1, 1, 1, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -49,7 +49,7 @@ const intermediateMatrixes = {
     [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
   ],
-  life: [
+  ambulance: [
     [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 0, 1, 1, 1, 1, 0, 1, 1],
@@ -61,7 +61,7 @@ const intermediateMatrixes = {
     [0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ],
-  beauty: [
+  butterfly: [
     [0, 0, 0, 0, 0, 1, 1, 1, 1, 0],
     [0, 0, 1, 0, 0, 1, 0, 1, 0, 0],
     [0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
@@ -73,7 +73,7 @@ const intermediateMatrixes = {
     [1, 0, 0, 1, 1, 0, 1, 0, 0, 0],
     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
   ],
-  money: [
+  car: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
     [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -85,7 +85,7 @@ const intermediateMatrixes = {
     [1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
     [0, 0, 1, 1, 0, 0, 0, 1, 1, 0],
   ],
-  inspiration: [
+  love: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 0, 1, 1, 1, 0, 0, 0],
     [1, 0, 0, 1, 0, 0, 1, 0, 0, 0],
@@ -99,7 +99,7 @@ const intermediateMatrixes = {
   ],
 };
 const advancedMatrixes = {
-  mood: [
+  ship: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
     [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
@@ -116,7 +116,7 @@ const advancedMatrixes = {
     [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ],
-  life: [
+  kitty: [
     [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     [0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
@@ -133,7 +133,7 @@ const advancedMatrixes = {
     [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0],
   ],
-  beauty: [
+  swan: [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -150,7 +150,7 @@ const advancedMatrixes = {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ],
-  money: [
+  house: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -167,20 +167,20 @@ const advancedMatrixes = {
     [0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ],
-  inspiration: [
+  family: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0],
-    [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
-    [0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0],
-    [0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0],
-    [0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0],
-    [0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ],
@@ -678,6 +678,7 @@ function manageClick(event) {
   if (event.target.closest(".level-beginner")) {
     currentLevel = "beginner";
     updateLevelsList(popupMenu);
+    currentKey = getRandomKey(levelsMatrixes[currentLevel]);
     generateHTMLFromMatrix();
     applyMatrixToCells(".row--picture", false);
     body.classList.add(currentLevel);
@@ -686,6 +687,7 @@ function manageClick(event) {
   if (event.target.closest(".level-intermediate")) {
     currentLevel = "intermediate";
     updateLevelsList(popupMenu);
+    currentKey = getRandomKey(levelsMatrixes[currentLevel]);
     generateHTMLFromMatrix();
     applyMatrixToCells(".row--picture", false);
     body.classList.add(currentLevel);
@@ -694,6 +696,7 @@ function manageClick(event) {
   if (event.target.closest(".level-advanced")) {
     currentLevel = "advanced";
     updateLevelsList(popupMenu);
+    currentKey = getRandomKey(levelsMatrixes[currentLevel]);
     generateHTMLFromMatrix();
     applyMatrixToCells(".row--picture", false);
     body.classList.add(currentLevel);
