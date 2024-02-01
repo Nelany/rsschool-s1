@@ -923,7 +923,7 @@ function loadFromLocalStorage() {
   isEndGame = JSON.parse(localStorage.getItem("isEndGame")) ?? false;
   savedTime = parseInt(localStorage.getItem("savedTime"), 10) || 0;
   currentTheme = localStorage.getItem("currentTheme") || currentTheme;
-  sound = JSON.parse(localStorage.getItem("sound"));
+  sound = JSON.parse(localStorage.getItem("sound")) || sound;
 
   body.classList.remove("light");
   body.classList.remove("medium");
