@@ -922,7 +922,7 @@ function loadFromLocalStorage() {
   currentKey = localStorage.getItem("currentKey") || currentKey;
   isEndGame = JSON.parse(localStorage.getItem("isEndGame")) ?? false;
   savedTime = parseInt(localStorage.getItem("savedTime"), 10) || 0;
-  currentTheme = localStorage.getItem("currentTheme") || currentLevel;
+  currentTheme = localStorage.getItem("currentTheme") || currentTheme;
   sound = JSON.parse(localStorage.getItem("sound"));
 
   body.classList.remove("light");
