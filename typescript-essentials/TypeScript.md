@@ -15,8 +15,6 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 ## Reflections
 
-[Add your personal reflections on what you learned in each module and how it contributes to your development skills]
-
 1. #### Getting Started with TypeScript
 
    This module introduced me to the TypeScript language, explained why it was created, and demonstrated how to use it for JavaScript development. I also set up the TypeScript development environment for future exercises.
