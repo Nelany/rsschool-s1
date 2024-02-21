@@ -1,1 +1,1 @@
-export {Sources, Source} from "./api";
+export {Sources, Source, Article} from "./api";
