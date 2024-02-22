@@ -1,5 +1,5 @@
 export interface ApiOptions {
-    apiKey: string;
+    apiKey?: string;
 }
 
 export interface ResponseOptions {

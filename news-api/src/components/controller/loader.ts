@@ -1,9 +1,11 @@
 import { ApiOptions, Callback, ResponseOptions, ResponseParam, Everything, Sources } from '../../types/index';
 class Loader {
-    baseLink: string;
+    baseLink: string | undefined;
     options: ApiOptions;
-    constructor(baseLink: string, options: ApiOptions) {
-        this.baseLink = baseLink;
+    constructor(baseLink: string | undefined, options: ApiOptions) {
+        if (baseLink) {
+            this.baseLink = baseLink;
+        }
         this.options = options;
     }
 
