@@ -26,3 +26,9 @@ export interface Article {
     publishedAt: string;
     content: string;
 }
+
+export interface Everything {
+    status: string;
+    totalResults: number;
+    articles: Article[];
+}
