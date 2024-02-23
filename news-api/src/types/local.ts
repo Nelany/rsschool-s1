@@ -8,7 +8,7 @@ export interface ResponseOptions {
 
 export interface ResponseParam {
     endpoint: string;
-    options: ResponseOptions;
+    options?: ResponseOptions;
 }
 
-export type Callback<T> = (data: T) => void;
+export type Callback<T> = (data?: T) => void;
