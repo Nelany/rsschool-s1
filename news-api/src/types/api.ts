@@ -8,10 +8,7 @@ export interface Source {
     country: string;
 }
 
-export interface Sources {
-    status: string;
-    sources: Source[];
-}
+export type Sources = Pick<Endpoints, 'status' | 'sources'>;
 
 export interface Article {
     source: {
@@ -27,8 +24,11 @@ export interface Article {
     content: string;
 }
 
-export interface Everything {
+export type Everything = Pick<Endpoints, 'status' | 'totalResults' | 'articles'>;
+
+interface Endpoints {
     status: string;
+    sources: Source[];
     totalResults: number;
     articles: Article[];
 }

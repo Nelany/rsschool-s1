@@ -1,14 +1,14 @@
 export interface ApiOptions {
-    apiKey?: string;
+    apiKey: string;
 }
 
 export interface ResponseOptions {
-    sources?: string;
+    sources: string;
 }
 
 export interface ResponseParam {
     endpoint: string;
-    options?: ResponseOptions;
+    options?: Partial<ResponseOptions>;
 }
 
 export type Callback<T> = (data?: T) => void;
