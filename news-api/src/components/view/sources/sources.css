@@ -51,24 +51,28 @@
 }
 
 .mark {
+    box-sizing: border-box;
     width: 20px;
     height: 20px;
     display: flex;
     justify-content: center;
-    padding: 1px 1px 0 0;
+    text-align: center;
+    /* padding: 1px 1px 0 0; */
     align-items: center;
     border: 1px solid #76d8ff;
     border-radius: 50%;
     color: #76d8ff;
+    line-height: 20px;
     /* font-style: italic; */
     font-weight: 100;
-    font-size: medium;
+    font-size: 12px;
+    ;
 }
 
 .mark.checked {
     background-color: #76d8ffab;
     color: rgb(21, 21, 26);
-    font-weight: 600;
+    /* font-weight: 600; */
 }
 
 .source__item:hover .mark,

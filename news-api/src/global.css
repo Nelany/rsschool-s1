@@ -6,6 +6,8 @@ body {
     font-family: sans-serif;
     min-height: 100vh;
     margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -116,4 +118,8 @@ footer .copyright:before {
 
 footer .nelany:before {
     content: '';
+}
+
+.main {
+    flex-grow: 1;
 }

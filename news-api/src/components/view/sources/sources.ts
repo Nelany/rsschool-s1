@@ -35,7 +35,7 @@ class Sources {
 function addMarkToElement(curItemEl: HTMLElement) {
     const markDiv = document.createElement('div');
 
-    markDiv.textContent = '+';
+    markDiv.innerHTML = '&#9733';
     markDiv.classList.add('mark');
 
     curItemEl.appendChild(markDiv);
