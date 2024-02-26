@@ -18,12 +18,12 @@ class Loader {
         this.load('GET', endpoint, callback, options);
     }
 
-    private errorHandler(res: Response) {
+    private errorHandler<T>(res: T): T {
         enum ResStatus {
             status1 = 401,
             status2 = 404,
         }
-        if (!res.ok) {
+        if (res instanceof Response && !res.ok) {
             if (res.status === ResStatus.status1 || res.status === ResStatus.status2)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
@@ -45,7 +45,7 @@ class Loader {
 
     private load(method: string, endpoint: string, callback: Callback<undefined | Sources | Everything>, options = {}) {
         fetch(this.makeUrl(options, endpoint), { method })
-            .then(this.errorHandler)
+            .then((response) => this.errorHandler<Response>(response))
             .then((res) => res.json())
             .then((data) => callback(data))
             .catch((err) => console.error(err));

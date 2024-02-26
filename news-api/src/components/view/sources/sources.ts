@@ -17,6 +17,7 @@ class Sources {
                 const itemEl = sourceClone.querySelector<HTMLElement>('.source__item');
                 if (itemEl !== null) {
                     itemEl.setAttribute('data-source-id', item.id);
+                    addMarkToElement(itemEl);
                 }
 
                 fragment.append(sourceClone);
@@ -27,7 +28,43 @@ class Sources {
         if (sourcesEl !== null) {
             sourcesEl.append(fragment);
         }
+        updateCheckedStatus();
     }
+}
+
+function addMarkToElement(curItemEl: HTMLElement) {
+    const markDiv = document.createElement('div');
+
+    markDiv.textContent = '+';
+    markDiv.classList.add('mark');
+
+    curItemEl.appendChild(markDiv);
+}
+
+export function updateCheckedStatus() {
+    const selectedChannels = JSON.parse(localStorage.getItem('selectedChannels') || 'false') || [];
+
+    const sourceItems = document.querySelectorAll('.source__item');
+
+    sourceItems.forEach((item) => {
+        const dataSourceId = item.getAttribute('data-source-id');
+
+        const markElement = item.querySelector('.mark');
+
+        const isSelected = selectedChannels.includes(dataSourceId);
+
+        if (isSelected && markElement) {
+            markElement.classList.add('checked');
+        } else if (markElement) {
+            markElement.classList.remove('checked');
+            const onlyMyChannels = JSON.parse(localStorage.getItem('onlyMyChannels') || 'false');
+            if (onlyMyChannels) {
+                item.classList.add('disabled');
+            } else {
+                item.classList.remove('disabled');
+            }
+        }
+    });
 }
 
 export default Sources;
