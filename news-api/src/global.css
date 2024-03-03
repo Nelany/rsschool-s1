@@ -1,8 +1,6 @@
 body {
     color: #fff;
-    /* background: #17181c; */
-    /* background: linear-gradient(to bottom, #131417, rgb(12, 24, 61)) no-repeat; */
-    background: url('https://img3.akspic.ru/crops/2/6/6/5/3/135662/135662-nochnoenebo-nebo-astronomicheskijobekt-tumannost-zvezda-3840x2160.jpg') center/cover no-repeat fixed;
+    background: url('./img/stars.jpg') center/cover no-repeat fixed;
     font-family: sans-serif;
     min-height: 100vh;
     margin: 0;

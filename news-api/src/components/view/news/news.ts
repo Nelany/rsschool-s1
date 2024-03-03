@@ -1,9 +1,12 @@
 import './news.css';
 import type { Article } from '../../../types/index';
 
+const MAX_ARTICLE_COUNT = 10;
+
 class News {
     draw(data: Article[]) {
-        const news = data.length >= 10 ? data.filter((_item, idx: number) => idx < 10) : data;
+        const news =
+            data.length >= MAX_ARTICLE_COUNT ? data.filter((_item, idx: number) => idx < MAX_ARTICLE_COUNT) : data;
 
         const fragment = document.createDocumentFragment();
         const newsItemTemp = document.querySelector<HTMLTemplateElement>('#newsItemTemp');

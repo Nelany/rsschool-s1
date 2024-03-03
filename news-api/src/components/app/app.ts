@@ -14,13 +14,13 @@ class App {
         const currentSources = document.querySelector('.sources');
 
         if (currentSources instanceof HTMLElement) {
-            currentSources.addEventListener('click', (e) => {
-                if (e.target instanceof HTMLElement && e.target.closest('.mark')) {
-                    markChanel(e.target);
+            currentSources.addEventListener('click', (event) => {
+                if (event.target instanceof HTMLElement && event.target.closest('.mark')) {
+                    markChanel(event.target);
                     return;
                 }
 
-                this.controller.getNews(e, (data) => {
+                this.controller.getNews(event, (data) => {
                     if (data && 'articles' in data) {
                         return this.view.drawNews(data);
                     }

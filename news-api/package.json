@@ -6,14 +6,14 @@
     "scripts": {
         "start": "webpack serve --open --config ./webpack.config.js --env mode=dev",
         "build": "webpack --config ./webpack.config.js --env mode=prod",
-        "lint": "eslint . --ext .ts"
+        "lint": "eslint . --ext .ts --fix"
     },
     "repository": {
         "type": "git",
         "url": ""
     },
     "keywords": [],
-    "author": "Aleh Serhiyenia",
+    "author": "Nelany",
     "license": "ISC",
     "homepage": "",
     "devDependencies": {

@@ -20,11 +20,11 @@ class Loader {
 
     private errorHandler<T>(res: T): T {
         enum ResStatus {
-            status1 = 401,
-            status2 = 404,
+            UNAUTHORIZED = 401,
+            NOT_FOUND = 404,
         }
         if (res instanceof Response && !res.ok) {
-            if (res.status === ResStatus.status1 || res.status === ResStatus.status2)
+            if (res.status === ResStatus.UNAUTHORIZED || res.status === ResStatus.NOT_FOUND)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }

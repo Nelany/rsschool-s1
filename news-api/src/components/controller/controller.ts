@@ -11,9 +11,9 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e: MouseEvent, callback: Callback<undefined | Sources | Everything>) {
-        let target = e.target;
-        const newsContainer = e.currentTarget;
+    getNews(event: MouseEvent, callback: Callback<undefined | Sources | Everything>) {
+        let target = event.target;
+        const newsContainer = event.currentTarget;
         while (target !== newsContainer) {
             if (target instanceof HTMLElement && newsContainer instanceof HTMLElement) {
                 if (target.classList.contains('source__item')) {
