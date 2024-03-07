@@ -37,6 +37,16 @@ body {
   font-weight: 300;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .login-form {
   width: 300px;
   height: 350px;
@@ -47,6 +57,7 @@ body {
   background-color: rgba(216, 171, 137, 0.721);
   border: 2px solid rgba(216, 171, 137, 0.756);
   border-radius: 10px;
+  animation: fadeIn ease 3s;
 }
 
 .error-message-container {
@@ -73,30 +84,58 @@ body {
 }
 
 .button {
-  width: 100px;
-  height: 30px;
-  margin: 10% 0 0 0;
   padding: 0 5px 3px 5px;
   background-color: rgba(184, 73, 59, 0.825);
   border: 1px solid rgba(139, 29, 9, 0.386);
   border-radius: 5px;
-  font-weight: 800;
-  letter-spacing: 1px;
   color: rgba(255, 240, 227, 0.903);
   transition: all 0.4s;
   cursor: pointer;
+}
+
+.button-login {
+  width: 100px;
+  height: 30px;
+  margin: 10% 0 0 0;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .button:hover {
   transform: scale(1.1);
 }
 
-.button:disabled {
-  cursor: default;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 .login-form:invalid .button {
   opacity: 0.5;
+}
+
+.greeting {
+  margin: 10% 0 0 0;
+  font-size: 50px;
+  font-weight: 500;
+  animation: fadeIn 2s ease;
+}
+
+.button-start {
+  width: 300px;
+  height: 50px;
+  margin: 5% 0 0 0;
+  font-size: 23px;
+  font-weight: 00;
+  letter-spacing: 8px;
+  animation: fadeIn ease 4s;
+}
+
+.log-out-string {
+  margin: 2% 0 0 0;
+  border-bottom: 1px solid rgba(255, 240, 227, 0);
+  transition: all 0.4s;
+  cursor: pointer;
+  font-size: 21px;
+  font-weight: 300;
+  animation: fadeIn ease 6s;
+}
+
+.log-out-string:hover {
+  border-bottom: 1px solid rgba(255, 240, 227, 0.903);
 }
