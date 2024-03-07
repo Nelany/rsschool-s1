@@ -10,3 +10,8 @@ export function loginAndStartTemplate() {
 `;
   document.body.innerHTML = startHTML;
 }
+
+export interface UserData {
+  firstName: string;
+  lastName: string;
+}

@@ -1,10 +1,5 @@
-import { loginAndStartTemplate } from './loginAndStartTemplate';
+import { loginAndStartTemplate, UserData } from './loginAndStartTemplate';
 import { createStartPage } from './startPage';
-
-interface UserData {
-  firstName: string;
-  lastName: string;
-}
 
 function saveDataToLocalStorage(event: SubmitEvent): void {
   const form = document.getElementById('loginForm');
