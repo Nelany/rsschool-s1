@@ -17,7 +17,7 @@ export function createLoginPage() {
                   type="text"
                   id="firstName"
                   name="firstName"
-
+                  pattern="[A-Z][a-z\\-]{3,}"
                   title="Minimum 3 characters, letters and hyphen only"
                   required
               />
@@ -27,7 +27,7 @@ export function createLoginPage() {
                   type="text"
                   id="lastName"
                   name="lastName"
-
+                  pattern="[A-Z][a-z\\-]{4,}"
                   title="Minimum 4 characters, letters and hyphen only"
                   required
               />
