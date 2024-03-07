@@ -1,3 +1,30 @@
+interface UserData {
+  firstName: string;
+  lastName: string;
+}
+
+function saveDataToLocalStorage(event: SubmitEvent): void {
+  const form = document.getElementById('loginForm');
+  event.preventDefault();
+
+  if (form instanceof HTMLFormElement) {
+    const formData = new FormData(form);
+    const firstName = formData.get('firstName');
+    const lastName = formData.get('lastName');
+
+    if (typeof firstName === 'string' && typeof lastName === 'string') {
+      if (firstName.trim() !== '' && lastName.trim() !== '') {
+        const userData: UserData = {
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+        };
+
+        localStorage.setItem('userData', JSON.stringify(userData));
+      }
+    }
+  }
+}
+
 export function createLoginPage() {
   const loginPageHTML = `
       <div class="content">
@@ -36,4 +63,7 @@ export function createLoginPage() {
       </div>
   `;
   document.body.innerHTML = loginPageHTML;
+
+  const form = document.getElementById('loginForm') as HTMLFormElement;
+  form.addEventListener('submit', saveDataToLocalStorage);
 }
