@@ -1,11 +1,25 @@
 import { createLoginPage } from './loginPage';
-import { loginAndStartTemplate } from './loginAndStartTemplate';
+import { loginAndStartTemplate, UserData } from './loginAndStartTemplate';
 
 loginAndStartTemplate();
 
 function removeUserDataAndOpenLoginPage(): void {
   localStorage.removeItem('userData');
   createLoginPage();
+}
+
+function displayGreetingName(greetingName: HTMLElement): void {
+  const fullNameContainer = greetingName;
+  if (fullNameContainer) {
+    const storedUserData = localStorage.getItem('userData');
+
+    if (storedUserData) {
+      const userData: UserData = JSON.parse(storedUserData);
+      const fullName = `${userData.firstName} ${userData.lastName}`;
+
+      fullNameContainer.textContent = fullName;
+    }
+  }
 }
 
 export function createStartPage() {
@@ -15,7 +29,7 @@ export function createStartPage() {
 
   if (contentElement) {
     const greetingHTML = `
-          <h3 class="greeting">Welcome, Vasya Pupkin!</h3>
+          <h3 class="greeting">Welcome, <span class="greeting-name" id="greetingName"></span>!</h3>
           <button class="button button-start" id="startButton" type="submit">Start</button>
           <h5 class="log-out-string" id="logOut" type="submit">Do you want to log out?</h5>
         `;
@@ -30,6 +44,11 @@ export function createStartPage() {
     const logOutString = document.getElementById('logOut');
     if (logOutString) {
       logOutString.addEventListener('click', removeUserDataAndOpenLoginPage);
+    }
+
+    const greetingName = document.getElementById('greetingName');
+    if (greetingName) {
+      displayGreetingName(greetingName);
     }
   }
 }

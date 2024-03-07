@@ -1,3 +1,4 @@
 cd rss-puzzle
 npm run format
 npx validate-branch-name
+git add -A .
