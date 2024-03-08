@@ -1,15 +1,24 @@
 import './global.css';
+import { UserData } from './loginAndStartTemplate';
 import { createLoginPage } from './loginPage';
 import { createStartPage } from './startPage';
 
-function checkLocalStorageForUserData(): void {
+export function checkLocalStorageForUserData(): void | UserData {
   const storedUserData = localStorage.getItem('userData');
 
   if (!storedUserData) {
     createLoginPage();
-  } else {
+    return undefined;
+  }
+  const userData: UserData = JSON.parse(storedUserData);
+  return userData;
+}
+
+function loadApp() {
+  const restoredUserData = checkLocalStorageForUserData();
+  if (restoredUserData) {
     createStartPage();
   }
 }
 
-checkLocalStorageForUserData();
+loadApp();

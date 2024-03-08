@@ -1,5 +1,7 @@
 import { createLoginPage } from './loginPage';
 import { loginAndStartTemplate, UserData } from './loginAndStartTemplate';
+import { checkLocalStorageForUserData } from './index';
+import { createMainPage } from './mainPage';
 
 loginAndStartTemplate();
 
@@ -22,6 +24,13 @@ function displayGreetingName(greetingName: HTMLElement): void {
   }
 }
 
+function openMainPage() {
+  const restoredUserData = checkLocalStorageForUserData();
+  if (restoredUserData) {
+    createMainPage();
+  }
+}
+
 export function createStartPage() {
   loginAndStartTemplate();
 
@@ -38,7 +47,7 @@ export function createStartPage() {
 
     const startButton = document.getElementById('startButton');
     if (startButton) {
-      startButton.addEventListener('click', removeUserDataAndOpenLoginPage);
+      startButton.addEventListener('click', openMainPage);
     }
 
     const logOutString = document.getElementById('logOut');
