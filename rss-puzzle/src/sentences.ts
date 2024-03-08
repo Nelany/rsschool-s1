@@ -24,7 +24,7 @@ export function sentenceHandler(sentence: string) {
   const lineElement = document.querySelector('.line');
   const fieldElement = document.querySelector('.field');
 
-  // const totalLetters = wordsArray.join('').length;
+  const totalLetters = wordsArray.join('').length;
 
   for (let i = 0; i < wordsArray.length; i += 1) {
     const newDiv = document.createElement('div');
@@ -35,9 +35,9 @@ export function sentenceHandler(sentence: string) {
     newDiv.textContent = word;
     newDiv.classList.add('word');
 
-    // const lettersInWord = word.length;
-    // const widthPercentage = (lettersInWord / totalLetters) * 100;
-    // newDiv.style.width = `${widthPercentage}%`;
+    const lettersInWord = word.length;
+    const widthPercentage = (lettersInWord / totalLetters) * 100;
+    newDiv.style.width = `${widthPercentage}%`;
 
     shuffledWords.splice(randomIndex, 1);
 
