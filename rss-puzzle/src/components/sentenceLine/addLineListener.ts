@@ -1,4 +1,4 @@
-import { addFieldListener } from './addFieldListener';
+import { addFieldListener } from '../field/addFieldListener';
 
 export function addLineListener(lineWordCard: HTMLElement, fieldElement: HTMLElement, lineElement: HTMLElement) {
   lineWordCard.addEventListener('click', () => {

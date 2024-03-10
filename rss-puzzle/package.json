@@ -38,7 +38,7 @@
     "webpack-merge": "^5.10.0"
   },
   "validate-branch-name": {
-    "pattern": "^(init|fix|refactor|docs|feat)/(RSS-PZ-\\d{2}_\\w+|rss-puzzle)$",
+    "pattern": "^(init|fix|refactor|docs|feat)/(RSS-PZ-\\d{2,4}_\\w+|rss-puzzle)$",
     "errorMsg": "error"
   }
 }

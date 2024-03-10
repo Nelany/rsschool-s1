@@ -1,4 +1,4 @@
-import { addLineListener } from './addLineListener';
+import { addLineListener } from '../sentenceLine/addLineListener';
 
 export function addFieldListener(fieldCell: HTMLElement, lineElement: HTMLElement, fieldElement: HTMLElement) {
   const fieldWordCard = fieldCell;
