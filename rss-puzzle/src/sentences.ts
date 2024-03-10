@@ -1,18 +1,12 @@
+import { addLineListener } from './addLineListener';
+
 function wordClickHandler(lineElement: HTMLElement, fieldElement: HTMLElement) {
-  const words = lineElement.querySelectorAll('.word');
+  const lineWords = lineElement.querySelectorAll('.word');
 
-  words.forEach((word) => {
-    word.addEventListener('click', () => {
-      const cell = fieldElement.querySelector('.cell');
-      const selectedWord = word.cloneNode(true) as HTMLDivElement;
-
-      if (cell) {
-        cell.innerHTML = selectedWord.innerHTML;
-        cell.className = selectedWord.className;
-        cell.setAttribute('style', selectedWord.getAttribute('style') || '');
-        word.remove();
-      }
-    });
+  lineWords.forEach((word) => {
+    if (word instanceof HTMLElement) {
+      addLineListener(word, fieldElement, lineElement);
+    }
   });
 }
 
