@@ -1,0 +1,10 @@
+.line {
+  width: 90vw;
+  max-width: 800px;
+  height: 2vw;
+  min-height: 30px;
+  display: flex;
+  border: 2px solid rgba(122, 96, 100, 0.458);
+  background-color: rgb(252, 246, 241);
+  animation: fadeIn ease 1s;
+}

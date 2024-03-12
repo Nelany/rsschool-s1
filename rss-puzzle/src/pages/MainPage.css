@@ -1,0 +1,16 @@
+.buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.main_button {
+  width: 200px;
+  height: 40px;
+  margin: 5% 0 0 0;
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 2px;
+}

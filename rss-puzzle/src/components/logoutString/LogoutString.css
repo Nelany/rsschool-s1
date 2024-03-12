@@ -1,0 +1,13 @@
+.log-out-string {
+  margin: 2% 0 0 0;
+  border-bottom: 1px solid rgba(255, 240, 227, 0);
+  transition: all 0.4s;
+  cursor: pointer;
+  font-size: 21px;
+  font-weight: 300;
+  animation: fadeIn ease 6s;
+}
+
+.log-out-string:hover {
+  border-bottom: 1px solid rgba(255, 240, 227, 0.903);
+}
