@@ -1,3 +1,4 @@
+import { SentenceLine } from './SentenceLine';
 import { addLineListener } from './addLineListener';
 
 function wordClickHandler(lineElement: HTMLElement, fieldElement: HTMLElement) {
@@ -10,7 +11,8 @@ function wordClickHandler(lineElement: HTMLElement, fieldElement: HTMLElement) {
   });
 }
 
-export function sentenceHandler(sentence: string) {
+export function sentenceCreator(sentence: string) {
+  SentenceLine.setAnswerArray([]);
   const wordsArray = sentence.split(' ');
 
   const shuffledWords = [...wordsArray];

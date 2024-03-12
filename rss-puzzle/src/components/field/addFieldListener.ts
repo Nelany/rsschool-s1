@@ -1,3 +1,4 @@
+import { SentenceLine } from '../sentenceLine/SentenceLine';
 import { addLineListener } from '../sentenceLine/addLineListener';
 
 export function addFieldListener(fieldCell: HTMLElement, lineElement: HTMLElement, fieldElement: HTMLElement) {
@@ -10,6 +11,18 @@ export function addFieldListener(fieldCell: HTMLElement, lineElement: HTMLElemen
 
     fieldWordCard.classList.remove('word');
     fieldWordCard.classList.add('cell');
+
+    if (fieldWordCard.textContent) {
+      const wordToRemove = fieldWordCard.textContent.trim();
+      const answerArray = SentenceLine.getAnswerArray();
+      if (wordToRemove) {
+        const indexToRemove = answerArray.indexOf(wordToRemove);
+        if (indexToRemove !== -1) {
+          answerArray.splice(indexToRemove, 1);
+          SentenceLine.setAnswerArray(answerArray);
+        }
+      }
+    }
     fieldWordCard.textContent = '';
 
     if (fieldWordCard instanceof HTMLElement) {

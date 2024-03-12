@@ -1,0 +1,6 @@
+.greeting {
+  margin: 10% 0 0 0;
+  font-size: 50px;
+  font-weight: 500;
+  animation: fadeIn 2s ease;
+}
