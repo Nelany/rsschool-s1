@@ -122,3 +122,7 @@ body {
 .word:hover {
   color: rgb(255, 0, 0);
 }
+
+.wrong-word {
+  border: 2px solid rgb(255, 0, 0);
+}

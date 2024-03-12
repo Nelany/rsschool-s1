@@ -5,6 +5,8 @@ import { SentenceLine } from '../components/sentenceLine/SentenceLine';
 import { checkButtonHandler, continueButtonHandler } from './MainPageService';
 import './MainPage.css';
 
+const drawMainPageTimeout = 1000;
+
 export const MainPage = {
   template: `<div class="content content-fadeout main-content">
   </div>`,
@@ -43,7 +45,7 @@ export const MainPage = {
             );
           }
         }
-      }, 1000);
+      }, drawMainPageTimeout);
     }
   },
 };
