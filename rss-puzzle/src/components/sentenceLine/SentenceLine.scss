@@ -6,5 +6,7 @@
   display: flex;
   border: 2px solid rgba(122, 96, 100, 0.458);
   background-color: rgb(252, 246, 241);
+  box-shadow: 0 0 3px rgba(47, 0, 0, 0.5);
+
   animation: fadeIn ease 1s;
 }
