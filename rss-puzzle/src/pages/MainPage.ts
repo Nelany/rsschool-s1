@@ -35,7 +35,7 @@ export const MainPage = {
           if (buttonsContainer instanceof HTMLElement) {
             Button.draw(
               buttonsContainer,
-              { text: 'continue', classes: 'main_button button-continue disabled' },
+              { text: 'continue', classes: 'main_button button-continue disabled hidden' },
               { type: 'click', handler: continueButtonHandler, selector: '.button-continue' }
             );
             Button.draw(
