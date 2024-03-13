@@ -15,8 +15,30 @@
     pointer-events: none;
     opacity: 0.5;
   }
-}
 
-.shaking {
-  animation: shake 1s ease;
+  &.shaking {
+    animation: shake 1s ease;
+  }
+
+  &.scale-color-animated {
+    animation: scaleAnimation 1s ease;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  &.disappearing {
+    animation: fadeOut 0.5s;
+  }
+
+  &.button-green {
+    animation: fadeIn 0.5s;
+    border: 4px solid rgba(114, 194, 10, 0.879);
+    background-color: rgba(111, 178, 23, 0.879);
+  }
+
+  &.semi-appearing {
+    animation: semiFadeIn 0.5s;
+  }
 }
