@@ -2,7 +2,7 @@ import { Button } from '../components/button/Button';
 import { Field } from '../components/field/Field';
 import { PageTemplate } from '../components/pageTemplate/PageTemplate';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
-import { checkButtonHandler, continueButtonHandler } from './MainPageService';
+import { autocompleteButtonHandler, checkButtonHandler, continueButtonHandler } from './MainPageService';
 import './MainPage.scss';
 
 const drawMainPageTimeout = 1000;
@@ -33,6 +33,11 @@ export const MainPage = {
           const buttonsContainer = document.querySelector('.buttons-container');
 
           if (buttonsContainer instanceof HTMLElement) {
+            Button.draw(
+              buttonsContainer,
+              { text: 'autocomplete', classes: 'main_button button-autocomplete' },
+              { type: 'click', handler: autocompleteButtonHandler, selector: '.button-autocomplete' }
+            );
             Button.draw(
               buttonsContainer,
               { text: 'continue', classes: 'main_button button-continue disabled hidden' },
