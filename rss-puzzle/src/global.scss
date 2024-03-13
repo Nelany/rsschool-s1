@@ -8,6 +8,16 @@
   }
 }
 
+@keyframes semiFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;
