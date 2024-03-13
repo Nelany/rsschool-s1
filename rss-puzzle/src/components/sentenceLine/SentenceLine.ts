@@ -1,5 +1,5 @@
 import { sentenceCreator } from './SentenceLineService';
-import './SentenceLine.css';
+import './SentenceLine.scss';
 import { wordCollections } from '../../common/services/wordCollections';
 
 export const SentenceLine = {

@@ -1,5 +1,5 @@
 import { checkLocalStorageForUserData } from './common/services/localStorage';
-import './global.css';
+import './global.scss';
 import { LoginPage } from './pages/LoginPage';
 import { StartPage } from './pages/StartPage';
 

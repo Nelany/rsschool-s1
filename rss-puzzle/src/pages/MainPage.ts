@@ -3,7 +3,9 @@ import { Field } from '../components/field/Field';
 import { PageTemplate } from '../components/pageTemplate/PageTemplate';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
 import { checkButtonHandler, continueButtonHandler } from './MainPageService';
-import './MainPage.css';
+import './MainPage.scss';
+
+const drawMainPageTimeout = 1000;
 
 export const MainPage = {
   template: `<div class="content content-fadeout main-content">
@@ -43,7 +45,7 @@ export const MainPage = {
             );
           }
         }
-      }, 1000);
+      }, drawMainPageTimeout);
     }
   },
 };

@@ -1,4 +1,4 @@
-import './Field.css';
+import './Field.scss';
 
 export const Field = {
   template: `<div class="field"></div>`,

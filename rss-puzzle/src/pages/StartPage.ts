@@ -3,7 +3,7 @@ import { Greetings } from '../components/greetings/Greetings';
 import { Button } from '../components/button/Button';
 import { LogoutString } from '../components/logoutString/LogoutString';
 
-import './StartPage.css';
+import './StartPage.scss';
 import { startButtonHandler } from './StartPageService';
 
 export const StartPage = {

@@ -103,6 +103,10 @@ body {
   transition: color 0.5s;
   cursor: pointer;
   font-weight: 800;
+
+  &:hover {
+    color: rgb(255, 0, 0);
+  }
 }
 
 @media (max-width: 800px) {
@@ -119,6 +123,6 @@ body {
   }
 }
 
-.word:hover {
-  color: rgb(255, 0, 0);
+.wrong-word {
+  border: 2px solid rgb(255, 0, 0);
 }

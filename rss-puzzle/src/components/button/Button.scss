@@ -6,15 +6,15 @@
   color: rgba(255, 240, 227, 0.903);
   transition: all 0.4s;
   cursor: pointer;
-}
 
-.button:hover {
-  transform: scale(1.1);
-}
+  &:hover {
+    transform: scale(1.1);
+  }
 
-.button.disabled {
-  pointer-events: none;
-  opacity: 0.5;
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
 
 .shaking {

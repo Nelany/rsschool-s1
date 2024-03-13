@@ -1,6 +1,24 @@
 import { wordCollections } from '../common/services/wordCollections';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
 
+const markTimeout = 1200;
+
+function markWrongWords() {
+  const fieldDivs: NodeListOf<HTMLDivElement> = document.querySelectorAll('.word');
+  const sentence = wordCollections.getCurrentSentence();
+  const wordsArray = sentence.split(' ');
+  const previousSentencesLength = fieldDivs.length - wordsArray.length;
+  for (let i = fieldDivs.length - 1; i >= previousSentencesLength; i -= 1) {
+    const divTextContent: string = fieldDivs[i].textContent || '';
+    if (divTextContent !== wordsArray[i - previousSentencesLength]) {
+      fieldDivs[i].classList.add('wrong-word');
+      setTimeout(() => {
+        fieldDivs[i].classList.remove('wrong-word');
+      }, markTimeout);
+    }
+  }
+}
+
 export function continueButtonHandler() {
   wordCollections.switchToNextSentence();
   const field = document.querySelector('.field');
@@ -19,19 +37,22 @@ export function continueButtonHandler() {
 export function checkButtonHandler() {
   const answerArray = SentenceLine.getAnswerArray();
   const checkButton = document.querySelector('.button-check');
+  if (!checkButton) {
+    return;
+  }
   if (wordCollections.getCurrentSentence() === answerArray.join(' ')) {
     const continueButton = document.querySelector('.button-continue');
     if (continueButton) {
       continueButton.classList.remove('disabled');
     }
 
-    if (checkButton) {
-      checkButton.classList.add('disabled');
-    }
-  } else if (checkButton) {
-    checkButton.classList.add('shaking');
-    setTimeout(() => {
-      checkButton.classList.remove('shaking');
-    }, 1200);
+    checkButton.classList.add('disabled');
+
+    return;
   }
+  checkButton.classList.add('shaking');
+  markWrongWords();
+  setTimeout(() => {
+    checkButton.classList.remove('shaking');
+  }, markTimeout);
 }

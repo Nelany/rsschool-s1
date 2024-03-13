@@ -9,6 +9,10 @@
   border: 2px solid rgba(216, 171, 137, 0.756);
   border-radius: 10px;
   animation: fadeIn ease 3s;
+
+  &:invalid .button {
+    opacity: 0.5;
+  }
 }
 
 .error-message-container {
@@ -40,8 +44,4 @@
   margin: 10% 0 0 0;
   font-weight: 800;
   letter-spacing: 1px;
-}
-
-.login-form:invalid .button {
-  opacity: 0.5;
 }
