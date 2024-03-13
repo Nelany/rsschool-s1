@@ -7,8 +7,6 @@ import './MainPage.scss';
 
 const drawMainPageTimeout = 1000;
 
-const drawMainPageTimeout = 1000;
-
 export const MainPage = {
   template: `<div class="content content-fadeout main-content">
   </div>`,
