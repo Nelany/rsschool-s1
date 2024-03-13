@@ -1,5 +1,5 @@
 import { removeUserDataAndOpenLoginPage } from './LogoutStringService';
-import './LogoutString.css';
+import './LogoutString.scss';
 
 export const LogoutString = {
   template: `<h5 class="log-out-string" id="logOut" type="submit">Do you want to log out?</h5>`,

@@ -1,4 +1,4 @@
-import './PageTemplate.css';
+import './PageTemplate.scss';
 
 export const PageTemplate = {
   template: `<div class="content">

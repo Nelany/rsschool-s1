@@ -1,4 +1,4 @@
-import './Login.css';
+import './Login.scss';
 import { loginAndStart } from './LoginService';
 
 export const Login = {
