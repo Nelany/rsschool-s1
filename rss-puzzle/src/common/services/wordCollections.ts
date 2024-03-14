@@ -13,6 +13,10 @@ export const wordCollections = {
   currentSentenceIndex: 0,
   isResetField: false,
 
+  getLevelRoundId() {
+    return `${wordCollections.currentLevelIndex}_${wordCollections.currentRoundIndex}_${wordCollections.currentSentenceIndex}`;
+  },
+
   getCurrentSentence() {
     const currentLevel = wordCollections.allLevelsData[wordCollections.currentLevelIndex];
 

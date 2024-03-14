@@ -58,6 +58,7 @@ body {
   text-align: center;
   margin: 0;
   background-color: rgba(216, 171, 137, 0.721);
+  caret-color: transparent;
 }
 
 .content {
@@ -113,6 +114,7 @@ body {
   transition: color 0.5s;
   cursor: pointer;
   font-weight: 800;
+  user-select: none;
 
   &:hover {
     color: rgb(255, 0, 0);
@@ -135,4 +137,8 @@ body {
 
 .wrong-word {
   border: 2px solid rgb(255, 0, 0);
+}
+
+.dragover {
+  border-color: #0b8f25;
 }
