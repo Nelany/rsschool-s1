@@ -1,4 +1,4 @@
-import { dragstart } from '../../pages/MainPageService';
+import { dragover, dragstart, drop } from '../../pages/MainPageService';
 import { SentenceLine } from '../sentenceLine/SentenceLine';
 import { addLineListener } from '../sentenceLine/addLineListener';
 
@@ -11,24 +11,32 @@ export function addFieldListener(fieldCell: HTMLElement, lineElement: HTMLElemen
   if (!fieldWordCard) {
     return;
   }
-  console.log('ho');
 
   const clickHandler = () => {
+    console.log('ho');
     const checkButton = document.querySelector('.button-check');
     if (checkButton) {
       checkButton.classList.add('disabled');
     }
 
-    fieldWordCard.removeEventListener('click', clickHandler);
+    // fieldWordCard.removeEventListener('click', clickHandler);
+    const newFieldWordCard = fieldWordCard.cloneNode(true);
+    if (!fieldWordCard.parentNode) {
+      return;
+    }
+    if (!(newFieldWordCard instanceof HTMLElement)) {
+      return;
+    }
+    fieldWordCard.parentNode.replaceChild(newFieldWordCard, fieldWordCard);
 
-    const selectedWordCell = fieldWordCard.cloneNode(true);
+    const selectedWordCell = newFieldWordCard.cloneNode(true);
 
-    fieldWordCard.classList.remove('word');
-    fieldWordCard.classList.add('cell');
-    fieldWordCard.draggable = false;
+    newFieldWordCard.classList.remove('word');
+    newFieldWordCard.classList.add('cell');
+    newFieldWordCard.draggable = false;
 
-    if (fieldWordCard.textContent) {
-      const wordToRemove = fieldWordCard.textContent.trim();
+    if (newFieldWordCard.textContent) {
+      const wordToRemove = newFieldWordCard.textContent.trim();
       const answerArray = SentenceLine.getAnswerArray();
       if (wordToRemove) {
         const indexToRemove = answerArray.indexOf(wordToRemove);
@@ -38,11 +46,11 @@ export function addFieldListener(fieldCell: HTMLElement, lineElement: HTMLElemen
         }
       }
     }
-    fieldWordCard.textContent = '';
+    newFieldWordCard.textContent = '';
 
-    if (fieldWordCard instanceof HTMLElement) {
-      fieldWordCard.removeAttribute('style');
-      fieldWordCard.removeAttribute('data-index');
+    if (newFieldWordCard instanceof HTMLElement) {
+      newFieldWordCard.removeAttribute('style');
+      newFieldWordCard.removeAttribute('data-index');
     }
 
     const newLineWordCard = lineElement.appendChild(selectedWordCell);
@@ -51,7 +59,11 @@ export function addFieldListener(fieldCell: HTMLElement, lineElement: HTMLElemen
       addLineListener(newLineWordCard, fieldElement, lineElement);
       newLineWordCard.addEventListener('dragstart', dragstart);
     }
+
+    newFieldWordCard.addEventListener('dragover', dragover);
+    newFieldWordCard.addEventListener('drop', drop);
   };
+
   if (fieldWordCard instanceof HTMLElement) {
     fieldWordCard.addEventListener('click', clickHandler);
   }
