@@ -13,6 +13,37 @@ export const wordCollections = {
   currentSentenceIndex: 0,
   isResetField: false,
 
+  getLevelsNumber() {
+    return wordCollections.allLevelsData.length;
+  },
+
+  getRoundsNumberOfLevel() {
+    return wordCollections.allLevelsData[wordCollections.currentLevelIndex].rounds.length;
+  },
+
+  // getCurrentRoundData() {
+  //   const currentLevelData = wordCollections.allLevelsData[wordCollections.currentLevelIndex];
+  //   return currentLevelData.rounds[wordCollections.currentRoundIndex];
+  // },
+
+  getCurrentLevelIndex() {
+    return wordCollections.currentLevelIndex;
+  },
+
+  setCurrentLevelIndex(levelIndex: number) {
+    this.currentRoundIndex = levelIndex;
+    this.currentSentenceIndex = 0;
+  },
+
+  getCurrentRoundIndex() {
+    return wordCollections.currentLevelIndex;
+  },
+
+  setCurrentRoundIndex(RoundIndex: number) {
+    this.currentRoundIndex = RoundIndex;
+    this.currentSentenceIndex = 0;
+  },
+
   getLevelRoundId() {
     return `${wordCollections.currentLevelIndex}_${wordCollections.currentRoundIndex}_${wordCollections.currentSentenceIndex}`;
   },

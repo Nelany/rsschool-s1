@@ -81,7 +81,6 @@ export function continueButtonHandler() {
 }
 
 export function checkButtonHandler() {
-  // const answerArray = SentenceLine.getAnswerArray();
   const checkButton = document.querySelector('.button-check');
   if (!checkButton) {
     return;

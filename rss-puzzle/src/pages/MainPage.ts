@@ -31,12 +31,12 @@ export const MainPage = {
         if (content instanceof HTMLElement) {
           const levelSelectLabel = document.querySelector('.level-select-label');
           if (levelSelectLabel instanceof HTMLElement) {
-            Select.draw(levelSelectLabel);
+            Select.draw(levelSelectLabel, 'level');
           }
 
           const roundSelectLabel = document.querySelector('.round-select-label');
           if (roundSelectLabel instanceof HTMLElement) {
-            Select.draw(roundSelectLabel);
+            Select.draw(roundSelectLabel, 'round');
           }
 
           Field.draw(content);
