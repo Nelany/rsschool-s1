@@ -3,17 +3,23 @@ import { Field } from '../components/field/Field';
 import { PageTemplate } from '../components/pageTemplate/PageTemplate';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
 import { autocompleteButtonHandler, checkButtonHandler, continueButtonHandler } from './MainPageService';
+import { Select } from '../components/select/Select';
 import './MainPage.scss';
 
-const drawMainPageTimeout = 1000;
+const DRAW_MAIN_PAGE_TIMEOUT = 1000;
 
 export const MainPage = {
   template: `<div class="content content-fadeout main-content">
+  <div class="main__select-container">
+  <label class="level-select-label" for="levelSelect">Level:</label>
+
+  <label class="round-select-label" for="roundSelect">Round:</label>
+
+  </div>
   </div>`,
 
   draw() {
     PageTemplate.draw();
-
     const contentElement = document.querySelector('.content');
 
     if (contentElement instanceof HTMLElement) {
@@ -21,7 +27,18 @@ export const MainPage = {
       setTimeout(() => {
         document.body.innerHTML = MainPage.template;
         const content = document.querySelector('.content');
+
         if (content instanceof HTMLElement) {
+          const levelSelectLabel = document.querySelector('.level-select-label');
+          if (levelSelectLabel instanceof HTMLElement) {
+            Select.draw(levelSelectLabel);
+          }
+
+          const roundSelectLabel = document.querySelector('.round-select-label');
+          if (roundSelectLabel instanceof HTMLElement) {
+            Select.draw(roundSelectLabel);
+          }
+
           Field.draw(content);
           const field = document.querySelector('.field');
           if (field instanceof HTMLElement) {
@@ -50,7 +67,7 @@ export const MainPage = {
             );
           }
         }
-      }, drawMainPageTimeout);
+      }, DRAW_MAIN_PAGE_TIMEOUT);
     }
   },
 };

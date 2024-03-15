@@ -13,13 +13,11 @@ export function addFieldListener(fieldCell: HTMLElement, lineElement: HTMLElemen
   }
 
   const clickHandler = () => {
-    console.log('ho');
     const checkButton = document.querySelector('.button-check');
     if (checkButton) {
       checkButton.classList.add('disabled');
     }
 
-    // fieldWordCard.removeEventListener('click', clickHandler);
     const newFieldWordCard = fieldWordCard.cloneNode(true);
     if (!fieldWordCard.parentNode) {
       return;

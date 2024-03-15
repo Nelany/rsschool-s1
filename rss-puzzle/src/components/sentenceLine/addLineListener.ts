@@ -5,7 +5,6 @@ import { SentenceLine } from './SentenceLine';
 
 export function addLineListener(lineWordCard: HTMLElement, fieldElement: HTMLElement, lineElement: HTMLElement) {
   lineWordCard.addEventListener('click', () => {
-    console.log('haa');
     const fieldCell = fieldElement.querySelector('.cell');
     const selectedWord = lineWordCard.cloneNode(true);
 
