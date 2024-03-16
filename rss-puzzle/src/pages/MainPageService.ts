@@ -1,12 +1,13 @@
 import { wordCollections } from '../common/services/wordCollections';
 import { addFieldListener } from '../components/field/addFieldListener';
+import { Select } from '../components/select/Select';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
 import { addLineListener } from '../components/sentenceLine/addLineListener';
 
-const markTimeout = 1200;
-const littleTimeout = 100;
-const mediumTimeout = 500;
-const largeTimeout = 500;
+const MARK_TIMEOUT = 1200;
+const LITTLE_TIMEOUT = 100;
+const MEDIUM_TIMEOUT = 500;
+const LARGE_TIMEOUT = 2000;
 
 function markWrongWords() {
   const fieldDivs: NodeListOf<HTMLDivElement> = document.querySelectorAll('.word');
@@ -19,7 +20,7 @@ function markWrongWords() {
       fieldDivs[i].classList.add('wrong-word');
       setTimeout(() => {
         fieldDivs[i].classList.remove('wrong-word');
-      }, markTimeout);
+      }, MARK_TIMEOUT);
     }
   }
 }
@@ -49,6 +50,18 @@ export function checkIfWrongAnswer() {
   return isError;
 }
 
+export function drawSelects() {
+  const levelSelectLabel = document.querySelector('.level-select-label');
+  if (levelSelectLabel instanceof HTMLElement) {
+    Select.draw(levelSelectLabel, 'level');
+  }
+
+  const roundSelectLabel = document.querySelector('.round-select-label');
+  if (roundSelectLabel instanceof HTMLElement) {
+    Select.draw(roundSelectLabel, 'round');
+  }
+}
+
 export function continueButtonHandler() {
   wordCollections.switchToNextSentence();
   const field = document.querySelector('.field');
@@ -63,6 +76,7 @@ export function continueButtonHandler() {
       field.innerHTML = '';
     }
     SentenceLine.draw(field);
+    drawSelects();
     if (!checkButton || !autocompleteButton) {
       return;
     }
@@ -73,15 +87,14 @@ export function continueButtonHandler() {
       continueButton.classList.remove('disappearing');
       checkButton.classList.remove('hidden');
       checkButton.classList.add('semi-appearing');
-    }, mediumTimeout);
+    }, MEDIUM_TIMEOUT);
     setTimeout(() => {
       checkButton.classList.remove('semi-appearing');
-    }, largeTimeout);
+    }, LARGE_TIMEOUT);
   }
 }
 
 export function checkButtonHandler() {
-  // const answerArray = SentenceLine.getAnswerArray();
   const checkButton = document.querySelector('.button-check');
   if (!checkButton) {
     return;
@@ -101,10 +114,10 @@ export function checkButtonHandler() {
         continueButton.classList.remove('hidden');
         continueButton.classList.remove('disabled');
         continueButton.classList.add('button-green');
-      }, littleTimeout);
+      }, LITTLE_TIMEOUT);
       setTimeout(() => {
         continueButton.classList.remove('button-green');
-      }, markTimeout);
+      }, MARK_TIMEOUT);
     }
 
     return;
@@ -113,7 +126,7 @@ export function checkButtonHandler() {
   markWrongWords();
   setTimeout(() => {
     checkButton.classList.remove('shaking');
-  }, markTimeout);
+  }, MARK_TIMEOUT);
 }
 
 export function autocompleteButtonHandler() {
@@ -146,7 +159,7 @@ export function autocompleteButtonHandler() {
         checkButton.classList.add('hidden');
         continueButton.classList.remove('hidden');
         continueButton.classList.remove('disabled');
-      }, littleTimeout);
+      }, LITTLE_TIMEOUT);
     }
   }
 }
@@ -191,7 +204,7 @@ export function dragover(event: DragEvent) {
 
 export function dropFieldCell(event: DragEvent) {
   event.preventDefault();
-  const data = event.dataTransfer!.getData('application/json');
+  const data = event.dataTransfer?.getData('application/json');
   if (data) {
     const parsedData = JSON.parse(data);
     const { target } = event;
