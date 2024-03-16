@@ -2,8 +2,7 @@ import { Button } from '../components/button/Button';
 import { Field } from '../components/field/Field';
 import { PageTemplate } from '../components/pageTemplate/PageTemplate';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
-import { autocompleteButtonHandler, checkButtonHandler, continueButtonHandler } from './MainPageService';
-import { Select } from '../components/select/Select';
+import { autocompleteButtonHandler, checkButtonHandler, continueButtonHandler, drawSelects } from './MainPageService';
 import './MainPage.scss';
 
 const DRAW_MAIN_PAGE_TIMEOUT = 1000;
@@ -29,15 +28,7 @@ export const MainPage = {
         const content = document.querySelector('.content');
 
         if (content instanceof HTMLElement) {
-          const levelSelectLabel = document.querySelector('.level-select-label');
-          if (levelSelectLabel instanceof HTMLElement) {
-            Select.draw(levelSelectLabel, 'level');
-          }
-
-          const roundSelectLabel = document.querySelector('.round-select-label');
-          if (roundSelectLabel instanceof HTMLElement) {
-            Select.draw(roundSelectLabel, 'round');
-          }
+          drawSelects();
 
           Field.draw(content);
           const field = document.querySelector('.field');

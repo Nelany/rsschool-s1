@@ -1,5 +1,6 @@
 import { wordCollections } from '../common/services/wordCollections';
 import { addFieldListener } from '../components/field/addFieldListener';
+import { Select } from '../components/select/Select';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
 import { addLineListener } from '../components/sentenceLine/addLineListener';
 
@@ -49,6 +50,18 @@ export function checkIfWrongAnswer() {
   return isError;
 }
 
+export function drawSelects() {
+  const levelSelectLabel = document.querySelector('.level-select-label');
+  if (levelSelectLabel instanceof HTMLElement) {
+    Select.draw(levelSelectLabel, 'level');
+  }
+
+  const roundSelectLabel = document.querySelector('.round-select-label');
+  if (roundSelectLabel instanceof HTMLElement) {
+    Select.draw(roundSelectLabel, 'round');
+  }
+}
+
 export function continueButtonHandler() {
   wordCollections.switchToNextSentence();
   const field = document.querySelector('.field');
@@ -63,6 +76,7 @@ export function continueButtonHandler() {
       field.innerHTML = '';
     }
     SentenceLine.draw(field);
+    drawSelects();
     if (!checkButton || !autocompleteButton) {
       return;
     }

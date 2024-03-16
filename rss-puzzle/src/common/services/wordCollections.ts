@@ -4,6 +4,7 @@ import { level3 } from '../../assets/data/wordCollectionLevel3';
 import { level4 } from '../../assets/data/wordCollectionLevel4';
 import { level5 } from '../../assets/data/wordCollectionLevel5';
 import { level6 } from '../../assets/data/wordCollectionLevel6';
+import { saveCurrentLevel, saveCurrentRound } from './localStorage';
 
 export const wordCollections = {
   allLevelsData: [level1, level2, level3, level4, level5, level6],
@@ -21,17 +22,13 @@ export const wordCollections = {
     return wordCollections.allLevelsData[wordCollections.currentLevelIndex].rounds.length;
   },
 
-  // getCurrentRoundData() {
-  //   const currentLevelData = wordCollections.allLevelsData[wordCollections.currentLevelIndex];
-  //   return currentLevelData.rounds[wordCollections.currentRoundIndex];
-  // },
-
   getCurrentLevelIndex() {
     return wordCollections.currentLevelIndex;
   },
 
   setCurrentLevelIndex(levelIndex: number) {
-    this.currentRoundIndex = levelIndex;
+    this.currentLevelIndex = levelIndex;
+    this.currentRoundIndex = 0;
     this.currentSentenceIndex = 0;
   },
 
@@ -71,11 +68,15 @@ export const wordCollections = {
       wordCollections.currentSentenceIndex += 1;
 
       if (wordCollections.currentSentenceIndex >= currentRound.words.length) {
+        saveCurrentRound(currentLevel);
+
         wordCollections.isResetField = true;
         wordCollections.currentRoundIndex += 1;
         wordCollections.currentSentenceIndex = 0;
 
         if (wordCollections.currentRoundIndex >= currentLevel.rounds.length) {
+          saveCurrentLevel();
+
           wordCollections.isResetField = true;
           wordCollections.currentLevelIndex += 1;
           wordCollections.currentRoundIndex = 0;

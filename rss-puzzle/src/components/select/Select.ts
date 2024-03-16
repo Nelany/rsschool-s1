@@ -1,3 +1,4 @@
+import { wordCollections } from '../../common/services/wordCollections';
 import './Select.scss';
 import {
   BASIC_OPTION,
@@ -14,6 +15,10 @@ export const Select = {
   },
 
   draw(parent: HTMLElement, whatSelect: 'level' | 'round') {
+    const oldElement = document.querySelector(`.select-${whatSelect}`);
+    if (oldElement instanceof HTMLElement) {
+      oldElement.remove();
+    }
     parent.insertAdjacentHTML('afterend', Select.template(whatSelect));
 
     const select = document.querySelector(`.select-${whatSelect}`);
@@ -32,6 +37,21 @@ export const Select = {
         select.innerHTML += `<option value="${i + 1}" class="option option-${whatSelect}" selected>${i + 1}</option>`;
       } else if (options[i] === COMPLETED_SELECTED_OPTION) {
         select.innerHTML += `<option value="${i + 1}" class="option option-${whatSelect} completed-option  selected">${i + 1}</option>`;
+      }
+    }
+    if (whatSelect === 'level') {
+      const option = document.querySelector(
+        `option.option-${whatSelect}[value='${wordCollections.currentLevelIndex + 1}']`
+      );
+      if (option instanceof HTMLOptionElement) {
+        option.selected = true;
+      }
+    } else if (whatSelect === 'round') {
+      const option = document.querySelector(
+        `option.option-${whatSelect}[value='${wordCollections.currentRoundIndex + 1}']`
+      );
+      if (option instanceof HTMLOptionElement) {
+        option.selected = true;
       }
     }
   },
