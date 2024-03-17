@@ -1,13 +1,6 @@
 import { wordCollections } from '../../common/services/wordCollections';
 import './Select.scss';
-import {
-  BASIC_OPTION,
-  BASIC_SELECTED_OPTION,
-  COMPLETED_OPTION,
-  COMPLETED_SELECTED_OPTION,
-  getLevelOptions,
-  getRoundOptions,
-} from './SelectService';
+import { BASIC_OPTION, COMPLETED_OPTION, getLevelOptions, getRoundOptions } from './SelectService';
 
 export const Select = {
   template(whatSelect: 'level' | 'round') {
@@ -32,11 +25,7 @@ export const Select = {
       if (options[i] === BASIC_OPTION) {
         select.innerHTML += `<option value="${i + 1}" class="option option-${whatSelect}">${i + 1}</option>`;
       } else if (options[i] === COMPLETED_OPTION) {
-        select.innerHTML += `<option value="${i + 1}" class="option option-${whatSelect} completed-option">${i + 1}</option>`;
-      } else if (options[i] === BASIC_SELECTED_OPTION) {
-        select.innerHTML += `<option value="${i + 1}" class="option option-${whatSelect}" selected>${i + 1}</option>`;
-      } else if (options[i] === COMPLETED_SELECTED_OPTION) {
-        select.innerHTML += `<option value="${i + 1}" class="option option-${whatSelect} completed-option  selected">${i + 1}</option>`;
+        select.innerHTML += `<option value="${i + 1}" class="option option-${whatSelect} completed-option">&#10003;${i + 1}</option>`;
       }
     }
     if (whatSelect === 'level') {

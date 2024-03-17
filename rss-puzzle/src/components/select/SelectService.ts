@@ -3,15 +3,12 @@ import { MainPage } from '../../pages/MainPage';
 
 export const BASIC_OPTION = 0;
 export const COMPLETED_OPTION = 1;
-export const BASIC_SELECTED_OPTION = 2;
-export const COMPLETED_SELECTED_OPTION = 3;
 
 export function getLevelOptions() {
   let optionsDataArray: number[] = [];
   const storedLevelArr = localStorage.getItem('levelArray');
-  const storedLustCompletedLevelIndex = localStorage.getItem('lustCompletedLevelIndex');
 
-  if (storedLevelArr && storedLustCompletedLevelIndex) {
+  if (storedLevelArr) {
     optionsDataArray = JSON.parse(storedLevelArr);
   } else {
     const levelsNumber = wordCollections.getLevelsNumber();
@@ -40,12 +37,14 @@ export function getRoundOptions() {
 
 export function selectsChangeListener(event: Event) {
   if (event.target instanceof HTMLSelectElement && event.target.classList.contains('select-level')) {
+    wordCollections.isRestoredRound = false;
     const { selectedIndex } = event.target;
     const selectedOption = event.target.options[selectedIndex];
     wordCollections.setCurrentLevelIndex(parseInt(selectedOption.value, 10) - 1);
     MainPage.draw();
   }
   if (event.target instanceof HTMLSelectElement && event.target.classList.contains('select-round')) {
+    wordCollections.isRestoredRound = false;
     const { selectedIndex } = event.target;
     const selectedOption = event.target.options[selectedIndex];
     wordCollections.setCurrentRoundIndex(parseInt(selectedOption.value, 10) - 1);

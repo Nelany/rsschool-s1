@@ -28,13 +28,12 @@ export const MainPage = {
         const content = document.querySelector('.content');
 
         if (content instanceof HTMLElement) {
-          drawSelects();
-
           Field.draw(content);
           const field = document.querySelector('.field');
           if (field instanceof HTMLElement) {
             SentenceLine.draw(field);
           }
+          drawSelects();
 
           const buttonsContainerTemplate = `<div class="buttons-container"></div>`;
           content.insertAdjacentHTML('beforeend', buttonsContainerTemplate);

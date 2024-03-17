@@ -13,6 +13,7 @@ export const wordCollections = {
   currentRoundIndex: 0,
   currentSentenceIndex: 0,
   isResetField: false,
+  isRestoredRound: false,
 
   getLevelsNumber() {
     return wordCollections.allLevelsData.length;
@@ -45,9 +46,12 @@ export const wordCollections = {
     return `${wordCollections.currentLevelIndex}_${wordCollections.currentRoundIndex}_${wordCollections.currentSentenceIndex}`;
   },
 
-  getCurrentSentence() {
+  getCurrentSentence(): string {
     const currentLevel = wordCollections.allLevelsData[wordCollections.currentLevelIndex];
-
+    if (wordCollections.currentRoundIndex >= currentLevel.rounds.length) {
+      wordCollections.switchToNextSentence();
+      return wordCollections.getCurrentSentence();
+    }
     if (currentLevel && currentLevel.rounds.length > 0) {
       const currentRound = currentLevel.rounds[wordCollections.currentRoundIndex];
 
@@ -62,7 +66,24 @@ export const wordCollections = {
   switchToNextSentence() {
     const currentLevel = wordCollections.allLevelsData[wordCollections.currentLevelIndex];
 
-    if (currentLevel && currentLevel.rounds.length > 0) {
+    if (wordCollections.isRestoredRound) {
+      wordCollections.currentRoundIndex += 1;
+
+      if (wordCollections.currentRoundIndex >= currentLevel.rounds.length) {
+        wordCollections.isResetField = true;
+        wordCollections.currentLevelIndex += 1;
+        wordCollections.currentSentenceIndex = 0;
+        wordCollections.currentRoundIndex = 0;
+
+        if (wordCollections.currentLevelIndex >= wordCollections.allLevelsData.length) {
+          wordCollections.isResetField = true;
+          wordCollections.currentLevelIndex = 0;
+          wordCollections.currentRoundIndex = 0;
+          wordCollections.currentSentenceIndex = 0;
+        }
+      }
+      wordCollections.isRestoredRound = false;
+    } else if (currentLevel && currentLevel.rounds.length > 0) {
       const currentRound = currentLevel.rounds[wordCollections.currentRoundIndex];
       wordCollections.isResetField = false;
       wordCollections.currentSentenceIndex += 1;
