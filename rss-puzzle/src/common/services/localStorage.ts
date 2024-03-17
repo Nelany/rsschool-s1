@@ -53,6 +53,25 @@ export function saveCurrentRound(currentLevel: Level) {
 
   roundArr[wordCollections.currentRoundIndex] = 1;
 
+  const isAllOnes = roundArr.every((num) => num === 1);
+  if (isAllOnes) {
+    const storedLevelArr = localStorage.getItem('levelArray');
+    let levelArr: number[] = [];
+    if (storedLevelArr) {
+      levelArr = JSON.parse(storedLevelArr);
+    } else {
+      const levelsLength = wordCollections.allLevelsData.length;
+      for (let i = 0; i < levelsLength; i += 1) {
+        levelArr.push(0);
+      }
+    }
+    if (levelArr) {
+      levelArr[wordCollections.currentLevelIndex] = 1;
+      const arrLevelsString = JSON.stringify(levelArr);
+      localStorage.setItem('levelArray', arrLevelsString);
+    }
+  }
+
   const arrRoundsString = JSON.stringify(roundArr);
   localStorage.setItem(`roundArray${wordCollections.currentLevelIndex}`, arrRoundsString);
 
