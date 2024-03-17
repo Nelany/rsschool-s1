@@ -103,11 +103,13 @@ export function restoreLastCompleted() {
   const storedCurrentLevelIndex = localStorage.getItem('lustCompletedLevelIndex');
   if (storedCurrentLevelIndex) {
     wordCollections.setCurrentLevelIndex(JSON.parse(storedCurrentLevelIndex));
+    wordCollections.isRestoredRound = true;
   }
 
   const storedCurrentRoundIndex = localStorage.getItem('lustCompletedRoundIndex');
   if (storedCurrentRoundIndex) {
     wordCollections.setCurrentRoundIndex(JSON.parse(storedCurrentRoundIndex) + 1);
     wordCollections.currentSentenceIndex = 0;
+    wordCollections.isRestoredRound = true;
   }
 }
