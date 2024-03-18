@@ -21,7 +21,10 @@
 }
 
 .main__tools-container {
+  width: 90vw;
+  max-width: 800px;
   display: flex;
+  justify-content: space-between;
 }
 
 .main__translate-container {
@@ -31,7 +34,6 @@
   justify-content: center;
   align-items: center;
   margin: 10px 5px;
-  // color: rgb(186 98 64);
   color: rgba(184, 73, 59, 0.825);
   transition: all 0.4s;
 }

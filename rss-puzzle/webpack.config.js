@@ -37,7 +37,7 @@ const baseConfig = {
       extensions: 'ts',
     }),
     new CopyWebpackPlugin({
-      patterns: [{ from: 'src/assets/images' }],
+      patterns: [{ from: 'src/assets/images' }, { from: 'src/assets/icons' }],
     }),
   ],
 };

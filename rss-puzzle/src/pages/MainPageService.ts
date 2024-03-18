@@ -108,6 +108,11 @@ export function checkButtonHandler() {
     });
     const continueButton = document.querySelector('.button-continue');
     if (continueButton) {
+      const translate = document.querySelector('.main__translate');
+      if (translate instanceof HTMLElement) {
+        translate.classList.add('appearing');
+      }
+
       checkButton.classList.add('disabled');
       setTimeout(() => {
         checkButton.classList.add('hidden');
@@ -161,6 +166,11 @@ export function autocompleteButtonHandler() {
         continueButton.classList.remove('disabled');
       }, LITTLE_TIMEOUT);
     }
+  }
+
+  const translate = document.querySelector('.main__translate');
+  if (translate instanceof HTMLElement) {
+    translate.classList.add('appearing');
   }
 }
 
@@ -321,4 +331,30 @@ export function drop(event: DragEvent) {
   } else if (event.target instanceof HTMLElement && event.target.classList.contains('line')) {
     dropLine(event);
   }
+}
+
+export function translateButtonHandler() {
+  let isOffTranslate = false;
+  const translateButton = document.querySelector('.translate-button');
+  if (!translateButton) {
+    return;
+  }
+  if (translateButton.classList.contains('button-off')) {
+    translateButton.classList.remove('button-off');
+    const translate = document.querySelector('.main__translate');
+    if (translate instanceof HTMLElement) {
+      translate.classList.add('appearing');
+    }
+    isOffTranslate = false;
+  } else {
+    translateButton.classList.add('button-off');
+    const translate = document.querySelector('.main__translate');
+    if (translate instanceof HTMLElement) {
+      translate.classList.remove('appearing');
+    }
+    isOffTranslate = true;
+  }
+
+  const isOffTranslateString = JSON.stringify(isOffTranslate);
+  localStorage.setItem('isOffTranslate', isOffTranslateString);
 }
