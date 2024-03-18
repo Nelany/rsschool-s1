@@ -108,6 +108,11 @@ export function checkButtonHandler() {
     });
     const continueButton = document.querySelector('.button-continue');
     if (continueButton) {
+      const translate = document.querySelector('.main__translate');
+      if (translate instanceof HTMLElement) {
+        translate.classList.add('appearing');
+      }
+
       checkButton.classList.add('disabled');
       setTimeout(() => {
         checkButton.classList.add('hidden');
@@ -161,6 +166,11 @@ export function autocompleteButtonHandler() {
         continueButton.classList.remove('disabled');
       }, LITTLE_TIMEOUT);
     }
+  }
+
+  const translate = document.querySelector('.main__translate');
+  if (translate instanceof HTMLElement) {
+    translate.classList.add('appearing');
   }
 }
 
