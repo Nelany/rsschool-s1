@@ -63,6 +63,11 @@ export const wordCollections = {
     return 'No sentences available';
   },
 
+  getCurrentTranslate(): string {
+    return wordCollections.allLevelsData[wordCollections.currentLevelIndex].rounds[wordCollections.currentRoundIndex]
+      .words[wordCollections.currentSentenceIndex].textExampleTranslate;
+  },
+
   switchToNextSentence() {
     const currentLevel = wordCollections.allLevelsData[wordCollections.currentLevelIndex];
 

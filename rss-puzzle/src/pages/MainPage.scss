@@ -19,3 +19,28 @@
   display: flex;
   gap: 10px;
 }
+
+.main__tools-container {
+  display: flex;
+}
+
+.main__translate-container {
+  width: 100%;
+  min-height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 5px;
+  // color: rgb(186 98 64);
+  color: rgba(184, 73, 59, 0.825);
+  transition: all 0.4s;
+}
+
+.main__translate {
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.appearing {
+  opacity: 1;
+}

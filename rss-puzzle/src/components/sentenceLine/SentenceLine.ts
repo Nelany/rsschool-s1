@@ -3,6 +3,8 @@ import './SentenceLine.scss';
 import { wordCollections } from '../../common/services/wordCollections';
 import { dragover, drop } from '../../pages/MainPageService';
 
+const DRAW_TRANSLATE_TIMEOUT = 500;
+
 export const SentenceLine = {
   answerArray: [] as string[],
   currentSentence: wordCollections.getCurrentSentence(),
@@ -15,6 +17,14 @@ export const SentenceLine = {
     if (line instanceof HTMLElement) {
       line.addEventListener('dragover', dragover);
       line.addEventListener('drop', drop);
+    }
+    const translate = document.querySelector('.main__translate');
+    if (translate instanceof HTMLElement) {
+      translate.classList.remove('appearing');
+      setTimeout(() => {
+        translate.textContent = wordCollections.getCurrentTranslate();
+        translate.classList.add('appearing');
+      }, DRAW_TRANSLATE_TIMEOUT);
     }
   },
 
