@@ -406,7 +406,7 @@ export async function speakerHandler() {
     return;
   }
 
-  // speaker.classList.add('speaker-speak');
+  speaker.classList.add('speaker-speak');
 
   await new Promise((resolve) => {
     audio.addEventListener('ended', resolve);
