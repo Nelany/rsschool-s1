@@ -358,3 +358,24 @@ export function translateButtonHandler() {
   const isOffTranslateString = JSON.stringify(isOffTranslate);
   localStorage.setItem('isOffTranslate', isOffTranslateString);
 }
+
+export async function speakerHandler() {
+  const file = wordCollections.getCurrentSpeak();
+  const audioSrc = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/${file}`;
+
+  const audio = new Audio(audioSrc);
+  audio.play();
+
+  const speaker = document.querySelector('.speaker');
+  if (!(speaker instanceof HTMLElement)) {
+    return;
+  }
+
+  speaker.classList.add('speaker-speak');
+
+  await new Promise((resolve) => {
+    audio.addEventListener('ended', resolve);
+  });
+
+  speaker.classList.remove('speaker-speak');
+}

@@ -9,6 +9,7 @@ export const SentenceLine = {
   answerArray: [] as string[],
   currentSentence: wordCollections.getCurrentSentence(),
   template: `<div class="line"></div>`,
+
   draw(parent: HTMLElement) {
     parent.insertAdjacentHTML('afterend', SentenceLine.template);
     sentenceCreator(wordCollections.getCurrentSentence());
