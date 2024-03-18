@@ -68,6 +68,11 @@ export const wordCollections = {
       .words[wordCollections.currentSentenceIndex].textExampleTranslate;
   },
 
+  getCurrentSpeak(): string {
+    return wordCollections.allLevelsData[wordCollections.currentLevelIndex].rounds[wordCollections.currentRoundIndex]
+      .words[wordCollections.currentSentenceIndex].audioExample;
+  },
+
   switchToNextSentence() {
     const currentLevel = wordCollections.allLevelsData[wordCollections.currentLevelIndex];
 
