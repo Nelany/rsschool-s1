@@ -7,6 +7,7 @@ import {
   checkButtonHandler,
   continueButtonHandler,
   drawSelects,
+  speakerButtonHandler,
   speakerHandler,
   translateButtonHandler,
 } from './MainPageService';
@@ -60,7 +61,7 @@ export const MainPage = {
               speakerContainer,
               {
                 text: '<img class="speaker-img" src="./speaker.png" alt="">',
-                classes: 'main_button tools-button speaker',
+                classes: 'main_button tools-button speaker appearing',
               },
               { type: 'click', handler: speakerHandler, selector: '.speaker' }
             );
@@ -72,8 +73,34 @@ export const MainPage = {
             Button.draw(
               toolsButtonsContainer,
               {
+                text: '<img class="tools-button-img" src="./speaker.png" alt="">',
+                classes: 'main_button tools-button speaker-button',
+              },
+              { type: 'click', handler: speakerButtonHandler, selector: '.speaker-button' }
+            );
+
+            const speakerButton = document.querySelector('.speaker-button');
+            if (!speakerButton) {
+              return;
+            }
+            const restoredIsSpeaker = localStorage.getItem('isOffSpeak');
+            let isOffSpeak = false;
+            if (restoredIsSpeaker) {
+              isOffSpeak = JSON.parse(restoredIsSpeaker);
+            }
+            if (isOffSpeak) {
+              speakerButton.classList.add('button-off');
+              const speaker = document.querySelector('.speaker');
+              if (speaker instanceof HTMLElement) {
+                speaker.classList.remove('appearing');
+              }
+            }
+
+            Button.draw(
+              toolsButtonsContainer,
+              {
                 text: '<img class="tools-button-img" src="./text.png" alt="">',
-                classes: 'main_button tools-button translate-button button-off',
+                classes: 'main_button tools-button translate-button',
               },
               { type: 'click', handler: translateButtonHandler, selector: '.translate-button' }
             );

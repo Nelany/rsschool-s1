@@ -77,6 +77,24 @@ export function continueButtonHandler() {
     }
     SentenceLine.draw(field);
     drawSelects();
+
+    const speakerButton = document.querySelector('.speaker-button');
+    if (!speakerButton) {
+      return;
+    }
+    const restoredIsSpeaker = localStorage.getItem('isOffSpeak');
+    let isOffSpeak = false;
+    if (restoredIsSpeaker) {
+      isOffSpeak = JSON.parse(restoredIsSpeaker);
+    }
+    if (isOffSpeak) {
+      speakerButton.classList.add('button-off');
+      const speaker = document.querySelector('.speaker');
+      if (speaker instanceof HTMLElement) {
+        speaker.classList.remove('appearing');
+      }
+    }
+
     if (!checkButton || !autocompleteButton) {
       return;
     }
@@ -111,6 +129,10 @@ export function checkButtonHandler() {
       const translate = document.querySelector('.main__translate');
       if (translate instanceof HTMLElement) {
         translate.classList.add('appearing');
+      }
+      const speaker = document.querySelector('.speaker');
+      if (speaker instanceof HTMLElement) {
+        speaker.classList.add('appearing');
       }
 
       checkButton.classList.add('disabled');
@@ -171,6 +193,11 @@ export function autocompleteButtonHandler() {
   const translate = document.querySelector('.main__translate');
   if (translate instanceof HTMLElement) {
     translate.classList.add('appearing');
+  }
+
+  const speaker = document.querySelector('.speaker');
+  if (speaker instanceof HTMLElement) {
+    speaker.classList.add('appearing');
   }
 }
 
@@ -359,7 +386,15 @@ export function translateButtonHandler() {
   localStorage.setItem('isOffTranslate', isOffTranslateString);
 }
 
+let isPlaying: boolean;
+
 export async function speakerHandler() {
+  if (isPlaying) {
+    return;
+  }
+
+  isPlaying = true;
+
   const file = wordCollections.getCurrentSpeak();
   const audioSrc = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/${file}`;
 
@@ -371,11 +406,38 @@ export async function speakerHandler() {
     return;
   }
 
-  speaker.classList.add('speaker-speak');
+  // speaker.classList.add('speaker-speak');
 
   await new Promise((resolve) => {
     audio.addEventListener('ended', resolve);
   });
 
   speaker.classList.remove('speaker-speak');
+  isPlaying = false;
+}
+
+export function speakerButtonHandler() {
+  let isOffSpeak = false;
+  const speakerButton = document.querySelector('.speaker-button');
+  if (!speakerButton) {
+    return;
+  }
+  if (speakerButton.classList.contains('button-off')) {
+    speakerButton.classList.remove('button-off');
+    const speaker = document.querySelector('.speaker');
+    if (speaker instanceof HTMLElement) {
+      speaker.classList.add('appearing');
+    }
+    isOffSpeak = false;
+  } else {
+    speakerButton.classList.add('button-off');
+    const speaker = document.querySelector('.speaker');
+    if (speaker instanceof HTMLElement) {
+      speaker.classList.remove('appearing');
+    }
+    isOffSpeak = true;
+  }
+
+  const isOffSpeakString = JSON.stringify(isOffSpeak);
+  localStorage.setItem('isOffSpeak', isOffSpeakString);
 }
