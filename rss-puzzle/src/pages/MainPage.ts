@@ -9,12 +9,19 @@ const DRAW_MAIN_PAGE_TIMEOUT = 1000;
 
 export const MainPage = {
   template: `<div class="content content-fadeout main-content">
-  <div class="main__select-container">
-  <label class="level-select-label" for="levelSelect">Level:</label>
+    <div class="main__tools-container">
 
-  <label class="round-select-label" for="roundSelect">Round:</label>
+      <div class="main__select-container">
+        <label class="level-select-label" for="levelSelect">Level:</label>
 
-  </div>
+        <label class="round-select-label" for="roundSelect">Round:</label>
+      </div>
+
+    </div>
+
+    <div class="main__translate-container">
+      <span class="main__translate"></span>
+    </div>
   </div>`,
 
   draw() {
