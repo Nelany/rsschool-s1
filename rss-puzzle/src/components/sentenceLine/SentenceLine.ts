@@ -18,12 +18,22 @@ export const SentenceLine = {
       line.addEventListener('dragover', dragover);
       line.addEventListener('drop', drop);
     }
+
+    const restoredIsOffTranslate = localStorage.getItem('isOffTranslate');
+    let isOffTranslate = false;
+    if (restoredIsOffTranslate) {
+      isOffTranslate = JSON.parse(restoredIsOffTranslate);
+    }
+
     const translate = document.querySelector('.main__translate');
     if (translate instanceof HTMLElement) {
       translate.classList.remove('appearing');
+
       setTimeout(() => {
         translate.textContent = wordCollections.getCurrentTranslate();
-        translate.classList.add('appearing');
+        if (!isOffTranslate) {
+          translate.classList.add('appearing');
+        }
       }, DRAW_TRANSLATE_TIMEOUT);
     }
   },

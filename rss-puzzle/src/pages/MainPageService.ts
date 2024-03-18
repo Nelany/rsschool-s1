@@ -322,3 +322,29 @@ export function drop(event: DragEvent) {
     dropLine(event);
   }
 }
+
+export function translateButtonHandler() {
+  let isOffTranslate = false;
+  const translateButton = document.querySelector('.translate-button');
+  if (!translateButton) {
+    return;
+  }
+  if (translateButton.classList.contains('button-off')) {
+    translateButton.classList.remove('button-off');
+    const translate = document.querySelector('.main__translate');
+    if (translate instanceof HTMLElement) {
+      translate.classList.add('appearing');
+    }
+    isOffTranslate = false;
+  } else {
+    translateButton.classList.add('button-off');
+    const translate = document.querySelector('.main__translate');
+    if (translate instanceof HTMLElement) {
+      translate.classList.remove('appearing');
+    }
+    isOffTranslate = true;
+  }
+
+  const isOffTranslateString = JSON.stringify(isOffTranslate);
+  localStorage.setItem('isOffTranslate', isOffTranslateString);
+}

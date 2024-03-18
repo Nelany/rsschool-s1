@@ -4,6 +4,7 @@ export function removeUserDataAndOpenLoginPage(): void {
   localStorage.removeItem('userData');
   localStorage.removeItem('lustCompletedRoundIndex');
   localStorage.removeItem('lustCompletedLevelIndex');
+  localStorage.removeItem('isOffTranslate');
   localStorage.removeItem('levelArray');
   localStorage.removeItem('roundArray0');
   localStorage.removeItem('roundArray1');

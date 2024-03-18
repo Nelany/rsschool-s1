@@ -2,7 +2,13 @@ import { Button } from '../components/button/Button';
 import { Field } from '../components/field/Field';
 import { PageTemplate } from '../components/pageTemplate/PageTemplate';
 import { SentenceLine } from '../components/sentenceLine/SentenceLine';
-import { autocompleteButtonHandler, checkButtonHandler, continueButtonHandler, drawSelects } from './MainPageService';
+import {
+  autocompleteButtonHandler,
+  checkButtonHandler,
+  continueButtonHandler,
+  drawSelects,
+  translateButtonHandler,
+} from './MainPageService';
 import './MainPage.scss';
 
 const DRAW_MAIN_PAGE_TIMEOUT = 1000;
@@ -16,6 +22,8 @@ export const MainPage = {
 
         <label class="round-select-label" for="roundSelect">Round:</label>
       </div>
+
+      <div class="tools-buttons-container"></div>
 
     </div>
 
@@ -41,6 +49,43 @@ export const MainPage = {
             SentenceLine.draw(field);
           }
           drawSelects();
+
+          const toolsButtonsContainer = document.querySelector('.tools-buttons-container');
+
+          if (toolsButtonsContainer instanceof HTMLElement) {
+            Button.draw(
+              toolsButtonsContainer,
+              {
+                text: '<img class="tools-button-img" src="./speaker.png" alt="">',
+                classes: 'main_button tools-button translate-button button-off',
+              },
+              { type: 'click', handler: translateButtonHandler, selector: '.translate-button' }
+            );
+            const translateButton = document.querySelector('.translate-button');
+            if (!translateButton) {
+              return;
+            }
+            const restoredIsOffTranslate = localStorage.getItem('isOffTranslate');
+            let isOffTranslate = false;
+            if (restoredIsOffTranslate) {
+              isOffTranslate = JSON.parse(restoredIsOffTranslate);
+            }
+            if (isOffTranslate) {
+              translateButton.classList.add('button-off');
+
+              const translate = document.querySelector('.main__translate');
+              if (translate instanceof HTMLElement) {
+                translate.classList.remove('appearing');
+              }
+            } else {
+              translateButton.classList.remove('button-off');
+
+              const translate = document.querySelector('.main__translate');
+              if (translate instanceof HTMLElement) {
+                translate.classList.add('appearing');
+              }
+            }
+          }
 
           const buttonsContainerTemplate = `<div class="buttons-container"></div>`;
           content.insertAdjacentHTML('beforeend', buttonsContainerTemplate);

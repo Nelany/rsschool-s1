@@ -12,6 +12,14 @@
     transform: scale(1.1);
   }
 
+  &.tools-button {
+    width: 40px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &.disabled {
     pointer-events: none;
     opacity: 0.5;
@@ -42,4 +50,16 @@
   &.semi-appearing {
     animation: semiFadeIn 0.5s;
   }
+
+  &.button-off {
+    background-color: rgba(122, 96, 100, 0.458);
+    border: 1px solid rgb(170, 170, 170);
+  }
+}
+
+.tools-button-img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(23%) saturate(6469%) hue-rotate(292deg) brightness(126%)
+    contrast(106%);
 }
