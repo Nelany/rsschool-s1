@@ -80,7 +80,7 @@ h4 {
   flex-grow: 1;
 }
 
-.main__container {
+.main__content {
   display: flex;
   flex-direction: column;
   width: 100%;
