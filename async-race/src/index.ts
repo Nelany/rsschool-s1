@@ -1,5 +1,9 @@
-import './global.scss';
+// import './global.scss';
 
-function loadApp() {}
+import { GaragePage } from './pages/GaragePage';
+
+function loadApp() {
+  GaragePage.draw();
+}
 
 loadApp();
