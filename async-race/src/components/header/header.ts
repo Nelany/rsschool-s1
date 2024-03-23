@@ -1,3 +1,4 @@
+import { Button } from '../button/Button';
 import './header.scss';
 
 export const headerTemplate = {
@@ -12,5 +13,15 @@ export const headerTemplate = {
       return;
     }
     content.innerHTML = headerTemplate.template;
+
+    Button.draw('.header__page-button-container', {
+      text: 'TO GARAGE',
+      classes: 'button big-button garage-button',
+    });
+
+    Button.draw('.header__page-button-container', {
+      text: 'TO WINNERS',
+      classes: 'button big-button winners-button',
+    });
   },
 };

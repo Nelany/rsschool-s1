@@ -1,3 +1,4 @@
+import { Button } from '../button/Button';
 import './footer.scss';
 
 export const footerTemplate = {
@@ -11,5 +12,15 @@ export const footerTemplate = {
       return;
     }
     content.innerHTML += footerTemplate.template;
+
+    Button.draw('.footer__buttons', {
+      text: 'PREV',
+      classes: 'button small-button prev-button',
+    });
+
+    Button.draw('.footer__buttons', {
+      text: 'NEXT',
+      classes: 'button small-button next-button',
+    });
   },
 };

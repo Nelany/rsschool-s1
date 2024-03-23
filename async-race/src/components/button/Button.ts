@@ -17,8 +17,12 @@ export const Button = {
     return `<button class="button ${params.classes}" id="${params.id}" ${params.isSubmit ? 'type="submit"' : ''}>${params.text}</button>`;
   },
 
-  draw(parent: HTMLElement, templateParams: TemplateParams, listenerParams?: ListenerParams) {
-    parent.insertAdjacentHTML('beforeend', Button.template(templateParams));
+  draw(parent: string, templateParams: TemplateParams, listenerParams?: ListenerParams) {
+    const parentElement = document.querySelector(`${parent}`);
+    if (!(parentElement instanceof HTMLElement)) {
+      return;
+    }
+    parentElement.insertAdjacentHTML('beforeend', Button.template(templateParams));
     if (listenerParams) {
       Button.addListeners(listenerParams);
     }
