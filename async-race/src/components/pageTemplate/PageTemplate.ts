@@ -1,15 +1,15 @@
-import { mainTemplate } from '../main/main';
-import { headerTemplate } from '../header/header';
+import { Main } from '../main/Main';
+import { Header } from '../header/Header';
 import './PageTemplate.scss';
-import { footerTemplate } from '../footer/footer';
+import { Footer } from '../footer/Footer';
 
 export const PageTemplate = {
   template: `<div class="content"></div>`,
 
   draw() {
     document.body.innerHTML = PageTemplate.template;
-    headerTemplate.draw();
-    mainTemplate.draw();
-    footerTemplate.draw();
+    Header.draw();
+    Main.draw();
+    Footer.draw();
   },
 };

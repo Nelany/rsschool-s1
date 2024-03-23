@@ -1,7 +1,7 @@
 import { Button } from '../button/Button';
 import './footer.scss';
 
-export const footerTemplate = {
+export const Footer = {
   template: `<footer class="footer">
   <div class="footer__buttons buttons-container"></div>
 </footer>`,
@@ -11,7 +11,7 @@ export const footerTemplate = {
     if (!(content instanceof HTMLElement)) {
       return;
     }
-    content.innerHTML += footerTemplate.template;
+    content.innerHTML += Footer.template;
 
     Button.draw('.footer__buttons', {
       text: 'PREV',

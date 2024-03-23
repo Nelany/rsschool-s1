@@ -1,7 +1,7 @@
 import { Button } from '../button/Button';
 import './header.scss';
 
-export const headerTemplate = {
+export const Header = {
   template: `<header class="header">
   <div class="header__page-button-container header__container">
   </div>
@@ -12,7 +12,7 @@ export const headerTemplate = {
     if (!(content instanceof HTMLElement)) {
       return;
     }
-    content.innerHTML = headerTemplate.template;
+    content.innerHTML = Header.template;
 
     Button.draw('.header__page-button-container', {
       text: 'TO GARAGE',

@@ -1,4 +1,4 @@
-// import './global.scss';
+import './global.scss';
 
 import { GaragePage } from './pages/GaragePage';
 

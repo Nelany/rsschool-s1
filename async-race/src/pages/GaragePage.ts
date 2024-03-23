@@ -1,6 +1,7 @@
 import { GarageTools } from '../components/garageTools/GarageTools';
 import { PageTemplate } from '../components/pageTemplate/PageTemplate';
-import { Tag } from '../components/tag/TagAppendChild';
+import { Tag } from '../components/tag/Tag';
+import './GaragePage.scss';
 
 export const GaragePage = {
   draw() {
