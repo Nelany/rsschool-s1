@@ -14,159 +14,64 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon" />
   </head>
   <body class="body">
-    <header class="header">
-      <div class="header__page-button-container header__container">
-        <button class="button big-button">TO GARAGE</button>
-        <button class="button big-button">TO WINNERS</button>
-      </div>
-      <form class="header__input-create-form header__container">
-        <input class="input input-text" type="text" id="createName" name="createName" />
-        <input class="input input-color" type="color" id="createColor" name="createColor" />
-        <button class="button small-button" type="submit">Create</button>
-      </form>
-      <form class="header__input-update-form header__container">
-        <input class="input input-text" type="text" id="updateName" name="updateName" />
-        <input class="input input-color" type="color" id="updateColor" name="updateColor" />
-        <button class="button small-button" type="submit">Update</button>
-      </form>
-      <div class="header__tools-buttons-contaner header__container">
-        <button class="button small-button">RACE</button>
-        <button class="button small-button">RESET</button>
-        <button class="button big-button">CREATE CARS</button>
-      </div>
-    </header>
+    <div class="content">
+      <header class="header">
+        <div class="header__page-button-container header__container">
+          <button class="button big-button">TO GARAGE</button>
+          <button class="button big-button">TO WINNERS</button>
+        </div>
 
-    <main class="main">
-      <h2 class="main__page-tittle">Garage (<span class="main__cars-number">6</span>)</h2>
-      <h3 class="main__page-number-text">Page #<span class="main__page-number">1</span></h3>
-
-      <div class="main__roads">
-        <div class="main__road-container">
-          <div class="main__road-tools buttons-container">
-            <button class="button big-button">SELECT</button>
-            <button class="button big-button">REMOVE</button>
-            <h4 class="main__car-name">Lamborghini</h4>
+        <div class="header__garage-tools-container">
+          <form class="header__input-create-form header__container">
+            <input class="input input-text" type="text" id="createName" name="createName" />
+            <input class="input input-color" type="color" id="createColor" name="createColor" />
+            <button class="button small-button" type="submit">Create</button>
+          </form>
+          <form class="header__input-update-form header__container">
+            <input class="input input-text" type="text" id="updateName" name="updateName" />
+            <input class="input input-color" type="color" id="updateColor" name="updateColor" />
+            <button class="button small-button" type="submit">Update</button>
+          </form>
+          <div class="header__tools-buttons-contaner header__container">
+            <button class="button small-button">RACE</button>
+            <button class="button small-button">RESET</button>
+            <button class="button big-button">CREATE CARS</button>
           </div>
+        </div>
+      </header>
 
-          <div class="main__road">
-            <div class="main__pedals-buttons buttons-container">
-              <button class="button button-pedal">GO</button>
-              <button class="button button-pedal">STOP</button>
+      <main class="main">
+        <h2 class="main__page-tittle">Garage (<span class="main__cars-number">6</span>)</h2>
+        <h3 class="main__page-number-text">Page #<span class="main__page-number">1</span></h3>
+
+        <div class="main__container">
+          <div class="main__road-container">
+            <div class="main__road-tools buttons-container">
+              <button class="button big-button">SELECT</button>
+              <button class="button big-button">REMOVE</button>
+              <h4 class="main__car-name">Lamborghini</h4>
             </div>
-            <div class="main__track">
-              <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
-              <img draggable="true" class="car" src="./assets/lovelamborghini.svg" alt="car" />
-              <img class="flag" src="./assets/flag2.svg" alt="" />
+
+            <div class="main__road">
+              <div class="main__pedals-buttons buttons-container">
+                <button class="button button-pedal">GO</button>
+                <button class="button button-pedal">STOP</button>
+              </div>
+              <div class="main__track">
+                <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
+                <img draggable="true" class="car" src="./assets/lovelamborghini.svg" alt="car" />
+                <img class="flag" src="./assets/flag2.svg" alt="" />
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="main__road-container">
-          <div class="main__road-tools buttons-container">
-            <button class="button big-button">SELECT</button>
-            <button class="button big-button">REMOVE</button>
-            <h4 class="main__car-name">Lamborghini</h4>
-          </div>
-
-          <div class="main__road">
-            <div class="main__pedals-buttons buttons-container">
-              <button class="button button-pedal">GO</button>
-              <button class="button button-pedal">STOP</button>
-            </div>
-            <div class="main__track">
-              <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
-              <img draggable="true" class="car" src="./assets/lovelamborghini.svg" alt="car" />
-              <img class="flag" src="./assets/flag2.svg" alt="" />
-            </div>
-          </div>
+      </main>
+      <footer class="footer">
+        <div class="buttons-container">
+          <button class="button small-button">PREV</button>
+          <button class="button small-button">NEXT</button>
         </div>
-
-        <div class="main__road-container">
-          <div class="main__road-tools buttons-container">
-            <button class="button big-button">SELECT</button>
-            <button class="button big-button">REMOVE</button>
-            <h4 class="main__car-name">Lamborghini</h4>
-          </div>
-
-          <div class="main__road">
-            <div class="main__pedals-buttons buttons-container">
-              <button class="button button-pedal">GO</button>
-              <button class="button button-pedal">STOP</button>
-            </div>
-            <div class="main__track">
-              <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
-              <img draggable="true" class="car" src="./assets/lovelamborghini.svg" alt="car" />
-              <img class="flag" src="./assets/flag2.svg" alt="" />
-            </div>
-          </div>
-        </div>
-
-        <div class="main__road-container">
-          <div class="main__road-tools buttons-container">
-            <button class="button big-button">SELECT</button>
-            <button class="button big-button">REMOVE</button>
-            <h4 class="main__car-name">Lamborghini</h4>
-          </div>
-
-          <div class="main__road">
-            <div class="main__pedals-buttons buttons-container">
-              <button class="button button-pedal">GO</button>
-              <button class="button button-pedal">STOP</button>
-            </div>
-            <div class="main__track">
-              <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
-              <img draggable="true" class="car" src="./assets/lovelamborghini.svg" alt="car" />
-              <img class="flag" src="./assets/flag2.svg" alt="" />
-            </div>
-          </div>
-        </div>
-
-        <div class="main__road-container">
-          <div class="main__road-tools buttons-container">
-            <button class="button big-button">SELECT</button>
-            <button class="button big-button">REMOVE</button>
-            <h4 class="main__car-name">Lamborghini</h4>
-          </div>
-
-          <div class="main__road">
-            <div class="main__pedals-buttons buttons-container">
-              <button class="button button-pedal">GO</button>
-              <button class="button button-pedal">STOP</button>
-            </div>
-            <div class="main__track">
-              <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
-              <img draggable="true" class="car" src="./assets/lovelamborghini.svg" alt="car" />
-              <img class="flag" src="./assets/flag2.svg" alt="" />
-            </div>
-          </div>
-        </div>
-
-        <div class="main__road-container">
-          <div class="main__road-tools buttons-container">
-            <button class="button big-button">SELECT</button>
-            <button class="button big-button">REMOVE</button>
-            <h4 class="main__car-name">Lamborghini</h4>
-          </div>
-
-          <div class="main__road">
-            <div class="main__pedals-buttons buttons-container">
-              <button class="button button-pedal">GO</button>
-              <button class="button button-pedal">STOP</button>
-            </div>
-            <div class="main__track">
-              <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
-              <img draggable="true" class="car" src="./assets/lovelamborghini.svg" alt="car" />
-              <img class="flag" src="./assets/flag2.svg" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <footer class="footer">
-      <div class="buttons-container">
-        <button class="button small-button">PREV</button>
-        <button class="button small-button">NEXT</button>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </body>
 </html>

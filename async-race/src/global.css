@@ -4,6 +4,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  background-color: black;
   background-image: url('./assets/background2.jpg');
   background-size: auto;
   background-repeat: no-repeat;
@@ -14,6 +15,14 @@
   margin: 0;
   padding: 20px;
   caret-color: transparent;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 h2,
@@ -38,6 +47,13 @@ h4 {
   justify-content: space-between;
 }
 
+.header__garage-tools-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .input {
   height: 30px;
   box-sizing: border-box;
@@ -58,6 +74,16 @@ h4 {
   width: 30px;
   padding: 0px;
   background-color: rgba(18, 1, 26, 0.749);
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.main__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .main__road-container {
@@ -150,7 +176,7 @@ h4 {
 }
 
 .small-button {
-  width: 60px;
+  width: 57px;
 }
 
 .button-pedal {
