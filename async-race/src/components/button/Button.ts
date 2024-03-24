@@ -30,7 +30,6 @@ export const Button = {
 
   addListeners: (listenerParams: ListenerParams) => {
     const button = document.querySelector(listenerParams.selector);
-
     if (button) {
       button.addEventListener(listenerParams.type, listenerParams.handler);
     }

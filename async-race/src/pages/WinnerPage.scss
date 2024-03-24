@@ -1,0 +1,49 @@
+.records-table {
+  display: flex;
+  background-color: rgba(18, 1, 26, 0.353);
+  flex-shrink: 0;
+  box-shadow: 0px 10px 10px rgb(17, 0, 36);
+
+  .records-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .records-cell {
+    min-height: 47px;
+    max-height: 47px;
+    display: flex;
+    text-align: start;
+    flex-grow: 1;
+    box-sizing: border-box;
+    padding: 0 5px;
+    border: 1px solid rgb(209, 182, 255);
+    overflow: hidden;
+  }
+
+  .records-header {
+    background-color: rgba(18, 1, 26, 0.749);
+    max-height: 75px;
+    min-height: 75px;
+  }
+
+  .record-name {
+    max-width: 179px;
+  }
+
+  .records-time {
+    width: 100%;
+  }
+
+  .record-car {
+    width: 70px;
+    position: relative;
+  }
+
+  .records-car-img {
+    width: 54px;
+    height: 19.5px;
+    left: 7px;
+    bottom: 12px;
+  }
+}

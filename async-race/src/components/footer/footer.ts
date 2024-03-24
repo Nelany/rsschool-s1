@@ -11,7 +11,7 @@ export const Footer = {
     if (!(content instanceof HTMLElement)) {
       return;
     }
-    content.innerHTML += Footer.template;
+    content.insertAdjacentHTML('beforeend', Footer.template);
 
     Button.draw('.footer__buttons', {
       text: 'PREV',
