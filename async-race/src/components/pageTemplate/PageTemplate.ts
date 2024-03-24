@@ -1,7 +1,7 @@
-import { Main } from '../main/Main';
-import { Header } from '../header/Header';
-import './PageTemplate.scss';
 import { Footer } from '../footer/Footer';
+import { Header } from '../header/Header';
+import { Main } from '../main/Main';
+import './PageTemplate.scss';
 
 export const PageTemplate = {
   template: `<div class="content"></div>`,

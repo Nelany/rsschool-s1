@@ -22,27 +22,22 @@
     pointer-events: none;
     opacity: 0.5;
   }
-}
 
-.button.appearing {
-  opacity: 1;
-  pointer-events: all;
-}
+  &.big-button {
+    width: 110px;
+  }
 
-.big-button {
-  width: 110px;
-}
+  &.small-button {
+    width: 57px;
+  }
 
-.small-button {
-  width: 57px;
-}
-
-.button-pedal {
-  width: 45px;
-  height: 40px;
-  margin: 5px 0;
-  border: 1px solid rgba(0, 255, 38, 0.57);
-  color: #00ff26;
-  font-weight: 100;
-  font-size: 11px;
+  &.button-pedal {
+    width: 45px;
+    height: 40px;
+    margin: 5px 0;
+    border: 1px solid rgba(0, 255, 38, 0.57);
+    color: #00ff26;
+    font-weight: 100;
+    font-size: 11px;
+  }
 }
