@@ -26,12 +26,6 @@
     justify-content: end;
     align-items: end;
     box-sizing: border-box;
-
-    .flag {
-      max-width: 80px;
-      margin-right: 140px;
-      z-index: 10;
-    }
   }
 
   &::after {

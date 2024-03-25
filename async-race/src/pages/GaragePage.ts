@@ -32,7 +32,6 @@ export const GaragePage = {
     getCars().then((cars: GetCarDTO[]) => {
       cars.forEach((car) => {
         Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
-        console.warn(car.color);
       });
     });
   },

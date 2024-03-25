@@ -1,9 +1,42 @@
+import { createCar, getCars } from '../../services/api';
+import { CreateCarDTO, GetCarDTO } from '../../types/apiTypes';
 import { Button } from '../button/Button';
+import { Road } from '../road/Road';
 import { Tag } from '../tag/Tag';
+
+export function createButtonHandler(event: Event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const nameInput = document.getElementById('createName') as HTMLInputElement;
+  const colorInput = document.getElementById('createColor') as HTMLInputElement;
+
+  const formData: CreateCarDTO = {
+    name: nameInput.value.trim(),
+    color: colorInput.value.trim(),
+  };
+
+  createCar(formData)
+    .then(() => {
+      const mainContent = document.querySelector('.main__content');
+      if (mainContent instanceof HTMLElement) {
+        mainContent.innerHTML = '';
+
+        getCars().then((cars: GetCarDTO[]) => {
+          cars.forEach((car) => {
+            console.warn(car.name);
+            Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
+          });
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('Error creating car:', error);
+    });
+}
 
 function createCreateForm() {
   Tag.draw('.header__garage-tools-container', {
-    tag: 'form',
+    tag: 'div',
     classes: 'header__input-create-form header__container',
   });
 
@@ -12,6 +45,7 @@ function createCreateForm() {
     classes: 'input input-text input-text-create',
     id: 'createName',
     type: 'text',
+    required: true,
   });
 
   Tag.draw('.header__input-create-form', {
@@ -19,18 +53,26 @@ function createCreateForm() {
     classes: 'input input-color input-color-create',
     id: 'createColor',
     type: 'color',
+    required: true,
   });
 
-  Button.draw('.header__input-create-form', {
-    text: 'Create',
-    classes: 'small-button button-create',
-    isSubmit: true,
-  });
+  Button.draw(
+    '.header__input-create-form',
+    {
+      text: 'Create',
+      classes: 'small-button button-create',
+    },
+    {
+      type: 'click',
+      selector: '.button-create',
+      handler: createButtonHandler,
+    }
+  );
 }
 
 function createUpdateForm() {
   Tag.draw('.header__garage-tools-container', {
-    tag: 'form',
+    tag: 'div',
     classes: 'header__input-update-form header__container',
   });
 
@@ -39,6 +81,7 @@ function createUpdateForm() {
     classes: 'input input-text input-text-update',
     id: 'updateName',
     type: 'text',
+    required: true,
   });
 
   Tag.draw('.header__input-update-form', {
@@ -46,12 +89,12 @@ function createUpdateForm() {
     classes: 'input input-color input-color-update',
     id: 'updateColor',
     type: 'color',
+    required: true,
   });
 
   Button.draw('.header__input-update-form', {
     text: 'Update',
     classes: 'small-button button-update',
-    isSubmit: true,
   });
 }
 

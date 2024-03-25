@@ -7,6 +7,7 @@ interface TagParams {
   alt?: string;
   src?: string;
   dataId?: string;
+  required?: boolean;
 }
 
 export const Tag = {
@@ -20,6 +21,9 @@ export const Tag = {
       element.type = params.type;
       if (params.id) {
         element.name = params.id;
+      }
+      if (params.required) {
+        element.required = params.required;
       }
     }
     if (params.text) {
