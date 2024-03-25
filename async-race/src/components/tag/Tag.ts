@@ -6,6 +6,7 @@ interface TagParams {
   text?: string;
   alt?: string;
   src?: string;
+  dataId?: string;
 }
 
 export const Tag = {
@@ -29,6 +30,9 @@ export const Tag = {
     }
     if (params.src && element instanceof HTMLImageElement) {
       element.src = params.src;
+    }
+    if (params.dataId) {
+      element.setAttribute('data-id', params.dataId);
     }
     return element;
   },
