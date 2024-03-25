@@ -4,11 +4,30 @@ import { Button } from '../button/Button';
 import { Road } from '../road/Road';
 import { Tag } from '../tag/Tag';
 
-export function createButtonHandler(event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
+export function updateCars() {
+  const mainContent = document.querySelector('.main__content');
+  if (mainContent instanceof HTMLElement) {
+    mainContent.innerHTML = '';
+
+    getCars().then((cars: GetCarDTO[]) => {
+      cars.forEach((car) => {
+        Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
+      });
+    });
+  }
+}
+
+export function createButtonHandler() {
   const nameInput = document.getElementById('createName') as HTMLInputElement;
   const colorInput = document.getElementById('createColor') as HTMLInputElement;
+
+  if (nameInput.value === '') {
+    nameInput.classList.add('red-border');
+    setTimeout(() => {
+      nameInput.classList.remove('red-border');
+    }, 2000);
+    return;
+  }
 
   const formData: CreateCarDTO = {
     name: nameInput.value.trim(),
@@ -17,17 +36,10 @@ export function createButtonHandler(event: Event) {
 
   createCar(formData)
     .then(() => {
-      const mainContent = document.querySelector('.main__content');
-      if (mainContent instanceof HTMLElement) {
-        mainContent.innerHTML = '';
+      updateCars();
 
-        getCars().then((cars: GetCarDTO[]) => {
-          cars.forEach((car) => {
-            console.warn(car.name);
-            Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
-          });
-        });
-      }
+      nameInput.value = '';
+      colorInput.value = '';
     })
     .catch((error) => {
       console.error('Error creating car:', error);

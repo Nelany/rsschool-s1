@@ -25,9 +25,22 @@ export async function createCar(dataParams: CreateCarDTO): Promise<void> {
     if (!response.ok) {
       throw new Error('Failed to create car');
     }
-
-    // return;
   } catch (error) {
     console.error('Error creating car:', error);
+  }
+}
+
+export async function deleteCar(carId: number): Promise<void> {
+  try {
+    const response = await fetch(`${BASE_URL}/garage/${carId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete car');
+    }
+  } catch (error) {
+    console.error('Error deleting car:', error);
+    throw error;
   }
 }

@@ -1,12 +1,35 @@
+import { deleteCar } from '../../services/api';
 import { Car } from '../car/Car';
+import { updateCars } from '../garageTools/GarageTools';
 import { Tag } from '../tag/Tag';
 import './Road.scss';
+
+export function removeButtonHandler(event: Event) {
+  const { target } = event;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  const dataId = target.dataset.id;
+
+  if (dataId) {
+    const str = dataId;
+    const numberPart: number = parseInt(str.split('-')[1], 10);
+
+    deleteCar(numberPart).then(() => {
+      updateCars();
+    });
+  } else {
+    console.error('data-id attribute is missing or invalid');
+  }
+}
 
 export const Road = {
   createTemplate(name: string, color: string, id: string) {
     const template = `<div class="main__road-tools buttons-container">
-  <button class="button big-button select-button">SELECT</button>
-  <button class="button big-button remove-button">REMOVE</button>
+  <button class="button big-button select-button data-id="select-${id}" ">SELECT</button>
+  <button class="button big-button remove-button" data-id="remove-${id}">REMOVE</button>
   <h4 class="main__car-name">${name}</h4>
 </div>
 
@@ -34,6 +57,12 @@ export const Road = {
 
     if (parentElement) {
       parentElement.insertAdjacentHTML('beforeend', Road.createTemplate(name, color, dataId));
+
+      const removeButton = document.querySelector(`[data-id="remove-${dataId}"]`);
+
+      if (removeButton) {
+        removeButton.addEventListener('click', removeButtonHandler);
+      }
     }
   },
 };
