@@ -25,7 +25,7 @@ function drawRecords() {
   <div class="records-names records-column">
     <div class="records-cell record-name-text records-header">Name</div>
     <div class="records-cell record-name">Lamborghini</div>
-    <div class="records-cell record-name">Aston MartinLamborghiniAlfabftgfcdxsaza Romeo</div>
+    <div class="records-cell record-name">Aston Martin</div>
     <div class="records-cell record-name">Alfa Romeo</div>
   </div>
 
