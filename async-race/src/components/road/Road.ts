@@ -1,8 +1,54 @@
 import { deleteCar } from '../../services/api';
 import { Car } from '../car/Car';
-import { updateCars } from '../garageTools/GarageTools';
+import { updateCar, updateCars } from '../garageTools/GarageTools';
 import { Tag } from '../tag/Tag';
 import './Road.scss';
+
+export function disableUpdateForm() {
+  const updateForm = document.querySelector('.header__input-update-form');
+
+  if (updateForm instanceof HTMLElement) {
+    updateForm.classList.add('disabled');
+    updateCar.selectedId = -1;
+  }
+}
+
+export function resetSelectButtons() {
+  const selectButtons = document.querySelectorAll('.select-button');
+  selectButtons.forEach((button) => {
+    button.classList.remove('green-border');
+  });
+}
+
+export function selectButtonHandler(event: Event) {
+  const { target } = event;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  const dataId = target.dataset.id;
+
+  if (dataId) {
+    const numberPart: number = parseInt(dataId.split('-')[1], 10);
+
+    updateCar.selectedId = numberPart;
+
+    const updateForm = document.querySelector('.header__input-update-form');
+
+    if (updateForm instanceof HTMLElement) {
+      resetSelectButtons();
+
+      if (updateForm.classList.contains('disabled')) {
+        updateForm.classList.remove('disabled');
+        updateCar.selectedId = numberPart;
+        target.classList.add('green-border');
+      } else {
+        disableUpdateForm();
+      }
+    }
+  }
+}
 
 export function removeButtonHandler(event: Event) {
   const { target } = event;
@@ -28,7 +74,7 @@ export function removeButtonHandler(event: Event) {
 export const Road = {
   createTemplate(name: string, color: string, id: string) {
     const template = `<div class="main__road-tools buttons-container">
-  <button class="button big-button select-button data-id="select-${id}" ">SELECT</button>
+  <button class="button big-button select-button" data-id="select-${id}">SELECT</button>
   <button class="button big-button remove-button" data-id="remove-${id}">REMOVE</button>
   <h4 class="main__car-name">${name}</h4>
 </div>
@@ -62,6 +108,11 @@ export const Road = {
 
       if (removeButton) {
         removeButton.addEventListener('click', removeButtonHandler);
+      }
+      const selectButton = document.querySelector(`[data-id="select-${dataId}"]`);
+
+      if (selectButton) {
+        selectButton.addEventListener('click', selectButtonHandler);
       }
     }
   },

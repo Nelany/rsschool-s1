@@ -4,6 +4,12 @@ import { Button } from '../button/Button';
 import { Road } from '../road/Road';
 import { Tag } from '../tag/Tag';
 
+export const updateCar = {
+  selectedId: -1,
+
+  updateSelectedCar() {},
+};
+
 export function updateCars() {
   const mainContent = document.querySelector('.main__content');
   if (mainContent instanceof HTMLElement) {
@@ -85,7 +91,7 @@ function createCreateForm() {
 function createUpdateForm() {
   Tag.draw('.header__garage-tools-container', {
     tag: 'div',
-    classes: 'header__input-update-form header__container',
+    classes: 'header__input-update-form header__container disabled',
   });
 
   Tag.draw('.header__input-update-form', {
