@@ -1,8 +1,9 @@
+import { Car } from '../car/Car';
 import { Tag } from '../tag/Tag';
 import './Road.scss';
 
 export const Road = {
-  createTemplate(name: string) {
+  createTemplate(name: string, color: string, id: string) {
     const template = `<div class="main__road-tools buttons-container">
   <button class="button big-button select-button">SELECT</button>
   <button class="button big-button remove-button">REMOVE</button>
@@ -16,15 +17,14 @@ export const Road = {
   </div>
 
   <div class="main__track">
-    <!-- <img class="car" src="./assets/Lamborghini-Silhouette.svg" alt="car" /> -->
-    <img draggable="true" class="car" src="./lovelamborghini.svg" alt="car" />
+  ${Car.svg(color, id)}
     <img class="flag" src="./flag2.svg" alt="flag" />
   </div>`;
 
     return template;
   },
 
-  draw(dataId: string, name: string) {
+  draw(dataId: string, name: string, color: string) {
     Tag.draw('.main__content', {
       classes: 'main__road-container',
       dataId,
@@ -33,7 +33,7 @@ export const Road = {
     const parentElement = document.querySelector(`[data-id="${dataId}"]`);
 
     if (parentElement) {
-      parentElement.insertAdjacentHTML('beforeend', Road.createTemplate(name));
+      parentElement.insertAdjacentHTML('beforeend', Road.createTemplate(name, color, dataId));
     }
   },
 };

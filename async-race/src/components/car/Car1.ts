@@ -1,7 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+export const Car1 = {
+  lightColor(color: string): string {
+    console.warn(color);
+    if (/^#[0-9a-fA-F]{6}$/.test(color)) {
+      const sliceColor = color.slice(1);
 
-<svg
+      const newSliceColor = sliceColor.replace(/(..)/g, (match) => `${match[0]}f`);
+
+      console.warn(`#${newSliceColor}`);
+
+      return `#${newSliceColor}`;
+    }
+    return color;
+  },
+
+  svg(color: string, id: string) {
+    const lightColor = Car1.lightColor(color);
+    const svg = `<svg class="car" id="car-${id}"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -11,9 +25,9 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    style="enable-background:new"
-   width="1920"
-   height="600"
-   id="svg2"
+
+   viewBox="0 0 1920 600"
+
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="car-lamborgini-green.svg">
@@ -74,13 +88,13 @@
          offset="0"
          style="stop-color:#050000;stop-opacity:1;" />
       <stop
-         style="stop-color:#03c800;stop-opacity:1;"
+         style="stop-color:${color};stop-opacity:1;"
          offset="0.5"
          id="stop4493" />
       <stop
          id="stop4495"
          offset="1"
-         style="stop-color:#04fa00;stop-opacity:1;" />
+         style="stop-color:${lightColor};stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        id="linearGradient4199">
@@ -4958,4 +4972,8 @@
          style="fill:#000000;fill-opacity:1;stroke:none" />
     </g>
   </g>
-</svg>
+</svg>`;
+
+    return svg;
+  },
+};

@@ -4,10 +4,12 @@
 
 .car {
   max-width: 140px;
+  max-height: 80px;
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
+  fill: #c6cfd0;
 }
 
 @media (max-width: 1000px) {

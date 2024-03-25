@@ -2,6 +2,7 @@ import { GarageTools } from '../components/garageTools/GarageTools';
 import { Road } from '../components/road/Road';
 import { Tag } from '../components/tag/Tag';
 import { getCars } from '../services/api';
+import { GetCarDTO } from '../types/apiTypes';
 import './GaragePage.scss';
 
 export const GaragePage = {
@@ -28,9 +29,9 @@ export const GaragePage = {
       mainContent.innerHTML = '';
     }
 
-    getCars().then((cars) => {
+    getCars().then((cars: GetCarDTO[]) => {
       cars.forEach((car) => {
-        Road.draw(`${car.id}`, `${car.name}`);
+        Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
         console.warn(car.color);
       });
     });
