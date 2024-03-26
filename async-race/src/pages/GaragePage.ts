@@ -1,8 +1,6 @@
-import { GarageTools } from '../components/garageTools/GarageTools';
-import { Road } from '../components/road/Road';
+import { carsData } from '../components/car/carsData';
+import { GarageTools, updateCars } from '../components/garageTools/GarageTools';
 import { Tag } from '../components/tag/Tag';
-import { getCars } from '../services/api';
-import { GetCarDTO } from '../types/apiTypes';
 import './GaragePage.scss';
 
 export const GaragePage = {
@@ -21,7 +19,7 @@ export const GaragePage = {
 
     const pageNumberName = document.querySelector('.main__page-number-text');
     if (pageNumberName instanceof HTMLElement) {
-      pageNumberName.innerHTML = `Page #<span class="main__page-number">1</span>`;
+      pageNumberName.innerHTML = `Page #<span class="main__page-number">${carsData.numberGaragePage}</span>`;
     }
 
     const mainContent = document.querySelector('.main__content');
@@ -29,11 +27,6 @@ export const GaragePage = {
       mainContent.innerHTML = '';
     }
 
-    getCars().then((cars: GetCarDTO[]) => {
-      cars.forEach((car) => {
-        Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
-        console.warn(car.color);
-      });
-    });
+    updateCars();
   },
 };

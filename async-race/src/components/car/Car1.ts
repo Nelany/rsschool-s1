@@ -1,12 +1,9 @@
 export const Car1 = {
   lightColor(color: string): string {
-    console.warn(color);
     if (/^#[0-9a-fA-F]{6}$/.test(color)) {
       const sliceColor = color.slice(1);
 
       const newSliceColor = sliceColor.replace(/(..)/g, (match) => `${match[0]}f`);
-
-      console.warn(`#${newSliceColor}`);
 
       return `#${newSliceColor}`;
     }

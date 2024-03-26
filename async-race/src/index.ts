@@ -1,16 +1,26 @@
 import { PageTemplate } from './components/pageTemplate/PageTemplate';
+import { disableUpdateForm } from './components/road/Road';
 import './global.scss';
 
 import { GaragePage } from './pages/GaragePage';
-// import { WinnersPage } from './pages/WinnersPage';
+
+function bodyListener(event: Event) {
+  const { target } = event;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  if (!target.closest('.header__input-update-form') && !target.classList.contains('select-button')) {
+    disableUpdateForm();
+  }
+}
 
 function loadApp() {
   PageTemplate.draw();
   GaragePage.draw();
 
-  // setTimeout(() => {
-  //   WinnersPage.draw();
-  // }, 1000);
+  document.body.addEventListener('click', bodyListener);
 }
 
 loadApp();

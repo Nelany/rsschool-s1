@@ -18,11 +18,6 @@
     transform: scale(1.1);
   }
 
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
   &.big-button {
     width: 110px;
   }
