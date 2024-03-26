@@ -1,3 +1,4 @@
+import { carsData } from '../components/car/carsData';
 import { GarageTools, updateCars } from '../components/garageTools/GarageTools';
 import { Tag } from '../components/tag/Tag';
 import './GaragePage.scss';
@@ -18,7 +19,7 @@ export const GaragePage = {
 
     const pageNumberName = document.querySelector('.main__page-number-text');
     if (pageNumberName instanceof HTMLElement) {
-      pageNumberName.innerHTML = `Page #<span class="main__page-number">1</span>`;
+      pageNumberName.innerHTML = `Page #<span class="main__page-number">${carsData.numberGaragePage}</span>`;
     }
 
     const mainContent = document.querySelector('.main__content');

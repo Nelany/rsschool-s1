@@ -1,6 +1,5 @@
 export const Car = {
   svg(color: string, id: string) {
-    console.log(color);
     const svg = `<svg class="car" data-id="car-${id}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="-45.8975 264.1042 2012.4376 551.4816" enable-background="new -45.8975 264.1042 2012.4376 551.4816"
       xml:space="preserve">

@@ -1,5 +1,16 @@
 export const carsData = {
   selectedId: -1,
+  numberGaragePage: 1,
+  totalCars: 0,
+
+  checkNumberGaragePage() {
+    const totalPages = Math.ceil(carsData.totalCars / 7);
+    if (carsData.numberGaragePage <= 0) {
+      carsData.numberGaragePage = totalPages;
+    } else if (carsData.numberGaragePage > totalPages) {
+      carsData.numberGaragePage = 1;
+    }
+  },
 
   randomBrand: [
     'banan',
@@ -54,7 +65,7 @@ export const carsData = {
     'molnienosnyi',
     'plokhoi',
     'bystryi',
-    'sladkj',
+    'sladkij',
     'lubimyi',
     'dorogoj',
     'krasnyy',

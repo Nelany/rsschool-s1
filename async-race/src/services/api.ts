@@ -2,8 +2,8 @@ import { CreateCarDTO, GetCarDTO } from '../types/apiTypes';
 
 const BASE_URL = 'http://localhost:3000';
 
-export async function getCars(page?: number): Promise<{ cars: GetCarDTO[]; total: number }> {
-  const response = await fetch(`${BASE_URL}/garage?_limit=7&_page=${page || 1}`);
+export async function getCars(page: number): Promise<{ cars: GetCarDTO[]; total: number }> {
+  const response = await fetch(`${BASE_URL}/garage?_limit=7&_page=${page}`);
   if (response.ok) {
     const cars: GetCarDTO[] = await response.json();
     const totalCountHeader = response.headers.get('X-Total-Count');

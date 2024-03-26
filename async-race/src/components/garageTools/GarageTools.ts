@@ -10,14 +10,20 @@ export function updateCars() {
   if (mainContent instanceof HTMLElement) {
     mainContent.innerHTML = '';
 
-    getCars().then((cars: { cars: GetCarDTO[]; total: number }) => {
+    getCars(carsData.numberGaragePage).then((cars: { cars: GetCarDTO[]; total: number }) => {
       cars.cars.forEach((car) => {
         Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
       });
       const numberOfCars = cars.total;
+      carsData.totalCars = numberOfCars;
       const mainCarsNumber = document.querySelector('.main__cars-number');
       if (mainCarsNumber instanceof HTMLElement) {
         mainCarsNumber.textContent = `${numberOfCars}`;
+      }
+      const garagePageNumber = document.querySelector('.main__page-number');
+      if (garagePageNumber instanceof HTMLElement) {
+        carsData.checkNumberGaragePage();
+        garagePageNumber.textContent = `${carsData.numberGaragePage}`;
       }
     });
   }
