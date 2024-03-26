@@ -1,5 +1,5 @@
 import { PageTemplate } from './components/pageTemplate/PageTemplate';
-import { disableUpdateForm, resetSelectButtons } from './components/road/Road';
+import { disableUpdateForm } from './components/road/Road';
 import './global.scss';
 
 import { GaragePage } from './pages/GaragePage';
@@ -13,7 +13,6 @@ function bodyListener(event: Event) {
 
   if (!target.closest('.header__input-update-form') && !target.classList.contains('select-button')) {
     disableUpdateForm();
-    resetSelectButtons();
   }
 }
 

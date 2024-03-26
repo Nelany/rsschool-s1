@@ -1,33 +1,68 @@
-import { createCar, getCars } from '../../services/api';
+import { createCar, getCars, updateCar } from '../../services/api';
 import { CreateCarDTO, GetCarDTO } from '../../types/apiTypes';
 import { Button } from '../button/Button';
-import { Road } from '../road/Road';
+import { carsData } from '../car/carsData';
+import { Road, disableUpdateForm } from '../road/Road';
 import { Tag } from '../tag/Tag';
-
-export const updateCar = {
-  selectedId: -1,
-
-  updateSelectedCar() {},
-};
 
 export function updateCars() {
   const mainContent = document.querySelector('.main__content');
   if (mainContent instanceof HTMLElement) {
     mainContent.innerHTML = '';
 
-    getCars().then((cars: GetCarDTO[]) => {
-      cars.forEach((car) => {
+    getCars().then((cars: { cars: GetCarDTO[]; total: number }) => {
+      cars.cars.forEach((car) => {
         Road.draw(`${car.id}`, `${car.name}`, `${car.color}`);
       });
+      const numberOfCars = cars.total;
+      const mainCarsNumber = document.querySelector('.main__cars-number');
+      if (mainCarsNumber instanceof HTMLElement) {
+        mainCarsNumber.textContent = `${numberOfCars}`;
+      }
     });
   }
 }
 
-export function createButtonHandler() {
-  const nameInput = document.getElementById('createName') as HTMLInputElement;
-  const colorInput = document.getElementById('createColor') as HTMLInputElement;
+export function updateButtonHandler() {
+  const nameInput: HTMLElement | null = document.getElementById('updateName');
+  const colorInput: HTMLElement | null = document.getElementById('updateColor');
+  if (!(nameInput instanceof HTMLInputElement) || !(colorInput instanceof HTMLInputElement)) {
+    return;
+  }
+  if (nameInput?.value === '') {
+    nameInput.classList.add('red-border');
+    setTimeout(() => {
+      nameInput.classList.remove('red-border');
+    }, 2000);
+    return;
+  }
 
-  if (nameInput.value === '') {
+  const formData: CreateCarDTO = {
+    name: nameInput.value.trim(),
+    color: colorInput.value.trim(),
+  };
+
+  updateCar(carsData.selectedId, formData)
+    .then(() => {
+      updateCars();
+
+      nameInput.value = '';
+      colorInput.value = '';
+      carsData.selectedId = -1;
+      disableUpdateForm();
+    })
+    .catch((error) => {
+      console.error('Error creating car:', error);
+    });
+}
+
+export function createButtonHandler() {
+  const nameInput: HTMLElement | null = document.getElementById('createName');
+  const colorInput: HTMLElement | null = document.getElementById('createColor');
+  if (!(nameInput instanceof HTMLInputElement) || !(colorInput instanceof HTMLInputElement)) {
+    return;
+  }
+  if (nameInput?.value === '') {
     nameInput.classList.add('red-border');
     setTimeout(() => {
       nameInput.classList.remove('red-border');
@@ -50,6 +85,31 @@ export function createButtonHandler() {
     .catch((error) => {
       console.error('Error creating car:', error);
     });
+}
+
+async function createCarsButtonHandler(): Promise<void> {
+  const carsPromises: Promise<void>[] = [];
+
+  for (let i = 0; i < 100; i += 1) {
+    const name = carsData.getRandomCarName();
+    const color = carsData.getRandomColor();
+
+    const car: CreateCarDTO = {
+      name,
+      color,
+    };
+
+    const promise = createCar(car);
+
+    carsPromises.push(promise);
+  }
+
+  try {
+    await Promise.all(carsPromises);
+    updateCars();
+  } catch (error) {
+    console.error(`Error creating car`, error);
+  }
 }
 
 function createCreateForm() {
@@ -110,10 +170,18 @@ function createUpdateForm() {
     required: true,
   });
 
-  Button.draw('.header__input-update-form', {
-    text: 'Update',
-    classes: 'small-button button-update',
-  });
+  Button.draw(
+    '.header__input-update-form',
+    {
+      text: 'Update',
+      classes: 'small-button button-update',
+    },
+    {
+      type: 'click',
+      selector: '.button-update',
+      handler: updateButtonHandler,
+    }
+  );
 }
 
 function createToolsButtons() {
@@ -132,10 +200,18 @@ function createToolsButtons() {
     classes: 'button small-button reset-button',
   });
 
-  Button.draw('.header__tools-buttons-container', {
-    text: 'CREATE CARS',
-    classes: 'button big-button button-create-cars',
-  });
+  Button.draw(
+    '.header__tools-buttons-container',
+    {
+      text: 'CREATE CARS',
+      classes: 'button big-button button-create-cars',
+    },
+    {
+      type: 'click',
+      selector: '.button-create-cars',
+      handler: createCarsButtonHandler,
+    }
+  );
 }
 
 export const GarageTools = {

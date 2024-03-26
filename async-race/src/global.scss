@@ -9,6 +9,7 @@
   background-size: auto;
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed;
   color: #00ff26;
   font-family: 'Nunito', sans-serif;
   font-style: normal;
@@ -30,6 +31,10 @@
     font-weight: 400;
     text-shadow: 2px 2px 4px rgb(0, 0, 0);
     margin: 5px 0;
+  }
+
+  .footer {
+    margin-top: 10px;
   }
 
   .buttons-container {

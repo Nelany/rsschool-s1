@@ -1,23 +1,33 @@
 import { deleteCar } from '../../services/api';
 import { Car } from '../car/Car';
-import { updateCar, updateCars } from '../garageTools/GarageTools';
+import { carsData } from '../car/carsData';
+import { updateCars } from '../garageTools/GarageTools';
 import { Tag } from '../tag/Tag';
 import './Road.scss';
-
-export function disableUpdateForm() {
-  const updateForm = document.querySelector('.header__input-update-form');
-
-  if (updateForm instanceof HTMLElement) {
-    updateForm.classList.add('disabled');
-    updateCar.selectedId = -1;
-  }
-}
 
 export function resetSelectButtons() {
   const selectButtons = document.querySelectorAll('.select-button');
   selectButtons.forEach((button) => {
     button.classList.remove('green-border');
   });
+}
+
+export function disableUpdateForm() {
+  const updateForm = document.querySelector('.header__input-update-form');
+
+  if (updateForm instanceof HTMLElement) {
+    updateForm.classList.add('disabled');
+    carsData.selectedId = -1;
+    const nameInput: HTMLElement | null = document.getElementById('updateName');
+    const colorInput: HTMLElement | null = document.getElementById('updateColor');
+    if (!(nameInput instanceof HTMLInputElement) || !(colorInput instanceof HTMLInputElement)) {
+      return;
+    }
+
+    nameInput.value = '';
+    colorInput.value = '';
+    resetSelectButtons();
+  }
 }
 
 export function selectButtonHandler(event: Event) {
@@ -32,7 +42,7 @@ export function selectButtonHandler(event: Event) {
   if (dataId) {
     const numberPart: number = parseInt(dataId.split('-')[1], 10);
 
-    updateCar.selectedId = numberPart;
+    carsData.selectedId = numberPart;
 
     const updateForm = document.querySelector('.header__input-update-form');
 
@@ -41,7 +51,7 @@ export function selectButtonHandler(event: Event) {
 
       if (updateForm.classList.contains('disabled')) {
         updateForm.classList.remove('disabled');
-        updateCar.selectedId = numberPart;
+        carsData.selectedId = numberPart;
         target.classList.add('green-border');
       } else {
         disableUpdateForm();
