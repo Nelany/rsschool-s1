@@ -1,4 +1,5 @@
 import { deleteCar, startStopEngine, switchEngineToDriveMode } from '../../services/api';
+import { StartStopCarsEngineDTO } from '../../types/apiTypes';
 import { Car } from '../car/Car';
 import { carsData } from '../car/carsData';
 import { updateCars } from '../garageTools/GarageTools';
@@ -81,6 +82,52 @@ export function removeButtonHandler(event: Event) {
   }
 }
 
+let stoppedCars: number[] = [];
+
+function startAnimation(id: number, startData: StartStopCarsEngineDTO) {
+  const carElement = document.querySelector(`[data-id="car-${id}"]`);
+  const parentElement = document.querySelector(`[data-id="track-${id}"]`);
+
+  if (!(parentElement instanceof HTMLElement) || !(carElement instanceof SVGElement)) {
+    return;
+  }
+
+  const parentWidth = parentElement.offsetWidth;
+  const carBoundingBox = carElement.getBoundingClientRect();
+  const carWidth = carBoundingBox.width;
+  const pathLength = parentWidth - carWidth;
+  const animationDuration = startData.distance / startData.velocity;
+
+  let startTime: number | null = null;
+
+  function animate(currentTime: number) {
+    if (!startTime) {
+      startTime = currentTime;
+    }
+
+    if (!(carElement instanceof SVGElement)) {
+      return;
+    }
+
+    const elapsedTime = currentTime - startTime;
+
+    const progress = Math.min(elapsedTime / animationDuration, 1);
+
+    const currentDistance = pathLength * progress;
+
+    carElement.style.left = `${currentDistance}px`;
+
+    if (elapsedTime < animationDuration && !stoppedCars.includes(id)) {
+      requestAnimationFrame(animate);
+    }
+    if (stoppedCars.includes(id)) {
+      stoppedCars = stoppedCars.filter((number) => number !== id);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
 function goButtonHandler(event: Event) {
   const { target } = event;
 
@@ -96,8 +143,23 @@ function goButtonHandler(event: Event) {
     const str = dataId;
     const numberPart: number = parseInt(str.split('-')[1], 10);
 
-    startStopEngine(numberPart, 'started').then(() => {
-      switchEngineToDriveMode(numberPart);
+    stoppedCars = stoppedCars.filter((number) => number !== numberPart);
+
+    startStopEngine(numberPart, 'started').then((startData: StartStopCarsEngineDTO | null) => {
+      if (startData === null) {
+        return;
+      }
+      startAnimation(numberPart, startData);
+      switchEngineToDriveMode(numberPart)
+        .then((response) => {
+          console.warn(response);
+          if (response && response.status === 500) {
+            stoppedCars.push(numberPart);
+          }
+        })
+        .catch((error) => {
+          console.error('Error switching engine to drive mode:', error);
+        });
 
       const stopButton = document.querySelector(`[data-id="stop-${numberPart}"]`);
       if (stopButton) {
@@ -124,12 +186,20 @@ function stopButtonHandler(event: Event) {
     const str = dataId;
     const numberPart: number = parseInt(str.split('-')[1], 10);
 
-    startStopEngine(numberPart, 'stopped').then(() => {});
-
-    const goButton = document.querySelector(`[data-id="go-${numberPart}"]`);
-    if (goButton) {
-      goButton.classList.remove('disabled');
+    stoppedCars.push(numberPart);
+    const carElement = document.querySelector(`[data-id="car-${numberPart}"]`);
+    if (carElement instanceof SVGElement) {
+      setTimeout(() => {
+        carElement.style.left = '0px';
+      }, 100);
     }
+
+    startStopEngine(numberPart, 'stopped').then(() => {
+      const goButton = document.querySelector(`[data-id="go-${numberPart}"]`);
+      if (goButton) {
+        goButton.classList.remove('disabled');
+      }
+    });
   } else {
     console.error('data-id attribute is missing or invalid');
   }
@@ -149,7 +219,7 @@ export const Road = {
     <button class="button button-pedal stop-button disabled" data-id="stop-${id}">STOP</button>
   </div>
 
-  <div class="main__track">
+  <div class="main__track" data-id="track-${id}">
   ${Car.svg(color, id)}
     <img class="flag" src="./flag2.svg" alt="flag" />
   </div>`;

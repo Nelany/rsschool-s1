@@ -12,5 +12,6 @@ export interface StartStopCarsEngineDTO {
 }
 
 export interface SwitchEngineToDriveModeDTO {
-  success: true;
+  success?: true;
+  status?: number;
 }

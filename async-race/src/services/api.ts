@@ -118,6 +118,9 @@ export async function switchEngineToDriveMode(carId: number): Promise<SwitchEngi
     } else if (response.status === 429) {
       console.error("Drive already in progress. You can't run drive for the same car twice while it's not stopped.");
     } else if (response.status === 500) {
+      return {
+        status: response.status,
+      };
       console.error("Car has been stopped suddenly. It's engine was broken down.");
     } else {
       console.error('Error:', response.statusText);
