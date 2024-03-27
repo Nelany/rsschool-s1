@@ -1,4 +1,4 @@
-import { deleteCar } from '../../services/api';
+import { deleteCar, startStopEngine, switchEngineToDriveMode } from '../../services/api';
 import { Car } from '../car/Car';
 import { carsData } from '../car/carsData';
 import { updateCars } from '../garageTools/GarageTools';
@@ -25,7 +25,7 @@ export function disableUpdateForm() {
     }
 
     nameInput.value = '';
-    colorInput.value = '';
+    colorInput.value = '#000000';
     resetSelectButtons();
   }
 }
@@ -81,6 +81,60 @@ export function removeButtonHandler(event: Event) {
   }
 }
 
+function goButtonHandler(event: Event) {
+  const { target } = event;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  target.classList.add('disabled');
+
+  const dataId = target.dataset.id;
+
+  if (dataId) {
+    const str = dataId;
+    const numberPart: number = parseInt(str.split('-')[1], 10);
+
+    startStopEngine(numberPart, 'started').then(() => {
+      switchEngineToDriveMode(numberPart);
+
+      const stopButton = document.querySelector(`[data-id="stop-${numberPart}"]`);
+      if (stopButton) {
+        stopButton.classList.remove('disabled');
+      }
+    });
+  } else {
+    console.error('data-id attribute is missing or invalid');
+  }
+}
+
+function stopButtonHandler(event: Event) {
+  const { target } = event;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  target.classList.add('disabled');
+
+  const dataId = target.dataset.id;
+
+  if (dataId) {
+    const str = dataId;
+    const numberPart: number = parseInt(str.split('-')[1], 10);
+
+    startStopEngine(numberPart, 'stopped').then(() => {});
+
+    const goButton = document.querySelector(`[data-id="go-${numberPart}"]`);
+    if (goButton) {
+      goButton.classList.remove('disabled');
+    }
+  } else {
+    console.error('data-id attribute is missing or invalid');
+  }
+}
+
 export const Road = {
   createTemplate(name: string, color: string, id: string) {
     const template = `<div class="main__road-tools buttons-container">
@@ -91,8 +145,8 @@ export const Road = {
 
 <div class="main__road">
   <div class="main__pedals-buttons buttons-container">
-    <button class="button button-pedal go-button">GO</button>
-    <button class="button button-pedal stop-button">STOP</button>
+    <button class="button button-pedal go-button" data-id="go-${id}">GO</button>
+    <button class="button button-pedal stop-button disabled" data-id="stop-${id}">STOP</button>
   </div>
 
   <div class="main__track">
@@ -123,6 +177,16 @@ export const Road = {
 
       if (selectButton) {
         selectButton.addEventListener('click', selectButtonHandler);
+      }
+      const goButton = document.querySelector(`[data-id="go-${dataId}"]`);
+
+      if (goButton) {
+        goButton.addEventListener('click', goButtonHandler);
+      }
+      const stopButton = document.querySelector(`[data-id="stop-${dataId}"]`);
+
+      if (stopButton) {
+        stopButton.addEventListener('click', stopButtonHandler);
       }
     }
   },

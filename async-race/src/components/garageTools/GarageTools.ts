@@ -52,8 +52,6 @@ export function updateButtonHandler() {
     .then(() => {
       updateCars();
 
-      nameInput.value = '';
-      colorInput.value = '';
       carsData.selectedId = -1;
       disableUpdateForm();
     })
@@ -130,6 +128,7 @@ function createCreateForm() {
     id: 'createName',
     type: 'text',
     required: true,
+    value: carsData.createName,
   });
 
   Tag.draw('.header__input-create-form', {
@@ -138,6 +137,7 @@ function createCreateForm() {
     id: 'createColor',
     type: 'color',
     required: true,
+    value: carsData.createColor,
   });
 
   Button.draw(

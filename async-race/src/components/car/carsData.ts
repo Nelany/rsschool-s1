@@ -2,6 +2,8 @@ export const carsData = {
   selectedId: -1,
   numberGaragePage: 1,
   totalCars: 0,
+  createName: '',
+  createColor: '#000000',
 
   checkNumberGaragePage() {
     const totalPages = Math.ceil(carsData.totalCars / 7);
@@ -21,7 +23,7 @@ export const carsData = {
     'kotopes',
     'volk',
     'programmer',
-    'telefon',
+    'begemot',
     'sportsmen',
     'boss',
     'arangutang',
@@ -58,7 +60,7 @@ export const carsData = {
     'krasivyy',
     'bolshoy',
     'idealnui',
-    'umnyy',
+    'kruglyi',
     'shokoladnyy',
     'stalnoi',
     'krutoj',

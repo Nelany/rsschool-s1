@@ -8,6 +8,7 @@ interface TagParams {
   src?: string;
   dataId?: string;
   required?: boolean;
+  value?: string;
 }
 
 export const Tag = {
@@ -25,6 +26,9 @@ export const Tag = {
       if (params.required) {
         element.required = params.required;
       }
+    }
+    if (params.value && element instanceof HTMLInputElement) {
+      element.value = params.value;
     }
     if (params.text) {
       element.textContent = params.text;
