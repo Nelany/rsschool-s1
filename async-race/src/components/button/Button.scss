@@ -1,10 +1,10 @@
 .button {
-  height: 30px;
+  height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 5px 3px 5px;
+  padding: 2px 5px 2px 5px;
   background-color: rgba(18, 1, 26, 0.749);
   border: 1px solid rgb(209, 182, 255);
   box-shadow: 0px 10px 10px rgb(17, 0, 36);
@@ -36,7 +36,21 @@
     font-size: 11px;
   }
 
+  &.reset-race {
+    border: 1px solid rgba(0, 255, 38, 0.57);
+    color: rgb(6, 2, 31);
+    background-color: #00ff26;
+    text-shadow: 2px 2px 4px rgb(255, 255, 255);
+    font-weight: 800;
+  }
+
   &.pressed {
     pointer-events: none;
+    opacity: 0.7;
+  }
+
+  &.turnOff {
+    pointer-events: none;
+    opacity: 0.7;
   }
 }

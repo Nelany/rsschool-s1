@@ -9,6 +9,7 @@ export interface GetCarDTO extends CreateCarDTO {
 export interface StartStopCarsEngineDTO {
   velocity: number;
   distance: number;
+  id: number;
 }
 
 export interface SwitchEngineToDriveModeDTO {

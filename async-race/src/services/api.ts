@@ -79,7 +79,7 @@ export async function startStopEngine(
 
     if (response.ok) {
       const data: StartStopCarsEngineDTO = await response.json();
-      return data;
+      return { ...data, id: carId };
     }
     if (response.status === 404) {
       console.error('Car with such id was not found in the garage.');
@@ -118,10 +118,10 @@ export async function switchEngineToDriveMode(carId: number): Promise<SwitchEngi
     } else if (response.status === 429) {
       console.error("Drive already in progress. You can't run drive for the same car twice while it's not stopped.");
     } else if (response.status === 500) {
+      console.error("Car has been stopped suddenly. It's engine was broken down.");
       return {
         status: response.status,
       };
-      console.error("Car has been stopped suddenly. It's engine was broken down.");
     } else {
       console.error('Error:', response.statusText);
     }

@@ -4,6 +4,7 @@ export const carsData = {
   totalCars: 0,
   createName: '',
   createColor: '#000000',
+  stoppedCars: [] as number[],
 
   checkNumberGaragePage() {
     const totalPages = Math.ceil(carsData.totalCars / 7);
@@ -97,7 +98,7 @@ export const carsData = {
     'neobychnyi',
     'interesnyi',
     'neSkuchnyi',
-    'zloy',
+    'bessmertnyi',
   ],
 
   getRandomCarName(): string {

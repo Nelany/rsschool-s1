@@ -82,9 +82,7 @@ export function removeButtonHandler(event: Event) {
   }
 }
 
-let stoppedCars: number[] = [];
-
-function startAnimation(id: number, startData: StartStopCarsEngineDTO) {
+export function startAnimation(id: number, startData: StartStopCarsEngineDTO) {
   const carElement = document.querySelector(`[data-id="car-${id}"]`);
   const parentElement = document.querySelector(`[data-id="track-${id}"]`);
 
@@ -117,11 +115,11 @@ function startAnimation(id: number, startData: StartStopCarsEngineDTO) {
 
     carElement.style.left = `${currentDistance}px`;
 
-    if (elapsedTime < animationDuration && !stoppedCars.includes(id)) {
+    if (elapsedTime < animationDuration && !carsData.stoppedCars.includes(id)) {
       requestAnimationFrame(animate);
     }
-    if (stoppedCars.includes(id)) {
-      stoppedCars = stoppedCars.filter((number) => number !== id);
+    if (carsData.stoppedCars.includes(id)) {
+      carsData.stoppedCars = carsData.stoppedCars.filter((number) => number !== id);
     }
   }
 
@@ -143,7 +141,7 @@ function goButtonHandler(event: Event) {
     const str = dataId;
     const numberPart: number = parseInt(str.split('-')[1], 10);
 
-    stoppedCars = stoppedCars.filter((number) => number !== numberPart);
+    carsData.stoppedCars = carsData.stoppedCars.filter((number) => number !== numberPart);
 
     startStopEngine(numberPart, 'started').then((startData: StartStopCarsEngineDTO | null) => {
       if (startData === null) {
@@ -154,7 +152,7 @@ function goButtonHandler(event: Event) {
         .then((response) => {
           console.warn(response);
           if (response && response.status === 500) {
-            stoppedCars.push(numberPart);
+            carsData.stoppedCars.push(numberPart);
           }
         })
         .catch((error) => {
@@ -186,7 +184,7 @@ function stopButtonHandler(event: Event) {
     const str = dataId;
     const numberPart: number = parseInt(str.split('-')[1], 10);
 
-    stoppedCars.push(numberPart);
+    carsData.stoppedCars.push(numberPart);
     const carElement = document.querySelector(`[data-id="car-${numberPart}"]`);
     if (carElement instanceof SVGElement) {
       setTimeout(() => {
