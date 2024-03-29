@@ -1,3 +1,5 @@
+import { CarTime } from '../../types/types';
+
 export const carsData = {
   selectedId: -1,
   numberGaragePage: 1,
@@ -5,6 +7,9 @@ export const carsData = {
   createName: '',
   createColor: '#000000',
   stoppedCars: [] as number[],
+  carsTimeArray: [] as CarTime[],
+  finishedRaces: {} as Record<string, boolean>,
+  isRace: false,
 
   checkNumberGaragePage() {
     const totalPages = Math.ceil(carsData.totalCars / 7);

@@ -150,7 +150,6 @@ function goButtonHandler(event: Event) {
       startAnimation(numberPart, startData);
       switchEngineToDriveMode(numberPart)
         .then((response) => {
-          console.warn(response);
           if (response && response.status === 500) {
             carsData.stoppedCars.push(numberPart);
           }

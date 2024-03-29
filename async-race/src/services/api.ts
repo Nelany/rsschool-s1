@@ -1,4 +1,11 @@
-import { CreateCarDTO, GetCarDTO, StartStopCarsEngineDTO, SwitchEngineToDriveModeDTO } from '../types/apiTypes';
+import {
+  CreateCarDTO,
+  GetCarDTO,
+  GetWinner,
+  StartStopCarsEngineDTO,
+  SwitchEngineToDriveModeDTO,
+  UpdateWinner,
+} from '../types/apiTypes';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -79,6 +86,7 @@ export async function startStopEngine(
 
     if (response.ok) {
       const data: StartStopCarsEngineDTO = await response.json();
+
       return { ...data, id: carId };
     }
     if (response.status === 404) {
@@ -130,4 +138,59 @@ export async function switchEngineToDriveMode(carId: number): Promise<SwitchEngi
   }
 
   return null;
+}
+
+export async function getWinner(winnerId: number): Promise<GetWinner | null> {
+  const response = await fetch(`${BASE_URL}/winners/${winnerId}`);
+  if (response.ok) {
+    const winner: GetWinner = await response.json();
+    return winner;
+  }
+  if (response.status === 404) {
+    console.error('Winner not found');
+    return null;
+  }
+
+  console.error('Error:', response.statusText);
+  return null;
+}
+
+export async function createWinner(newWinner: GetWinner): Promise<GetWinner> {
+  const response = await fetch(`${BASE_URL}/winners`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newWinner),
+  });
+
+  if (response.ok) {
+    const createdWinner: GetWinner = await response.json();
+    return createdWinner;
+  }
+  if (response.status === 500) {
+    throw new Error('Insert failed, duplicate id');
+  } else {
+    throw new Error('Failed to create winner');
+  }
+}
+
+export async function updateWinner(winnerId: number, updatedWinnerData: UpdateWinner): Promise<GetWinner> {
+  const response = await fetch(`${BASE_URL}/winners/${winnerId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedWinnerData),
+  });
+
+  if (response.ok) {
+    const updatedWinner: GetWinner = await response.json();
+    return updatedWinner;
+  }
+  if (response.status === 404) {
+    throw new Error('Winner not found');
+  } else {
+    throw new Error('Failed to update winner');
+  }
 }

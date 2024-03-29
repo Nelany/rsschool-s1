@@ -16,3 +16,14 @@ export interface SwitchEngineToDriveModeDTO {
   success?: true;
   status?: number;
 }
+
+export interface GetWinner {
+  id: number;
+  wins: number;
+  time: number;
+}
+
+export interface UpdateWinner {
+  wins: number;
+  time: number;
+}
