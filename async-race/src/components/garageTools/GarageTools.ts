@@ -11,6 +11,7 @@ import {
 import { CreateCarDTO, GetCarDTO, GetWinner, StartStopCarsEngineDTO } from '../../types/apiTypes';
 import { Button } from '../button/Button';
 import { carsData } from '../car/carsData';
+import { Popup } from '../popup/Popup';
 import { Road, disableUpdateForm, startAnimation } from '../road/Road';
 import { Tag } from '../tag/Tag';
 
@@ -133,6 +134,7 @@ function checkWinners() {
 
               updateWinner(carTime.id, newWinnerData).then((updateWinnerData: GetWinner) => {
                 console.warn(updateWinnerData, 'EEEEEEEEEEEE');
+                Popup.open(carTime.id, carTime.time);
               });
             } else {
               const newWinner = {
@@ -142,6 +144,7 @@ function checkWinners() {
               };
               createWinner(newWinner).then((createWinnerData: GetWinner) => {
                 console.warn(createWinnerData, 'createEEEEEEEEEEEEEE');
+                Popup.open(carTime.id, carTime.time);
               });
             }
           });
@@ -244,6 +247,7 @@ async function resetButtonHandler(event: Event) {
     return;
   }
 
+  Popup.close();
   carsData.isRace = false;
   target.classList.add('turnOff');
   target.classList.add('disable');

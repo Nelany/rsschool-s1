@@ -10,6 +10,7 @@ export const carsData = {
   carsTimeArray: [] as CarTime[],
   finishedRaces: {} as Record<string, boolean>,
   isRace: false,
+  goCarsArray: [] as number[],
 
   checkNumberGaragePage() {
     const totalPages = Math.ceil(carsData.totalCars / 7);

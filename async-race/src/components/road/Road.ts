@@ -207,7 +207,7 @@ export const Road = {
     const template = `<div class="main__road-tools buttons-container">
   <button class="button big-button select-button" data-id="select-${id}">SELECT</button>
   <button class="button big-button remove-button" data-id="remove-${id}">REMOVE</button>
-  <h4 class="main__car-name">${name}</h4>
+  <h4 class="main__car-name" data-id="name-${id}">${name}</h4>
 </div>
 
 <div class="main__road">
