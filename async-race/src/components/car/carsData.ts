@@ -1,7 +1,15 @@
+import { CarTime } from '../../types/types';
+
 export const carsData = {
   selectedId: -1,
   numberGaragePage: 1,
   totalCars: 0,
+  createName: '',
+  createColor: '#000000',
+  stoppedCars: [] as number[],
+  carsTimeArray: [] as CarTime[],
+  finishedRaces: {} as Record<string, boolean>,
+  isRace: false,
 
   checkNumberGaragePage() {
     const totalPages = Math.ceil(carsData.totalCars / 7);
@@ -21,7 +29,7 @@ export const carsData = {
     'kotopes',
     'volk',
     'programmer',
-    'telefon',
+    'begemot',
     'sportsmen',
     'boss',
     'arangutang',
@@ -58,7 +66,7 @@ export const carsData = {
     'krasivyy',
     'bolshoy',
     'idealnui',
-    'umnyy',
+    'kruglyi',
     'shokoladnyy',
     'stalnoi',
     'krutoj',
@@ -95,7 +103,7 @@ export const carsData = {
     'neobychnyi',
     'interesnyi',
     'neSkuchnyi',
-    'zloy',
+    'bessmertnyi',
   ],
 
   getRandomCarName(): string {

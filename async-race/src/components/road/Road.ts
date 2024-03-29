@@ -1,4 +1,5 @@
-import { deleteCar } from '../../services/api';
+import { deleteCar, startStopEngine, switchEngineToDriveMode } from '../../services/api';
+import { StartStopCarsEngineDTO } from '../../types/apiTypes';
 import { Car } from '../car/Car';
 import { carsData } from '../car/carsData';
 import { updateCars } from '../garageTools/GarageTools';
@@ -25,7 +26,7 @@ export function disableUpdateForm() {
     }
 
     nameInput.value = '';
-    colorInput.value = '';
+    colorInput.value = '#000000';
     resetSelectButtons();
   }
 }
@@ -81,6 +82,126 @@ export function removeButtonHandler(event: Event) {
   }
 }
 
+export function startAnimation(id: number, startData: StartStopCarsEngineDTO) {
+  const carElement = document.querySelector(`[data-id="car-${id}"]`);
+  const parentElement = document.querySelector(`[data-id="track-${id}"]`);
+
+  if (!(parentElement instanceof HTMLElement) || !(carElement instanceof SVGElement)) {
+    return;
+  }
+
+  const parentWidth = parentElement.offsetWidth;
+  const carBoundingBox = carElement.getBoundingClientRect();
+  const carWidth = carBoundingBox.width;
+  const pathLength = parentWidth - carWidth;
+  const animationDuration = startData.distance / startData.velocity;
+
+  let startTime: number | null = null;
+
+  function animate(currentTime: number) {
+    if (!startTime) {
+      startTime = currentTime;
+    }
+
+    if (!(carElement instanceof SVGElement)) {
+      return;
+    }
+
+    const elapsedTime = currentTime - startTime;
+
+    const progress = Math.min(elapsedTime / animationDuration, 1);
+
+    const currentDistance = pathLength * progress;
+
+    carElement.style.left = `${currentDistance}px`;
+
+    if (elapsedTime < animationDuration && !carsData.stoppedCars.includes(id)) {
+      requestAnimationFrame(animate);
+    }
+    if (carsData.stoppedCars.includes(id)) {
+      carsData.stoppedCars = carsData.stoppedCars.filter((number) => number !== id);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function goButtonHandler(event: Event) {
+  const { target } = event;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  target.classList.add('disabled');
+
+  const dataId = target.dataset.id;
+
+  if (dataId) {
+    const str = dataId;
+    const numberPart: number = parseInt(str.split('-')[1], 10);
+
+    carsData.stoppedCars = carsData.stoppedCars.filter((number) => number !== numberPart);
+
+    startStopEngine(numberPart, 'started').then((startData: StartStopCarsEngineDTO | null) => {
+      if (startData === null) {
+        return;
+      }
+      startAnimation(numberPart, startData);
+      switchEngineToDriveMode(numberPart)
+        .then((response) => {
+          if (response && response.status === 500) {
+            carsData.stoppedCars.push(numberPart);
+          }
+        })
+        .catch((error) => {
+          console.error('Error switching engine to drive mode:', error);
+        });
+
+      const stopButton = document.querySelector(`[data-id="stop-${numberPart}"]`);
+      if (stopButton) {
+        stopButton.classList.remove('disabled');
+      }
+    });
+  } else {
+    console.error('data-id attribute is missing or invalid');
+  }
+}
+
+function stopButtonHandler(event: Event) {
+  const { target } = event;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  target.classList.add('disabled');
+
+  const dataId = target.dataset.id;
+
+  if (dataId) {
+    const str = dataId;
+    const numberPart: number = parseInt(str.split('-')[1], 10);
+
+    carsData.stoppedCars.push(numberPart);
+    const carElement = document.querySelector(`[data-id="car-${numberPart}"]`);
+    if (carElement instanceof SVGElement) {
+      setTimeout(() => {
+        carElement.style.left = '0px';
+      }, 100);
+    }
+
+    startStopEngine(numberPart, 'stopped').then(() => {
+      const goButton = document.querySelector(`[data-id="go-${numberPart}"]`);
+      if (goButton) {
+        goButton.classList.remove('disabled');
+      }
+    });
+  } else {
+    console.error('data-id attribute is missing or invalid');
+  }
+}
+
 export const Road = {
   createTemplate(name: string, color: string, id: string) {
     const template = `<div class="main__road-tools buttons-container">
@@ -91,11 +212,11 @@ export const Road = {
 
 <div class="main__road">
   <div class="main__pedals-buttons buttons-container">
-    <button class="button button-pedal go-button">GO</button>
-    <button class="button button-pedal stop-button">STOP</button>
+    <button class="button button-pedal go-button" data-id="go-${id}">GO</button>
+    <button class="button button-pedal stop-button disabled" data-id="stop-${id}">STOP</button>
   </div>
 
-  <div class="main__track">
+  <div class="main__track" data-id="track-${id}">
   ${Car.svg(color, id)}
     <img class="flag" src="./flag2.svg" alt="flag" />
   </div>`;
@@ -123,6 +244,16 @@ export const Road = {
 
       if (selectButton) {
         selectButton.addEventListener('click', selectButtonHandler);
+      }
+      const goButton = document.querySelector(`[data-id="go-${dataId}"]`);
+
+      if (goButton) {
+        goButton.addEventListener('click', goButtonHandler);
+      }
+      const stopButton = document.querySelector(`[data-id="stop-${dataId}"]`);
+
+      if (stopButton) {
+        stopButton.addEventListener('click', stopButtonHandler);
       }
     }
   },

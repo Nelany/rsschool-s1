@@ -14,7 +14,7 @@ export const GaragePage = {
 
     const mainTittle = document.querySelector('.main__page-tittle');
     if (mainTittle instanceof HTMLElement) {
-      mainTittle.innerHTML = `Garage (<span class="main__cars-number">6</span>)`;
+      mainTittle.innerHTML = `Garage (<span class="main__cars-number"></span>)`;
     }
 
     const pageNumberName = document.querySelector('.main__page-number-text');

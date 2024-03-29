@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 
   &__container {
     width: 100%;
@@ -42,6 +42,11 @@
 
     .red-border {
       border: 1px solid rgba(254, 0, 0, 0.804);
+    }
+
+    .turnOff {
+      pointer-events: none;
+      opacity: 0.7;
     }
   }
 }
