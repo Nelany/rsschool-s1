@@ -3,7 +3,9 @@ import { CarTime } from '../../types/types';
 export const carsData = {
   selectedId: -1,
   numberGaragePage: 1,
+  numberWinnersPage: 1,
   totalCars: 0,
+  totalWinners: 0,
   createName: '',
   createColor: '#000000',
   stoppedCars: [] as number[],
@@ -11,6 +13,15 @@ export const carsData = {
   finishedRaces: {} as Record<string, boolean>,
   isRace: false,
   goCarsArray: [] as number[],
+
+  checkNumberWinnersPage() {
+    const totalPages = Math.ceil(carsData.totalWinners / 10);
+    if (carsData.numberWinnersPage <= 0) {
+      carsData.numberWinnersPage = totalPages;
+    } else if (carsData.numberWinnersPage > totalPages) {
+      carsData.numberWinnersPage = 1;
+    }
+  },
 
   checkNumberGaragePage() {
     const totalPages = Math.ceil(carsData.totalCars / 7);

@@ -1,46 +1,106 @@
+import { Car } from '../components/car/Car';
+import { carsData } from '../components/car/carsData';
+import { getCar, getWinners } from '../services/api';
+import { GetCarDTO, GetWinnerDTO } from '../types/apiTypes';
 import './WinnerPage.scss';
 
-function drawRecords() {
+function drawRecord(num: number, winner: GetWinnerDTO) {
+  const { name } = winner;
+  const { wins } = winner;
+  const { time } = winner;
+  const { color } = winner;
+  const id = `${winner.id}`;
+
+  const recordsNumbers = document.querySelector('.records-numbers');
+  const recordsCars = document.querySelector('.records-cars');
+  const recordsNames = document.querySelector('.records-names');
+  const recordsWins = document.querySelector('.records-wins');
+  const recordsTime = document.querySelector('.records-time');
+
+  if (recordsNumbers && recordsCars && recordsNames && recordsWins && recordsTime && color && id) {
+    const number = `<div class="records-cell record-number">${num}</div>`;
+    recordsNumbers.insertAdjacentHTML('beforeend', number);
+
+    const carTemplate = `<div class="records-cell record-car"><div class="records-car-img">${Car.svg(color, id)}</div></div>`;
+    recordsCars.insertAdjacentHTML('beforeend', carTemplate);
+
+    const nameTemplate = `<div class="records-cell record-name">${name}</div>`;
+    recordsNames.insertAdjacentHTML('beforeend', nameTemplate);
+
+    const winTemplate = `<div class="records-cell record-wins">${wins}</div>`;
+    recordsWins.insertAdjacentHTML('beforeend', winTemplate);
+
+    const timeTemplate = `<div class="records-cell record-time">${time}</div>`;
+    recordsTime.insertAdjacentHTML('beforeend', timeTemplate);
+  }
+}
+
+function updateWinners() {
+  let totalWinners = 0;
+  getWinners(carsData.numberWinnersPage)
+    .then((winners: { winners: GetWinnerDTO[]; total: number }) => {
+      totalWinners = winners.total;
+      const winnersArray = winners.winners;
+      const updatedWinnersArray: GetWinnerDTO[] = [];
+      const promises = winnersArray.map((winner) =>
+        getCar(winner.id).then((car: GetCarDTO | null) => {
+          const updatedWinner = winner;
+          if (car) {
+            updatedWinner.color = car.color;
+            updatedWinner.name = car.name;
+            updatedWinnersArray.push(updatedWinner);
+          }
+          return updatedWinner;
+        })
+      );
+      return Promise.all(promises);
+    })
+    .then((updatedWinnersArray: GetWinnerDTO[]) => {
+      for (let i = 0; i < updatedWinnersArray.length; i += 1) {
+        drawRecord(i + 1, updatedWinnersArray[i]);
+      }
+
+      const numberOfWinners = updatedWinnersArray.length;
+      carsData.totalWinners = numberOfWinners;
+      const mainCarsNumber = document.querySelector('.main__cars-number');
+      if (mainCarsNumber instanceof HTMLElement) {
+        mainCarsNumber.textContent = `${totalWinners}`;
+      }
+      const winnersPageNumber = document.querySelector('.main__page-number');
+      if (winnersPageNumber instanceof HTMLElement) {
+        carsData.checkNumberWinnersPage();
+        winnersPageNumber.textContent = `${carsData.numberWinnersPage}`;
+      }
+    })
+    .catch((error) => {
+      console.error('Error updating winners:', error);
+    });
+}
+
+function drawRecordsTableTemplate() {
   const template = `<div class="records-table">
   <div class="records-numbers records-column">
     <div class="records-cell record-number-text records-header">Number</div>
-    <div class="records-cell record-number">1</div>
-    <div class="records-cell record-number">2</div>
-    <div class="records-cell record-number">3</div>
   </div>
+
 
   <div class="records-cars records-column">
     <div class="records-cell record-car-text records-header">Car</div>
-    <div class="records-cell record-car">
-      <img class="car records-car-img" src="./lovelamborghini.svg" alt="car" />
-    </div>
-    <div class="records-cell record-car">
-      <img class="car records-car-img" src="./lovelamborghini.svg" alt="car" />
-    </div>
-    <div class="records-cell record-car">
-      <img class="car records-car-img" src="./lovelamborghini.svg" alt="car" />
-    </div>
   </div>
+
 
   <div class="records-names records-column">
     <div class="records-cell record-name-text records-header">Name</div>
-    <div class="records-cell record-name">Lamborghini</div>
-    <div class="records-cell record-name">Aston Martin</div>
-    <div class="records-cell record-name">Alfa Romeo</div>
   </div>
+
 
   <div class="records-wins records-column">
     <div class="records-cell record-wins-text records-header">Wins</div>
-    <div class="records-cell record-wins">5</div>
-    <div class="records-cell record-wins">2</div>
-    <div class="records-cell record-wins">10</div>
   </div>
+
 
   <div class="records-time records-column">
     <div class="records-cell record-time-text records-header">Best time (seconds)</div>
-    <div class="records-cell record-time">2.5</div>
-    <div class="records-cell record-time">3.2</div>
-    <div class="records-cell record-time">3.35</div>
   </div>
 </div>`;
 
@@ -66,7 +126,9 @@ export const WinnersPage = {
 
     const mainContent = document.querySelector('.main__content');
     if (mainContent instanceof HTMLElement) {
-      mainContent.innerHTML = drawRecords();
+      mainContent.innerHTML = drawRecordsTableTemplate();
     }
+
+    updateWinners();
   },
 };

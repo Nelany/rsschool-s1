@@ -1,10 +1,10 @@
 import {
   CreateCarDTO,
   GetCarDTO,
-  GetWinner,
+  GetWinnerDTO,
   StartStopCarsEngineDTO,
   SwitchEngineToDriveModeDTO,
-  UpdateWinner,
+  UpdateWinnerDTO,
 } from '../types/apiTypes';
 
 const BASE_URL = 'http://localhost:3000';
@@ -140,10 +140,10 @@ export async function switchEngineToDriveMode(carId: number): Promise<SwitchEngi
   return null;
 }
 
-export async function getWinner(winnerId: number): Promise<GetWinner | null> {
+export async function getWinner(winnerId: number): Promise<GetWinnerDTO | null> {
   const response = await fetch(`${BASE_URL}/winners/${winnerId}`);
   if (response.ok) {
-    const winner: GetWinner = await response.json();
+    const winner: GetWinnerDTO = await response.json();
     return winner;
   }
   if (response.status === 404) {
@@ -155,7 +155,7 @@ export async function getWinner(winnerId: number): Promise<GetWinner | null> {
   return null;
 }
 
-export async function createWinner(newWinner: GetWinner): Promise<GetWinner> {
+export async function createWinner(newWinner: GetWinnerDTO): Promise<GetWinnerDTO> {
   const response = await fetch(`${BASE_URL}/winners`, {
     method: 'POST',
     headers: {
@@ -165,7 +165,7 @@ export async function createWinner(newWinner: GetWinner): Promise<GetWinner> {
   });
 
   if (response.ok) {
-    const createdWinner: GetWinner = await response.json();
+    const createdWinner: GetWinnerDTO = await response.json();
     return createdWinner;
   }
   if (response.status === 500) {
@@ -175,7 +175,7 @@ export async function createWinner(newWinner: GetWinner): Promise<GetWinner> {
   }
 }
 
-export async function updateWinner(winnerId: number, updatedWinnerData: UpdateWinner): Promise<GetWinner> {
+export async function updateWinner(winnerId: number, updatedWinnerData: UpdateWinnerDTO): Promise<GetWinnerDTO> {
   const response = await fetch(`${BASE_URL}/winners/${winnerId}`, {
     method: 'PUT',
     headers: {
@@ -185,12 +185,46 @@ export async function updateWinner(winnerId: number, updatedWinnerData: UpdateWi
   });
 
   if (response.ok) {
-    const updatedWinner: GetWinner = await response.json();
+    const updatedWinner: GetWinnerDTO = await response.json();
     return updatedWinner;
   }
   if (response.status === 404) {
     throw new Error('Winner not found');
   } else {
     throw new Error('Failed to update winner');
+  }
+}
+
+export async function getWinners(page?: number): Promise<{ winners: GetWinnerDTO[]; total: number }> {
+  let url = `${BASE_URL}/winners?_limit=10&_sort=time&_order=ASC`;
+
+  if (page) {
+    url += `&_page=${page}`;
+  }
+
+  const response = await fetch(url);
+  if (response.ok) {
+    const winners: GetWinnerDTO[] = await response.json();
+    const totalCountHeader = response.headers.get('X-Total-Count');
+    const total = totalCountHeader ? parseInt(totalCountHeader, 10) : 0;
+    return { winners, total };
+  }
+  return { winners: [], total: 0 };
+}
+
+export async function getCar(carId: number): Promise<GetCarDTO | null> {
+  try {
+    const response = await fetch(`${BASE_URL}/garage/${carId}`);
+    if (response.ok) {
+      const carData: GetCarDTO = await response.json();
+      return carData;
+    }
+    if (response.status === 404) {
+      return null;
+    }
+    throw new Error('Failed to get car data');
+  } catch (error) {
+    console.error('Error getting car data:', error);
+    return null;
   }
 }

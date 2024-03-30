@@ -8,7 +8,7 @@ import {
   updateCar,
   updateWinner,
 } from '../../services/api';
-import { CreateCarDTO, GetCarDTO, GetWinner, StartStopCarsEngineDTO } from '../../types/apiTypes';
+import { CreateCarDTO, GetCarDTO, GetWinnerDTO, StartStopCarsEngineDTO } from '../../types/apiTypes';
 import { Button } from '../button/Button';
 import { carsData } from '../car/carsData';
 import { Popup } from '../popup/Popup';
@@ -28,7 +28,6 @@ function toggleButtons(isTurnOff: boolean) {
   if (isTurnOff) {
     resetButton.classList.remove('turnOff');
     resetButton.classList.add('reset-race');
-    // raceButton.classList.add('pressed');
 
     anotherButtons.forEach((button) => {
       if (!button.classList.contains('reset-button')) {
@@ -121,7 +120,7 @@ function checkWinners() {
       carsData.carsTimeArray.sort((a, b) => a.time - b.time);
       carsData.carsTimeArray.forEach((carTime) => {
         if (carsData.finishedRaces[carTime.id] === true) {
-          getWinner(carTime.id).then((winnerData: GetWinner | null) => {
+          getWinner(carTime.id).then((winnerData: GetWinnerDTO | null) => {
             if (winnerData) {
               const newWinnerData = {
                 wins: winnerData.wins + 1,
@@ -132,8 +131,7 @@ function checkWinners() {
                 newWinnerData.time = carTime.time;
               }
 
-              updateWinner(carTime.id, newWinnerData).then((updateWinnerData: GetWinner) => {
-                console.warn(updateWinnerData, 'EEEEEEEEEEEE');
+              updateWinner(carTime.id, newWinnerData).then(() => {
                 Popup.open(carTime.id, carTime.time);
               });
             } else {
@@ -142,8 +140,7 @@ function checkWinners() {
                 wins: 1,
                 time: carTime.time,
               };
-              createWinner(newWinner).then((createWinnerData: GetWinner) => {
-                console.warn(createWinnerData, 'createEEEEEEEEEEEEEE');
+              createWinner(newWinner).then(() => {
                 Popup.open(carTime.id, carTime.time);
               });
             }
