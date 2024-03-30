@@ -228,3 +228,17 @@ export async function getCar(carId: number): Promise<GetCarDTO | null> {
     return null;
   }
 }
+
+export async function deleteWinner(id: number): Promise<void> {
+  try {
+    const response = await fetch(`${BASE_URL}/winners/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      console.warn('Error deleting winner:', Error);
+    }
+  } catch (error) {
+    console.warn('Error deleting winner:', error);
+  }
+}

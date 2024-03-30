@@ -1,4 +1,4 @@
-import { deleteCar, startStopEngine, switchEngineToDriveMode } from '../../services/api';
+import { deleteCar, deleteWinner, startStopEngine, switchEngineToDriveMode } from '../../services/api';
 import { StartStopCarsEngineDTO } from '../../types/apiTypes';
 import { Car } from '../car/Car';
 import { carsData } from '../car/carsData';
@@ -73,6 +73,8 @@ export function removeButtonHandler(event: Event) {
   if (dataId) {
     const str = dataId;
     const numberPart: number = parseInt(str.split('-')[1], 10);
+
+    deleteWinner(numberPart);
 
     deleteCar(numberPart).then(() => {
       updateCars();
