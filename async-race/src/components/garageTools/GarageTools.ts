@@ -169,12 +169,41 @@ function addCarTimeToArray(id: number, startData: StartStopCarsEngineDTO) {
   carsData.carsTimeArray.push(carTime);
 }
 
+function checkGoButtons() {
+  const goButtons = document.querySelectorAll('.go-button');
+  goButtons.forEach((button) => {
+    if (button instanceof HTMLElement && button.classList.contains('disabled')) {
+      const dataId = button.dataset.id;
+
+      if (dataId) {
+        const str = dataId;
+        const numberPart: number = parseInt(str.split('-')[1], 10);
+
+        const element = document.querySelector(`[data-id="stop-${numberPart}"]`);
+        const customEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+        });
+        Object.defineProperty(customEvent, 'target', {
+          value: element,
+        });
+
+        if (element) {
+          element.dispatchEvent(customEvent);
+        }
+      }
+    }
+  });
+}
+
 async function raceButtonHandler(event: Event) {
   const { target } = event;
 
   if (!(target instanceof HTMLElement)) {
     return;
   }
+
+  checkGoButtons();
 
   carsData.isRace = true;
   target.classList.add('turnOff');

@@ -1,3 +1,4 @@
+import { sortListener } from '../components/button/Button';
 import { Car } from '../components/car/Car';
 import { carsData } from '../components/car/carsData';
 import { getCar, getWinners } from '../services/api';
@@ -94,12 +95,12 @@ export function drawRecordsTableTemplate() {
 
 
   <div class="records-wins records-column">
-    <div class="records-cell record-wins-text records-header">Wins</div>
+    <div class="records-cell record-wins-text records-header records-cell-button wins-cell-button">Wins<img class="arrow wins-arrow ${carsData.winsArrowClass}" src="./greenarrow.png" alt=""></div>
   </div>
 
 
   <div class="records-time records-column">
-    <div class="records-cell record-time-text records-header">Best time (seconds)</div>
+    <div class="records-cell record-time-text records-header records-cell-button time-cell-button">Best time (seconds)<img class="arrow time-arrow ${carsData.timeArrowClass}" src="./greenarrow.png" alt=""></div>
   </div>
 </div>`;
 
@@ -129,6 +130,68 @@ export const WinnersPage = {
       mainContent.innerHTML = drawRecordsTableTemplate();
     }
 
+    const tableWins = document.querySelector('.wins-cell-button');
+    const tableTime = document.querySelector('.time-cell-button');
+
+    if (tableTime && tableWins) {
+      tableWins.addEventListener('click', sortListener);
+      tableTime.addEventListener('click', sortListener);
+    }
+
     updateWinners();
   },
 };
+
+export function sortTime(timeArrow: HTMLElement, winsArrow: HTMLElement) {
+  winsArrow.classList.add('hidden');
+  winsArrow.classList.remove('arrow-rotate');
+  carsData.winsArrowClass = 'hidden';
+
+  if (timeArrow.classList.contains('hidden')) {
+    timeArrow.classList.remove('hidden');
+    carsData.sort = 'time';
+    carsData.sortOrder = 'ASC';
+    carsData.timeArrowClass = '';
+    WinnersPage.draw();
+  } else if (timeArrow.classList.contains('arrow-rotate')) {
+    timeArrow.classList.remove('arrow-rotate');
+    timeArrow.classList.add('hidden');
+    carsData.sort = 'none';
+    carsData.sortOrder = 'none';
+    carsData.timeArrowClass = 'hidden';
+    WinnersPage.draw();
+  } else {
+    timeArrow.classList.add('arrow-rotate');
+    carsData.sort = 'time';
+    carsData.sortOrder = 'DESC';
+    carsData.timeArrowClass = 'arrow-rotate';
+    WinnersPage.draw();
+  }
+}
+
+export function sortWins(timeArrow: HTMLElement, winsArrow: HTMLElement) {
+  timeArrow.classList.add('hidden');
+  timeArrow.classList.remove('arrow-rotate');
+  carsData.timeArrowClass = 'hidden';
+
+  if (winsArrow.classList.contains('hidden')) {
+    winsArrow.classList.remove('hidden');
+    carsData.sort = 'wins';
+    carsData.sortOrder = 'ASC';
+    carsData.winsArrowClass = '';
+    WinnersPage.draw();
+  } else if (winsArrow.classList.contains('arrow-rotate')) {
+    winsArrow.classList.remove('arrow-rotate');
+    winsArrow.classList.add('hidden');
+    carsData.sort = 'none';
+    carsData.sortOrder = 'none';
+    carsData.winsArrowClass = 'hidden';
+    WinnersPage.draw();
+  } else {
+    winsArrow.classList.add('arrow-rotate');
+    carsData.sort = 'wins';
+    carsData.sortOrder = 'DESC';
+    carsData.winsArrowClass = 'arrow-rotate';
+    WinnersPage.draw();
+  }
+}

@@ -1,3 +1,4 @@
+import { sortTime, sortWins } from '../../pages/WinnersPage';
 import './Button.scss';
 
 interface TemplateParams {
@@ -10,6 +11,26 @@ interface ListenerParams {
   type: string;
   selector: string;
   handler: (event: Event) => void;
+}
+
+export function sortListener(event: Event) {
+  const winsArrow = document.querySelector('.wins-arrow');
+  const timeArrow = document.querySelector('.time-arrow');
+  if (
+    !(event.target instanceof HTMLElement) ||
+    !(winsArrow instanceof HTMLElement) ||
+    !(timeArrow instanceof HTMLElement)
+  ) {
+    return;
+  }
+
+  if (event.target.closest('.records-cell-button')) {
+    if (event.target.closest('.wins-cell-button')) {
+      sortWins(timeArrow, winsArrow);
+    } else if (event.target.closest('.time-cell-button')) {
+      sortTime(timeArrow, winsArrow);
+    }
+  }
 }
 
 export const Button = {

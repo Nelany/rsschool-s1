@@ -170,7 +170,7 @@ function goButtonHandler(event: Event) {
   }
 }
 
-function stopButtonHandler(event: Event) {
+export function stopButtonHandler(event: Event) {
   const { target } = event;
 
   if (!(target instanceof HTMLElement)) {

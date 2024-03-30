@@ -1,3 +1,4 @@
+import { carsData } from '../components/car/carsData';
 import {
   CreateCarDTO,
   GetCarDTO,
@@ -147,7 +148,6 @@ export async function getWinner(winnerId: number): Promise<GetWinnerDTO | null> 
     return winner;
   }
   if (response.status === 404) {
-    console.error('Winner not found');
     return null;
   }
 
@@ -189,19 +189,24 @@ export async function updateWinner(winnerId: number, updatedWinnerData: UpdateWi
     return updatedWinner;
   }
   if (response.status === 404) {
-    throw new Error('Winner not found');
+    throw new Error('server error');
   } else {
     throw new Error('Failed to update winner');
   }
 }
 
 export async function getWinners(page?: number): Promise<{ winners: GetWinnerDTO[]; total: number }> {
-  let url = `${BASE_URL}/winners?_limit=10&_sort=time&_order=ASC`;
+  let url = `${BASE_URL}/winners?_limit=10`;
 
   if (page) {
     url += `&_page=${page}`;
   }
-
+  if (!(carsData.sort === 'none')) {
+    url += `&_sort=${carsData.sort}`;
+  }
+  if (!(carsData.sortOrder === 'none')) {
+    url += `&_order=${carsData.sortOrder}`;
+  }
   const response = await fetch(url);
   if (response.ok) {
     const winners: GetWinnerDTO[] = await response.json();
