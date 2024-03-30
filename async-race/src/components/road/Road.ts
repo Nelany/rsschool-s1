@@ -135,6 +135,12 @@ function goButtonHandler(event: Event) {
     return;
   }
 
+  carsData.goButtonArray.push(1);
+  const raceButton = document.querySelector('.race-button');
+  if (raceButton instanceof HTMLElement) {
+    raceButton.classList.add('stop-race');
+  }
+
   target.classList.add('disabled');
 
   const dataId = target.dataset.id;
@@ -175,6 +181,14 @@ export function stopButtonHandler(event: Event) {
 
   if (!(target instanceof HTMLElement)) {
     return;
+  }
+
+  carsData.goButtonArray.pop();
+  if (carsData.goButtonArray.length === 0) {
+    const raceButton = document.querySelector('.race-button');
+    if (raceButton instanceof HTMLElement) {
+      raceButton.classList.remove('stop-race');
+    }
   }
 
   target.classList.add('disabled');

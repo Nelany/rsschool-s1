@@ -18,6 +18,7 @@ export const carsData = {
   sortOrder: 'none',
   winsArrowClass: 'hidden',
   timeArrowClass: 'hidden',
+  goButtonArray: [] as number[],
 
   checkNumberWinnersPage() {
     const totalPages = Math.ceil(carsData.totalWinners / 10);
