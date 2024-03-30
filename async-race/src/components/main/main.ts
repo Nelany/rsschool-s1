@@ -1,4 +1,4 @@
-import './Main.scss';
+import './main.scss';
 
 export const Main = {
   template: `<main class="main">

@@ -1,6 +1,7 @@
 import { Footer } from '../footer/footer';
 import { Header } from '../header/header';
 import { Main } from '../main/main';
+import { Popup } from '../popup/Popup';
 import './PageTemplate.scss';
 
 export const PageTemplate = {
@@ -11,5 +12,6 @@ export const PageTemplate = {
     Header.draw();
     Main.draw();
     Footer.draw();
+    Popup.draw();
   },
 };

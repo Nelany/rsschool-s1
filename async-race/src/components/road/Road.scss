@@ -7,6 +7,12 @@
   display: block;
 }
 
+@media (max-width: 1000px) {
+  .main__car-name {
+    font-size: 12px;
+  }
+}
+
 .main__road {
   position: relative;
   width: 100%;

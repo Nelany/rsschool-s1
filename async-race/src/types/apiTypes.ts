@@ -17,13 +17,19 @@ export interface SwitchEngineToDriveModeDTO {
   status?: number;
 }
 
-export interface GetWinner {
-  id: number;
+export interface UpdateWinnerDTO {
   wins: number;
   time: number;
 }
 
-export interface UpdateWinner {
-  wins: number;
-  time: number;
+export interface GetWinnerDTO extends UpdateWinnerDTO {
+  id: number;
+  name?: string;
+  color?: string;
 }
+
+// export interface GetWinnersDTO {
+//   page?: number;
+// sort?: 'id' | 'wins' | 'time';
+// order?: 'ASC' | 'DESC';
+// }

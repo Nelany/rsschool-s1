@@ -1,4 +1,4 @@
-import { deleteCar, startStopEngine, switchEngineToDriveMode } from '../../services/api';
+import { deleteCar, deleteWinner, startStopEngine, switchEngineToDriveMode } from '../../services/api';
 import { StartStopCarsEngineDTO } from '../../types/apiTypes';
 import { Car } from '../car/Car';
 import { carsData } from '../car/carsData';
@@ -74,6 +74,8 @@ export function removeButtonHandler(event: Event) {
     const str = dataId;
     const numberPart: number = parseInt(str.split('-')[1], 10);
 
+    deleteWinner(numberPart);
+
     deleteCar(numberPart).then(() => {
       updateCars();
     });
@@ -133,6 +135,12 @@ function goButtonHandler(event: Event) {
     return;
   }
 
+  carsData.goButtonArray.push(1);
+  const raceButton = document.querySelector('.race-button');
+  if (raceButton instanceof HTMLElement) {
+    raceButton.classList.add('stop-race');
+  }
+
   target.classList.add('disabled');
 
   const dataId = target.dataset.id;
@@ -168,11 +176,19 @@ function goButtonHandler(event: Event) {
   }
 }
 
-function stopButtonHandler(event: Event) {
+export function stopButtonHandler(event: Event) {
   const { target } = event;
 
   if (!(target instanceof HTMLElement)) {
     return;
+  }
+
+  carsData.goButtonArray.pop();
+  if (carsData.goButtonArray.length === 0) {
+    const raceButton = document.querySelector('.race-button');
+    if (raceButton instanceof HTMLElement) {
+      raceButton.classList.remove('stop-race');
+    }
   }
 
   target.classList.add('disabled');
@@ -207,7 +223,7 @@ export const Road = {
     const template = `<div class="main__road-tools buttons-container">
   <button class="button big-button select-button" data-id="select-${id}">SELECT</button>
   <button class="button big-button remove-button" data-id="remove-${id}">REMOVE</button>
-  <h4 class="main__car-name">${name}</h4>
+  <h4 class="main__car-name" data-id="name-${id}">${name}</h4>
 </div>
 
 <div class="main__road">

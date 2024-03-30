@@ -8,9 +8,10 @@ import {
   updateCar,
   updateWinner,
 } from '../../services/api';
-import { CreateCarDTO, GetCarDTO, GetWinner, StartStopCarsEngineDTO } from '../../types/apiTypes';
+import { CreateCarDTO, GetCarDTO, GetWinnerDTO, StartStopCarsEngineDTO } from '../../types/apiTypes';
 import { Button } from '../button/Button';
 import { carsData } from '../car/carsData';
+import { Popup } from '../popup/Popup';
 import { Road, disableUpdateForm, startAnimation } from '../road/Road';
 import { Tag } from '../tag/Tag';
 
@@ -27,7 +28,6 @@ function toggleButtons(isTurnOff: boolean) {
   if (isTurnOff) {
     resetButton.classList.remove('turnOff');
     resetButton.classList.add('reset-race');
-    // raceButton.classList.add('pressed');
 
     anotherButtons.forEach((button) => {
       if (!button.classList.contains('reset-button')) {
@@ -120,7 +120,7 @@ function checkWinners() {
       carsData.carsTimeArray.sort((a, b) => a.time - b.time);
       carsData.carsTimeArray.forEach((carTime) => {
         if (carsData.finishedRaces[carTime.id] === true) {
-          getWinner(carTime.id).then((winnerData: GetWinner | null) => {
+          getWinner(carTime.id).then((winnerData: GetWinnerDTO | null) => {
             if (winnerData) {
               const newWinnerData = {
                 wins: winnerData.wins + 1,
@@ -131,8 +131,8 @@ function checkWinners() {
                 newWinnerData.time = carTime.time;
               }
 
-              updateWinner(carTime.id, newWinnerData).then((updateWinnerData: GetWinner) => {
-                console.warn(updateWinnerData, 'EEEEEEEEEEEE');
+              updateWinner(carTime.id, newWinnerData).then(() => {
+                Popup.open(carTime.id, carTime.time);
               });
             } else {
               const newWinner = {
@@ -140,8 +140,8 @@ function checkWinners() {
                 wins: 1,
                 time: carTime.time,
               };
-              createWinner(newWinner).then((createWinnerData: GetWinner) => {
-                console.warn(createWinnerData, 'createEEEEEEEEEEEEEE');
+              createWinner(newWinner).then(() => {
+                Popup.open(carTime.id, carTime.time);
               });
             }
           });
@@ -244,6 +244,7 @@ async function resetButtonHandler(event: Event) {
     return;
   }
 
+  Popup.close();
   carsData.isRace = false;
   target.classList.add('turnOff');
   target.classList.add('disable');
@@ -258,6 +259,13 @@ async function resetButtonHandler(event: Event) {
 }
 
 export function updateCars() {
+  carsData.goButtonArray = [];
+
+  const raceButton = document.querySelector('.race-button');
+  if (raceButton instanceof HTMLElement) {
+    raceButton.classList.remove('stop-race');
+  }
+
   const mainContent = document.querySelector('.main__content');
   if (mainContent instanceof HTMLElement) {
     mainContent.innerHTML = '';

@@ -24,6 +24,9 @@
   }
 
   .records-header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     background-color: rgba(18, 1, 26, 0.749);
     max-height: 75px;
     min-height: 75px;
@@ -33,19 +36,48 @@
     max-width: 179px;
   }
 
+  .records-wins {
+    width: 75px;
+  }
+
   .records-time {
     width: 100%;
   }
 
   .record-car {
-    width: 70px;
+    width: 115px;
     position: relative;
   }
 
   .records-car-img {
-    width: 54px;
-    height: 19.5px;
-    left: 7px;
-    bottom: 12px;
+    position: relative;
+    width: 92px;
+    height: 35.5px;
+  }
+
+  .records-cell-button:hover {
+    background-color: rgba(65, 30, 82, 0.749);
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+
+  .records-arrow-container {
+    width: 20px;
+    height: 40px;
+  }
+
+  .arrow {
+    width: 13px;
+    min-width: 13px;
+    height: 30px;
+    margin-left: 6px;
+  }
+
+  .arrow-rotate {
+    transform: scaleY(-1);
+  }
+
+  .hidden {
+    opacity: 0;
   }
 }
