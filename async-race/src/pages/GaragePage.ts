@@ -28,5 +28,6 @@ export const GaragePage = {
     }
 
     updateCars();
+    carsData.currentPage = 'garage';
   },
 };

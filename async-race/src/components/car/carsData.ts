@@ -13,6 +13,7 @@ export const carsData = {
   finishedRaces: {} as Record<string, boolean>,
   isRace: false,
   goCarsArray: [] as number[],
+  currentPage: 'garage',
 
   checkNumberWinnersPage() {
     const totalPages = Math.ceil(carsData.totalWinners / 10);

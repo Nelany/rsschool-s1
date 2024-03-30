@@ -1,18 +1,33 @@
+import { WinnersPage } from '../../pages/WinnersPage';
 import { Button } from '../button/Button';
 import { carsData } from '../car/carsData';
 import { updateCars } from '../garageTools/GarageTools';
 import './footer.scss';
 
 function nextButtonHandler() {
-  carsData.numberGaragePage += 1;
-  carsData.checkNumberGaragePage();
-  updateCars();
+  if (carsData.currentPage === 'garage') {
+    carsData.numberGaragePage += 1;
+    carsData.checkNumberGaragePage();
+    updateCars();
+  }
+  if (carsData.currentPage === 'winners') {
+    carsData.numberWinnersPage += 1;
+    carsData.checkNumberWinnersPage();
+    WinnersPage.draw();
+  }
 }
 
 function prevButtonHandler() {
-  carsData.numberGaragePage -= 1;
-  carsData.checkNumberGaragePage();
-  updateCars();
+  if (carsData.currentPage === 'garage') {
+    carsData.numberGaragePage -= 1;
+    carsData.checkNumberGaragePage();
+    updateCars();
+  }
+  if (carsData.currentPage === 'winners') {
+    carsData.numberWinnersPage -= 1;
+    carsData.checkNumberWinnersPage();
+    WinnersPage.draw();
+  }
 }
 
 export const Footer = {

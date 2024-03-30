@@ -35,7 +35,7 @@ function drawRecord(num: number, winner: GetWinnerDTO) {
   }
 }
 
-function updateWinners() {
+export function updateWinners() {
   let totalWinners = 0;
   getWinners(carsData.numberWinnersPage)
     .then((winners: { winners: GetWinnerDTO[]; total: number }) => {
@@ -60,8 +60,7 @@ function updateWinners() {
         drawRecord(i + 1, updatedWinnersArray[i]);
       }
 
-      const numberOfWinners = updatedWinnersArray.length;
-      carsData.totalWinners = numberOfWinners;
+      carsData.totalWinners = totalWinners;
       const mainCarsNumber = document.querySelector('.main__cars-number');
       if (mainCarsNumber instanceof HTMLElement) {
         mainCarsNumber.textContent = `${totalWinners}`;
@@ -77,7 +76,7 @@ function updateWinners() {
     });
 }
 
-function drawRecordsTableTemplate() {
+export function drawRecordsTableTemplate() {
   const template = `<div class="records-table">
   <div class="records-numbers records-column">
     <div class="records-cell record-number-text records-header">Number</div>
@@ -109,6 +108,7 @@ function drawRecordsTableTemplate() {
 
 export const WinnersPage = {
   draw() {
+    carsData.currentPage = 'winners';
     const garageTools = document.querySelector('.header__garage-tools-container');
     if (garageTools) {
       garageTools.remove();
