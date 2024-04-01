@@ -27,9 +27,3 @@ export interface GetWinnerDTO extends UpdateWinnerDTO {
   name?: string;
   color?: string;
 }
-
-// export interface GetWinnersDTO {
-//   page?: number;
-// sort?: 'id' | 'wins' | 'time';
-// order?: 'ASC' | 'DESC';
-// }
