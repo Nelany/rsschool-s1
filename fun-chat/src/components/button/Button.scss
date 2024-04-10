@@ -1,0 +1,43 @@
+.button {
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 2px 5px 2px 5px;
+  background-color: rgba(18, 1, 26, 0.749);
+  border: 1px solid rgb(209, 182, 255);
+  box-shadow: 0px 10px 10px rgb(17, 0, 36);
+  border-radius: 5px;
+  color: rgb(209, 182, 255);
+  transition: all 0.4s;
+  cursor: pointer;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.button-green-border {
+    width: 45px;
+    height: 40px;
+    margin: 5px 0;
+    border: 1px solid rgba(0, 255, 38, 0.57);
+    color: #00ff26;
+    font-weight: 100;
+    font-size: 11px;
+  }
+
+  &.button-green {
+    border: 1px solid rgba(0, 255, 38, 0.57);
+    color: rgb(6, 2, 31);
+    background-color: #00ff26;
+    text-shadow: 2px 2px 4px rgb(255, 255, 255);
+    font-weight: 800;
+  }
+
+  &.disable {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
