@@ -1,6 +1,6 @@
 import './global.scss';
 // import { Login } from './pages/Login';
-import { locationHandler } from './services/route';
+import { locationHandler } from './services/router';
 
 function loadApp() {
   // Login.draw();

@@ -1,4 +1,7 @@
+import { About } from '../pages/About';
 import { Login } from '../pages/Login';
+import { Main } from '../pages/Main';
+import { NotFound } from '../pages/NotFound';
 
 const BASE_URL = 'http://localhost:8080/';
 
@@ -7,42 +10,35 @@ const routes = {
     title: '404',
     description: 'Page not found',
     page: () => {
-      Login.draw();
+      NotFound.draw();
     },
   },
-  '/login': {
+  login: {
     title: 'Log In',
     description: 'This is the login page',
     page: () => {
       Login.draw();
     },
   },
-  '/about': {
+  about: {
     title: 'About Us',
     description: 'This is the about page',
     page: () => {
-      Login.draw();
+      About.draw();
     },
   },
-  '/main': {
+  main: {
     title: 'Chat',
     description: 'This is the chat page',
     page: () => {
-      Login.draw();
-    },
-  },
-  '/': {
-    title: 'Log In',
-    description: 'This is the login page',
-    page: () => {
-      Login.draw();
+      Main.draw();
     },
   },
 };
 export function locationHandler() {
   let location = window.location.hash.replace('#', '') as keyof typeof routes;
   if (location.length === 0) {
-    location = '/login';
+    location = 'login';
     window.location.hash = '#login';
     return;
   }
@@ -54,7 +50,7 @@ export function locationHandler() {
   document.querySelector('meta[name="description"]')!.setAttribute('content', currentRoute.description);
 }
 
-export function route(location: string) {
+export function navigateTo(location: string) {
   window.history.pushState({}, '', `${BASE_URL}#${location}`);
   locationHandler();
 }

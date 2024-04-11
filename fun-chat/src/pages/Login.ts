@@ -1,9 +1,13 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { route } from '../services/route';
+import { navigateTo } from '../services/router';
 
 function loginButtonHandler() {
-  route('login');
+  navigateTo('main');
+}
+
+export function aboutButtonHandler() {
+  navigateTo('about');
 }
 
 export const Login = {
@@ -20,6 +24,19 @@ export const Login = {
         type: 'click',
         selector: '.login-button',
         handler: loginButtonHandler,
+      }
+    );
+
+    Button.draw(
+      '.content',
+      {
+        text: 'About us',
+        classes: 'about-button',
+      },
+      {
+        type: 'click',
+        selector: '.about-button',
+        handler: aboutButtonHandler,
       }
     );
   },
