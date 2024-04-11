@@ -18,22 +18,6 @@
   caret-color: transparent;
 }
 
-.content {
-  width: 100%;
-  height: 100%;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-
-  h2,
-  h3,
-  h4 {
-    font-weight: 400;
-    text-shadow: 2px 2px 4px rgb(0, 0, 0);
-    margin: 5px 0;
-  }
-}
-
 .disabled {
   pointer-events: none;
   opacity: 0.6;

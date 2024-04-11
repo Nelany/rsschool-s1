@@ -1,18 +1,27 @@
 .button {
-  height: 25px;
+  width: 50%;
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  padding: 2px 5px 2px 5px;
+  padding: 2px 5px 6px 5px;
   background-color: rgba(18, 1, 26, 0.749);
-  border: 1px solid rgb(209, 182, 255);
+  // border: 1px solid rgb(209, 182, 255);
+  border: 1px solid rgb(194 216 0);
+
   box-shadow: 0px 10px 10px rgb(17, 0, 36);
   border-radius: 5px;
-  color: rgb(209, 182, 255);
+  // color: rgb(209, 182, 255);
+  color: rgb(194 216 0);
   transition: all 0.4s;
   cursor: pointer;
   text-shadow: 2px 2px 4px rgb(0, 0, 0);
+
+  font-family: 'Covered By Your Grace', cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
 
   &:hover {
     transform: scale(1.1);
