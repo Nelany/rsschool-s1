@@ -3,6 +3,7 @@ import './Button.scss';
 interface TemplateParams {
   text: string;
   classes: string;
+  selectorForId?: string;
   id?: string;
   isSubmit?: boolean;
 }
@@ -14,7 +15,7 @@ interface ListenerParams {
 
 export const Button = {
   template(params: TemplateParams) {
-    return `<button class="button ${params.classes}" id="${params.id}" ${params.isSubmit ? 'type="submit"' : ''}>${params.text}</button>`;
+    return `<button class="button ${params.classes}" ${params.isSubmit ? 'type="submit"' : ''}>${params.text}</button>`;
   },
 
   draw(parent: string, templateParams: TemplateParams, listenerParams?: ListenerParams) {
@@ -23,6 +24,12 @@ export const Button = {
       return;
     }
     parentElement.insertAdjacentHTML('beforeend', Button.template(templateParams));
+    if (templateParams.id && templateParams.selectorForId) {
+      const button = document.querySelector(templateParams.selectorForId);
+      if (button) {
+        button.id = templateParams.id;
+      }
+    }
     if (listenerParams) {
       Button.addListeners(listenerParams);
     }
