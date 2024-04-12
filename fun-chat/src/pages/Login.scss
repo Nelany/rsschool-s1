@@ -1,0 +1,27 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
+  gap: 13px;
+
+  .invalid {
+    border: 1px solid rgb(216, 0, 0);
+    box-shadow: 0px 10px 10px rgb(255, 0, 0);
+  }
+
+  .invalid-message {
+    width: 175px;
+    color: rgb(216, 198, 0);
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+    font-family: 'Nunito', sans-serif;
+    font-style: normal;
+    letter-spacing: 1px;
+    font-size: 10;
+    display: none;
+  }
+
+  .invalid + .invalid-message {
+    display: block;
+  }
+}
