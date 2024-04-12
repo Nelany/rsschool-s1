@@ -1,11 +1,18 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
+import { logoutUser } from '../services/api';
 import { checkLogin } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
 
+function clearStorage() {
+  sessionStorage.clear();
+}
+
 function logoutButtonHandler() {
+  logoutUser();
+  clearStorage();
   navigateTo('login');
 }
 

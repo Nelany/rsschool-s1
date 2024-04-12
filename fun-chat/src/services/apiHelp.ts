@@ -1,5 +1,5 @@
-import { GeneralRequest, SessionData, UserLoginResponse } from '../types/apiTypes';
-import { sendUser } from './api';
+import { GeneralRequest, SessionData, UserLoginResponse, UserLogoutResponse } from '../types/apiTypes';
+import { loginUser } from './api';
 import { navigateTo, wait } from './router';
 
 export function generateRequestId(): string {
@@ -9,7 +9,7 @@ export function generateRequestId(): string {
 export function handleConnectionError(event: Event): void {
   wait();
   console.error('Ошибка соединения WebSocket:', event);
-  sendUser();
+  loginUser();
 }
 
 export function loginTrueSessionStorageUser() {
@@ -24,10 +24,16 @@ export function loginTrueSessionStorageUser() {
   }
 }
 
-export function handleLoginResponse(response: UserLoginResponse): void {
+export function handleLoginResponse(response: UserLoginResponse) {
   const { login, isLogined } = response.payload.user;
   loginTrueSessionStorageUser();
   navigateTo('main');
+
+  console.log(`Пользователь '${login}' вошел в систему: ${isLogined}`);
+}
+
+export function handleLogoutResponse(response: UserLogoutResponse) {
+  const { login, isLogined } = response.payload.user;
 
   console.log(`Пользователь '${login}' вошел в систему: ${isLogined}`);
 }
@@ -48,6 +54,10 @@ export function listenResponse(event: MessageEvent) {
   const response = JSON.parse(event.data);
 
   switch (response.type) {
+    case 'USER_LOGOUT':
+      handleLogoutResponse(response);
+      break;
+
     case 'USER_LOGIN':
       handleLoginResponse(response);
       break;

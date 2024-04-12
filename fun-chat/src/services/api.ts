@@ -7,8 +7,33 @@ export const connectionData = {
   socket: null as WebSocket | null,
 };
 
-export function sendUser() {
-  // *************************************************************
+export function logoutUser() {
+  const currentUser = getUserFromSessionStorage();
+  if (!currentUser) {
+    navigateTo('login');
+    return;
+  }
+
+  const request = {
+    id: currentUser.id,
+    type: 'USER_LOGOUT',
+    payload: {
+      user: {
+        login: currentUser.login,
+        password: currentUser.password,
+      },
+    },
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+
+  wait();
+}
+
+export function loginUser() {
   const currentUser = getUserFromSessionStorage();
   if (!currentUser) {
     navigateTo('login');
@@ -32,8 +57,6 @@ export function sendUser() {
   }
 
   wait();
-
-  console.warn(request);
 }
 
 export function startSocket() {

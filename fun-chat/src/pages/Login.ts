@@ -1,6 +1,6 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { sendUser } from '../services/api';
+import { loginUser } from '../services/api';
 import { generateRequestId } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import './Login.scss';
@@ -25,10 +25,8 @@ function saveUserToSessionStorage() {
 function loginButtonHandler() {
   const loginButton = document.querySelector('.login-button');
   if (loginButton && !loginButton.classList.contains('disabled')) {
-    // *************************************************************
-    // *************************************************************
     saveUserToSessionStorage();
-    sendUser();
+    loginUser();
     navigateTo('main');
   }
 }
