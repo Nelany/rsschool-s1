@@ -1,5 +1,6 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
+import { checkLogin } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
@@ -97,38 +98,44 @@ export const Main = {
   </div>`,
 
   draw() {
-    ContentTemplate.draw();
+    console.warn(checkLogin(), 'checkLogin');
 
-    const content = document.querySelector('.content');
-    if (!content) {
-      return;
+    if (checkLogin()) {
+      ContentTemplate.draw();
+
+      const content = document.querySelector('.content');
+      if (!content) {
+        return;
+      }
+      content.insertAdjacentHTML('beforeend', Main.template);
+
+      Button.draw(
+        '.main__header-buttons',
+        {
+          text: 'About',
+          classes: 'about-button',
+        },
+        {
+          type: 'click',
+          selector: '.about-button',
+          handler: aboutButtonHandler,
+        }
+      );
+
+      Button.draw(
+        '.main__header-buttons',
+        {
+          text: 'Log out',
+          classes: 'logout-button',
+        },
+        {
+          type: 'click',
+          selector: '.logout-button',
+          handler: logoutButtonHandler,
+        }
+      );
+    } else {
+      navigateTo('login');
     }
-    content.insertAdjacentHTML('beforeend', Main.template);
-
-    Button.draw(
-      '.main__header-buttons',
-      {
-        text: 'About',
-        classes: 'about-button',
-      },
-      {
-        type: 'click',
-        selector: '.about-button',
-        handler: aboutButtonHandler,
-      }
-    );
-
-    Button.draw(
-      '.main__header-buttons',
-      {
-        text: 'Log out',
-        classes: 'logout-button',
-      },
-      {
-        type: 'click',
-        selector: '.logout-button',
-        handler: logoutButtonHandler,
-      }
-    );
   },
 };

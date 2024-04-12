@@ -1,3 +1,5 @@
+import { ContentTemplate } from '../components/content/Content';
+import { Tag } from '../components/tag/Tag';
 import { About } from '../pages/About';
 import { Login } from '../pages/Login';
 import { Main } from '../pages/Main';
@@ -53,4 +55,13 @@ export function locationHandler() {
 export function navigateTo(location: string) {
   window.history.pushState({}, '', `${BASE_URL}#${location}`);
   locationHandler();
+}
+
+export function wait() {
+  ContentTemplate.draw();
+
+  Tag.draw('.content', {
+    classes: 'notfound-text',
+    text: 'WAIT A MINUTE, PLEASE!',
+  });
 }
