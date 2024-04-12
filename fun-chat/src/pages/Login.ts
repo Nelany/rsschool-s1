@@ -4,7 +4,10 @@ import { navigateTo } from '../services/router';
 import './Login.scss';
 
 function loginButtonHandler() {
-  navigateTo('main');
+  const loginButton = document.querySelector('.login-button');
+  if (loginButton && !loginButton.classList.contains('disabled')) {
+    navigateTo('main');
+  }
 }
 
 export function aboutButtonHandler() {
@@ -96,8 +99,13 @@ export const Login = {
 
     const firstNameInput = document.querySelector('.first-name');
     const passwordInput = document.querySelector('.password');
+    const loginButton = document.querySelector('.login-button');
 
-    if (firstNameInput instanceof HTMLInputElement && passwordInput instanceof HTMLInputElement) {
+    if (
+      loginButton instanceof HTMLElement &&
+      firstNameInput instanceof HTMLInputElement &&
+      passwordInput instanceof HTMLInputElement
+    ) {
       firstNameInput.addEventListener('input', validateForm);
       passwordInput.addEventListener('input', validateForm);
     }
