@@ -5,21 +5,6 @@
   margin-top: 10%;
   gap: 13px;
 
-  .input {
-    height: 30px;
-    padding: 3px;
-    background-color: rgba(18, 1, 26, 0.93);
-    border: 1px solid rgb(194, 216, 0);
-    box-shadow: 0px 10px 10px rgb(17, 0, 36);
-    border-radius: 5px;
-    color: rgb(253, 255, 237);
-    transition: all 0.4s;
-    cursor: pointer;
-    text-shadow: 2px 2px 4px rgb(0, 0, 0);
-    font-size: 14px;
-    letter-spacing: 1px;
-  }
-
   .invalid {
     border: 1px solid rgb(216, 0, 0);
     box-shadow: 0px 10px 10px rgb(255, 0, 0);

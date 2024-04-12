@@ -23,7 +23,6 @@ function validateForm() {
   ) {
     const firstName = firstNameInput.value;
     const password = passwordInput.value;
-
     const isFirstNameValid = firstName.length >= 4;
     const isPasswordValid = password.length >= 4 && /[A-Z]/.test(password);
 
