@@ -1,10 +1,9 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { navigateTo } from '../services/router';
 import './About.scss';
 
 function backButtonHandler() {
-  navigateTo('main');
+  window.history.back();
 }
 
 export const About = {
