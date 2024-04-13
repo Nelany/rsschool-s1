@@ -116,7 +116,7 @@ export interface MSGSendRequest {
 }
 
 export interface MSGSendResponse {
-  id: string;
+  id: string | null;
   type: 'MSG_SEND';
   payload: {
     message: {

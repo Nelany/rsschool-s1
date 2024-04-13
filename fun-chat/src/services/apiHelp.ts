@@ -39,6 +39,8 @@ const RECEIVED = 'received';
 const SENT = 'sent';
 const READED = 'marker-status hidden';
 const NOT_READED = 'marker-status';
+const OUTGOING = 'outgoing-message';
+const INCOMING = 'incoming-message';
 
 function formateDate(date: Date) {
   const day = String(date.getDate()).padStart(2, '0');
@@ -55,8 +57,10 @@ function formateDate(date: Date) {
 }
 
 export function handleMSGSendResponse(response: MSGSendResponse) {
-  // const {id} = response;
-  // const {from} = response.payload.message;
+  let messageClass = OUTGOING;
+  let sender = 'You';
+  const { id } = response;
+  const { from } = response.payload.message;
   const { to } = response.payload.message;
   const { text } = response.payload.message;
   const { datetime } = response.payload.message;
@@ -68,15 +72,20 @@ export function handleMSGSendResponse(response: MSGSendResponse) {
   const statusText = isDelivered ? RECEIVED : SENT;
   const markerStatus = isReaded ? READED : NOT_READED;
 
-  if (to === connectionData.selectedUser) {
-    const chat = document.querySelector('.main__chat-main');
-    if (!chat) {
-      return;
+  if (!id) {
+    if (from === connectionData.selectedUser) {
+      const chat = document.querySelector('.main__chat-main');
+      if (!chat) {
+        return;
+      }
+      messageClass = INCOMING;
+      sender = from;
     }
+  }
 
-    const template = `<div class="message-container outgoing-message">
+  const template = `<div class="message-container ${messageClass}">
 <div class="message-info">
-  <div class="message-sender">You</div>
+  <div class="message-sender">${sender}</div>
   <div class="message-date">
     <div class="message-day">${date}</div>
 
@@ -85,6 +94,12 @@ export function handleMSGSendResponse(response: MSGSendResponse) {
 <div class="message-text">${text}</div>
 <div class="message-status"><div class="${markerStatus}"></div>${statusText}</div>
 </div>`;
+
+  if ((id && to === connectionData.selectedUser) || (!id && from === connectionData.selectedUser)) {
+    const chat = document.querySelector('.main__chat-main');
+    if (!chat) {
+      return;
+    }
 
     chat.insertAdjacentHTML('beforeend', template);
     const messageContainer = document.querySelector('.main__chat-main');
