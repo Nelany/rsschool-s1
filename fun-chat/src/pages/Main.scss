@@ -223,6 +223,21 @@
             letter-spacing: 2px;
           }
 
+          .message-footer {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 7px;
+          }
+
+          .marker-status {
+            width: 5px;
+            height: 5px;
+            margin-top: 3px;
+            background-color: rgb(239, 255, 94);
+            border-radius: 50%;
+          }
+
           .message-status {
             display: flex;
             justify-content: end;
@@ -232,14 +247,6 @@
             @media (max-width: 700px) {
               letter-spacing: 2px;
               font-size: 12px;
-            }
-
-            .marker-status {
-              width: 5px;
-              height: 5px;
-              margin-top: 3px;
-              background-color: rgb(239, 255, 94);
-              border-radius: 50%;
             }
           }
         }

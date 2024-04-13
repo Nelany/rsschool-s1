@@ -151,3 +151,16 @@ export interface MSGSHistoryResponse {
     messages: [];
   };
 }
+
+export interface MSGDeliver {
+  id: null;
+  type: 'MSG_DELIVER';
+  payload: {
+    message: {
+      id: string;
+      status: {
+        isDelivered: boolean;
+      };
+    };
+  };
+}

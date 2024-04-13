@@ -10,10 +10,18 @@ import {
   UserExternalLogoutResponse,
   MSGSend,
   MSGSHistoryResponse,
+  MSGDeliver,
 } from '../types/apiTypes';
 import { User } from '../types/types';
 import { connectionData, startSocket } from './api';
 import { navigateTo, wait } from './router';
+
+const RECEIVED = 'received';
+const SENT = 'sent';
+const READED = 'marker-status hidden';
+const NOT_READED = 'marker-status';
+const OUTGOING = 'outgoing-message';
+const INCOMING = 'incoming-message';
 
 export function generateRequestId(): string {
   return Math.random().toString(36).substring(2, 11);
@@ -36,13 +44,6 @@ export function loginTrueSessionStorageUser() {
   }
 }
 
-const RECEIVED = 'received';
-const SENT = 'sent';
-const READED = 'marker-status hidden';
-const NOT_READED = 'marker-status';
-const OUTGOING = 'outgoing-message';
-const INCOMING = 'incoming-message';
-
 function formateDate(date: Date) {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -57,7 +58,19 @@ function formateDate(date: Date) {
   return formattedDate;
 }
 
-export function handleMSGSendResponse(response: MSGSend) {
+function handleMSGDeliverResponse(response: MSGDeliver) {
+  console.warn(RECEIVED);
+  const messageId = response.payload.message.id;
+  const status = response.payload.message.status.isDelivered;
+  if (status) {
+    const messageStatus = document.querySelector(`#${messageId}status`);
+    if (messageStatus instanceof HTMLElement) {
+      messageStatus.textContent = RECEIVED;
+    }
+  }
+}
+
+function handleMSGSendResponse(response: MSGSend) {
   let messageClass = OUTGOING;
   let sender = 'You';
   // const { id } = response;
@@ -93,8 +106,8 @@ export function handleMSGSendResponse(response: MSGSend) {
   </div>
 </div>
 <div class="message-text">${text}</div>
-<div class="message-status"><div class="${markerStatus}"></div>${statusText}</div>
-</div>`;
+<div class="message-footer"><div class="${markerStatus}"></div><div id="${messageId}status" class="message-status">${statusText}</div>
+</div></div>`;
 
   if (to === connectionData.selectedUser || from === connectionData.selectedUser) {
     const chat = document.querySelector('.main__chat-main');
@@ -109,8 +122,7 @@ export function handleMSGSendResponse(response: MSGSend) {
     }
   }
 }
-
-export function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
+function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
   if (response) {
     const { id } = response;
 
@@ -128,8 +140,7 @@ export function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
     }
   }
 }
-
-export function handleLoginResponse(response: UserLoginResponse) {
+function handleLoginResponse(response: UserLoginResponse) {
   const { login, isLogined } = response.payload.user;
   if (isLogined) {
     loginTrueSessionStorageUser();
@@ -237,12 +248,12 @@ function handleUserExternalLogoutResponse(response: UserExternalLogoutResponse) 
   userList.appendChild(listItem);
 }
 
-export function handleActiveResponse(response: UsersActiveResponse) {
+function handleActiveResponse(response: UsersActiveResponse) {
   const { users } = response.payload;
   renderActiveUserList(users);
 }
 
-export function handleInactiveResponse(response: UsersInactiveResponse) {
+function handleInactiveResponse(response: UsersInactiveResponse) {
   const { users } = response.payload;
   renderInactiveUserList(users);
 }
@@ -263,6 +274,10 @@ export function listenResponse(event: MessageEvent) {
   const response = JSON.parse(event.data);
 
   switch (response.type) {
+    case 'MSG_DELIVER':
+      handleMSGDeliverResponse(response);
+      break;
+
     case 'MSG_FROM_USER':
       handleMSGHistoryResponse(response);
       break;
