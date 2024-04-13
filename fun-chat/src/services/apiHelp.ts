@@ -35,17 +35,38 @@ export function loginTrueSessionStorageUser() {
   }
 }
 
+const RECEIVED = 'received';
+const SENT = 'sent';
+const READED = 'marker-status hidden';
+const NOT_READED = 'marker-status';
+
+function formateDate(date: Date) {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  const formattedDate = `${day}.${month}.${year}, ${hours}:${minutes}:${seconds}`;
+
+  return formattedDate;
+}
+
 export function handleMSGSendResponse(response: MSGSendResponse) {
   // const {id} = response;
   // const {from} = response.payload.message;
   const { to } = response.payload.message;
   const { text } = response.payload.message;
   const { datetime } = response.payload.message;
+  const newDate = new Date(datetime);
+  const date = formateDate(newDate);
   const { isDelivered } = response.payload.message.status;
   const { isReaded } = response.payload.message.status;
   // const {isEdited} = response.payload.message.status;
-  const statusText = isDelivered ? 'received' : 'sent';
-  const markerStatus = isReaded ? 'marker-status' : 'marker-status hidden';
+  const statusText = isDelivered ? RECEIVED : SENT;
+  const markerStatus = isReaded ? READED : NOT_READED;
 
   if (to === connectionData.selectedUser) {
     const chat = document.querySelector('.main__chat-main');
@@ -57,7 +78,7 @@ export function handleMSGSendResponse(response: MSGSendResponse) {
 <div class="message-info">
   <div class="message-sender">You</div>
   <div class="message-date">
-    <div class="message-day">${datetime}</div>
+    <div class="message-day">${date}</div>
 
   </div>
 </div>

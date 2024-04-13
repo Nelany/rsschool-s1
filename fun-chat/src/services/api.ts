@@ -14,6 +14,9 @@ export function sendMSG() {
     navigateTo('login');
     return;
   }
+  if (!connectionData.selectedUser) {
+    return;
+  }
 
   const messageArea = document.querySelector('.message-input');
 
