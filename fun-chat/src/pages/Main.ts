@@ -1,12 +1,12 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { logoutUser } from '../services/api';
+import { logoutUser, updateAllUsers } from '../services/api';
 import { checkLogin } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
 
-function clearStorage() {
+export function clearStorage() {
   sessionStorage.clear();
 }
 
@@ -99,7 +99,7 @@ export const Main = {
   </div>`,
 
   draw() {
-    console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
+    console.warn(checkLogin(), 'checkLoginЗарег');
 
     if (checkLogin()) {
       ContentTemplate.draw();
@@ -135,7 +135,10 @@ export const Main = {
           handler: logoutButtonHandler,
         }
       );
+
+      updateAllUsers();
     } else {
+      console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
       navigateTo('login');
     }
   },

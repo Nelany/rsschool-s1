@@ -1,3 +1,4 @@
+import { clearStorage } from '../pages/Main';
 import {
   GeneralRequest,
   SessionData,
@@ -9,7 +10,7 @@ import {
   UserExternalLogoutResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
-import { loginUser, updateAllUsers } from './api';
+import { startSocket } from './api';
 import { navigateTo, wait } from './router';
 
 export function generateRequestId(): string {
@@ -19,7 +20,7 @@ export function generateRequestId(): string {
 export function handleConnectionError(event: Event): void {
   wait();
   console.error('Ошибка соединения WebSocket:', event);
-  loginUser();
+  startSocket();
 }
 
 export function loginTrueSessionStorageUser() {
@@ -35,17 +36,22 @@ export function loginTrueSessionStorageUser() {
 
 export function handleLoginResponse(response: UserLoginResponse) {
   const { login, isLogined } = response.payload.user;
-  loginTrueSessionStorageUser();
-  updateAllUsers();
-  navigateTo('main');
-
-  console.log(`Пользователь '${login}' вошел в систему: ${isLogined}`);
+  if (isLogined) {
+    loginTrueSessionStorageUser();
+    // updateAllUsers();
+    navigateTo('main');
+    console.log(`Пользователь '${login}' вошел в систему: ${isLogined}`);
+  } else {
+    clearStorage();
+    navigateTo('login');
+    console.log(`Пользователь '${login}' НЕ в системе, isLogined: ${isLogined}`);
+  }
 }
 
 export function handleLogoutResponse(response: UserLogoutResponse) {
   const { login, isLogined } = response.payload.user;
 
-  console.log(`Пользователь '${login}' вошел в систему: ${isLogined}`);
+  console.log(`Пользователь '${login}' вышел из системы, isLogined: ${isLogined}`);
 }
 
 function renderActiveUserList(users: User[]) {

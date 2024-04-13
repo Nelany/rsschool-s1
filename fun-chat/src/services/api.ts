@@ -94,7 +94,7 @@ export function startSocket() {
   connectionData.socket = new WebSocket(`ws://${SERVER_URL}`);
 
   connectionData.socket.addEventListener('open', () => {
-    navigateTo('main');
+    loginUser();
   });
 
   connectionData.socket.addEventListener('message', listenResponse);
