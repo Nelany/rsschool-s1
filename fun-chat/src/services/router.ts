@@ -61,7 +61,18 @@ export function wait() {
   ContentTemplate.draw();
 
   Tag.draw('.content', {
+    tag: 'img',
+    classes: 'wait-img',
+    src: './stop1.png',
+  });
+
+  Tag.draw('.content', {
     classes: 'notfound-text',
     text: 'WAIT A MINUTE, PLEASE!',
+  });
+
+  Tag.draw('.content', {
+    classes: 'notfound-text',
+    text: 'connection to server...',
   });
 }

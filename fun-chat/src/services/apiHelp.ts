@@ -8,9 +8,10 @@ import {
   UsersInactiveResponse,
   UserExternalLoginResponse,
   UserExternalLogoutResponse,
+  MSGSendResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
-import { startSocket } from './api';
+import { connectionData, startSocket } from './api';
 import { navigateTo, wait } from './router';
 
 export function generateRequestId(): string {
@@ -31,6 +32,44 @@ export function loginTrueSessionStorageUser() {
     userData.isLogined = true;
     const credentialsJSON = JSON.stringify(userData);
     sessionStorage.setItem('currentUser', credentialsJSON);
+  }
+}
+
+export function handleMSGSendResponse(response: MSGSendResponse) {
+  // const {id} = response;
+  // const {from} = response.payload.message;
+  const { to } = response.payload.message;
+  const { text } = response.payload.message;
+  const { datetime } = response.payload.message;
+  const { isDelivered } = response.payload.message.status;
+  const { isReaded } = response.payload.message.status;
+  // const {isEdited} = response.payload.message.status;
+  const statusText = isDelivered ? 'received' : 'sent';
+  const markerStatus = isReaded ? 'marker-status' : 'marker-status hidden';
+
+  if (to === connectionData.selectedUser) {
+    const chat = document.querySelector('.main__chat-main');
+    if (!chat) {
+      return;
+    }
+
+    const template = `<div class="message-container outgoing-message">
+<div class="message-info">
+  <div class="message-sender">You</div>
+  <div class="message-date">
+    <div class="message-day">${datetime}</div>
+
+  </div>
+</div>
+<div class="message-text">${text}</div>
+<div class="message-status"><div class="${markerStatus}"></div>${statusText}</div>
+</div>`;
+
+    chat.insertAdjacentHTML('beforeend', template);
+    const messageContainer = document.querySelector('.main__chat-main');
+    if (messageContainer instanceof HTMLElement) {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
   }
 }
 
@@ -169,6 +208,10 @@ export function listenResponse(event: MessageEvent) {
   const response = JSON.parse(event.data);
 
   switch (response.type) {
+    case 'MSG_SEND':
+      handleMSGSendResponse(response);
+      break;
+
     case 'USER_EXTERNAL_LOGOUT':
       handleUserExternalLogoutResponse(response);
       break;

@@ -5,7 +5,45 @@ const SERVER_URL = 'localhost:4000';
 
 export const connectionData = {
   socket: null as WebSocket | null,
+  selectedUser: '',
 };
+
+export function sendMSG() {
+  const currentUser = getUserFromSessionStorage();
+  if (!currentUser) {
+    navigateTo('login');
+    return;
+  }
+
+  const messageArea = document.querySelector('.message-input');
+
+  if (!(messageArea instanceof HTMLTextAreaElement) || !messageArea.value.trim()) {
+    return;
+  }
+
+  const message = messageArea.value.trim();
+  if (!message) {
+    return;
+  }
+
+  messageArea.value = '';
+
+  const request = {
+    id: currentUser.id,
+    type: 'MSG_SEND',
+    payload: {
+      message: {
+        to: connectionData.selectedUser,
+        text: message,
+      },
+    },
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+}
 
 export function getActiveUsers() {
   const request = {

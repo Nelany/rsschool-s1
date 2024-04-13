@@ -1,10 +1,62 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { logoutUser, updateAllUsers } from '../services/api';
-import { checkLogin } from '../services/apiHelp';
+import { connectionData, logoutUser, sendMSG, updateAllUsers } from '../services/api';
+import { checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
+
+function listenSend() {
+  const sendButton = document.querySelector('.button-send');
+  if (sendButton instanceof HTMLElement) {
+    sendButton.addEventListener('click', sendMSG);
+  }
+}
+
+function listenUsers() {
+  const currentUser = getUserFromSessionStorage();
+  if (!currentUser) {
+    navigateTo('login');
+    return;
+  }
+
+  const usersList = document.querySelector('.main__people-list');
+  if (usersList) {
+    usersList.addEventListener('click', (event: Event) => {
+      if (event.target instanceof HTMLElement) {
+        const { target } = event;
+        const selectedName = document.querySelector('.main__chat-name');
+        const selectedStatus = document.querySelector('.main__chat-status');
+        if (
+          selectedStatus &&
+          selectedName &&
+          target.classList.contains('main__people-one') &&
+          target.textContent &&
+          currentUser.login &&
+          !(target.textContent === currentUser.login)
+        ) {
+          connectionData.selectedUser = target.textContent;
+          selectedName.textContent = target.textContent;
+          if (!target.classList.contains('offline')) {
+            selectedStatus.textContent = 'online';
+          } else {
+            selectedStatus.textContent = '';
+          }
+        }
+      }
+    });
+  }
+}
+
+function renderUserData() {
+  const userData = getUserFromSessionStorage();
+  if (userData) {
+    const userName = document.querySelector('.user-name');
+    if (userName) {
+      userName.textContent = userData.login;
+    }
+  }
+}
 
 export function clearStorage() {
   sessionStorage.clear();
@@ -52,7 +104,7 @@ export const Main = {
               </div>
             </div>
             <div class="message-text">Hello, darling!</div>
-            <div class="message-status">received</div>
+            <div class="message-status"><div class="marker-status"></div>received</div>
           </div>
 
           <div class="message-container outgoing-message">
@@ -64,7 +116,7 @@ export const Main = {
               </div>
             </div>
             <div class="message-text">Hello, Honney! How are you?</div>
-            <div class="message-status">sent</div>
+            <div class="message-status"><div class="marker-status hidden"></div>sent</div>
           </div>
 
           <div class="message-container incoming-message">
@@ -84,7 +136,7 @@ export const Main = {
 
         <div class="main__chat-footer">
         <textarea rows="10" class="input message-input" placeholder="Enter message"></textarea>
-        <div class="button">send</div>
+        <div class="button button-send">send</div>
         </div>
       </div>
     </div>
@@ -136,7 +188,10 @@ export const Main = {
         }
       );
 
+      renderUserData();
       updateAllUsers();
+      listenUsers();
+      listenSend();
     } else {
       console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
       navigateTo('login');
