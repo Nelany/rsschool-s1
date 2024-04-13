@@ -1,6 +1,6 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { connectionData, logoutUser, sendMSG, updateAllUsers } from '../services/api';
+import { connectionData, getMSGSHistory, logoutUser, sendMSG, updateAllUsers } from '../services/api';
 import { checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
@@ -36,6 +36,7 @@ function listenUsers() {
           !(target.textContent === currentUser.login)
         ) {
           connectionData.selectedUser = target.textContent;
+          getMSGSHistory();
           selectedName.textContent = target.textContent;
           if (!target.classList.contains('offline')) {
             selectedStatus.textContent = 'online';
@@ -89,8 +90,8 @@ export const Main = {
 
       <div class="main__chat dark-background">
         <div class="main__chat-header">
-          <div class="main__chat-name">Vasia</div>
-          <div class="main__chat-status">online</div>
+          <div class="main__chat-name"></div>
+          <div class="main__chat-status"></div>
         </div>
 
         <div class="main__chat-main">

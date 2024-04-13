@@ -8,6 +8,25 @@ export const connectionData = {
   selectedUser: '',
 };
 
+export function getMSGSHistory() {
+  const login = connectionData.selectedUser;
+
+  const request = {
+    id: `${connectionData.selectedUser}`,
+    type: 'MSG_FROM_USER',
+    payload: {
+      user: {
+        login,
+      },
+    },
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+}
+
 export function sendMSG() {
   const currentUser = getUserFromSessionStorage();
   if (!currentUser) {

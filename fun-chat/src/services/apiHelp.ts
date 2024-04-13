@@ -8,7 +8,8 @@ import {
   UsersInactiveResponse,
   UserExternalLoginResponse,
   UserExternalLogoutResponse,
-  MSGSendResponse,
+  MSGSend,
+  MSGSHistoryResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
 import { connectionData, startSocket } from './api';
@@ -56,34 +57,34 @@ function formateDate(date: Date) {
   return formattedDate;
 }
 
-export function handleMSGSendResponse(response: MSGSendResponse) {
+export function handleMSGSendResponse(response: MSGSend) {
   let messageClass = OUTGOING;
   let sender = 'You';
-  const { id } = response;
-  const { from } = response.payload.message;
-  const { to } = response.payload.message;
-  const { text } = response.payload.message;
-  const { datetime } = response.payload.message;
+  // const { id } = response;
+  const message = response?.payload?.message || response;
+  const messageId = message.id;
+  const { from } = message;
+  const { to } = message;
+  const { text } = message;
+  const { datetime } = message;
   const newDate = new Date(datetime);
   const date = formateDate(newDate);
-  const { isDelivered } = response.payload.message.status;
-  const { isReaded } = response.payload.message.status;
+  const { isDelivered } = message.status;
+  const { isReaded } = message.status;
   // const {isEdited} = response.payload.message.status;
   const statusText = isDelivered ? RECEIVED : SENT;
   const markerStatus = isReaded ? READED : NOT_READED;
 
-  if (!id) {
-    if (from === connectionData.selectedUser) {
-      const chat = document.querySelector('.main__chat-main');
-      if (!chat) {
-        return;
-      }
-      messageClass = INCOMING;
-      sender = from;
+  if (from === connectionData.selectedUser) {
+    const chat = document.querySelector('.main__chat-main');
+    if (!chat) {
+      return;
     }
+    messageClass = INCOMING;
+    sender = from;
   }
 
-  const template = `<div class="message-container ${messageClass}">
+  const template = `<div id="${messageId}" class="message-container ${messageClass}">
 <div class="message-info">
   <div class="message-sender">${sender}</div>
   <div class="message-date">
@@ -95,7 +96,7 @@ export function handleMSGSendResponse(response: MSGSendResponse) {
 <div class="message-status"><div class="${markerStatus}"></div>${statusText}</div>
 </div>`;
 
-  if ((id && to === connectionData.selectedUser) || (!id && from === connectionData.selectedUser)) {
+  if (to === connectionData.selectedUser || from === connectionData.selectedUser) {
     const chat = document.querySelector('.main__chat-main');
     if (!chat) {
       return;
@@ -109,11 +110,29 @@ export function handleMSGSendResponse(response: MSGSendResponse) {
   }
 }
 
+export function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
+  if (response) {
+    const { id } = response;
+
+    if (id === connectionData.selectedUser) {
+      const chat = document.querySelector('.main__chat-main');
+      if (!chat) {
+        return;
+      }
+      chat.innerHTML = '';
+      const { messages } = response.payload;
+
+      messages.forEach((message) => {
+        handleMSGSendResponse(message);
+      });
+    }
+  }
+}
+
 export function handleLoginResponse(response: UserLoginResponse) {
   const { login, isLogined } = response.payload.user;
   if (isLogined) {
     loginTrueSessionStorageUser();
-    // updateAllUsers();
     navigateTo('main');
     console.log(`Пользователь '${login}' вошел в систему: ${isLogined}`);
   } else {
@@ -244,6 +263,10 @@ export function listenResponse(event: MessageEvent) {
   const response = JSON.parse(event.data);
 
   switch (response.type) {
+    case 'MSG_FROM_USER':
+      handleMSGHistoryResponse(response);
+      break;
+
     case 'MSG_SEND':
       handleMSGSendResponse(response);
       break;

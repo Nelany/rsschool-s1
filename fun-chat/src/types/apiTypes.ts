@@ -115,7 +115,7 @@ export interface MSGSendRequest {
   };
 }
 
-export interface MSGSendResponse {
+export interface MSGSend {
   id: string | null;
   type: 'MSG_SEND';
   payload: {
@@ -131,5 +131,23 @@ export interface MSGSendResponse {
         isEdited: boolean;
       };
     };
+  };
+}
+
+export interface MSGSHistoryRequest {
+  id: string;
+  type: 'MSG_FROM_USER';
+  payload: {
+    user: {
+      login: string;
+    };
+  };
+}
+
+export interface MSGSHistoryResponse {
+  id: string;
+  type: 'MSG_FROM_USER';
+  payload: {
+    messages: [];
   };
 }
