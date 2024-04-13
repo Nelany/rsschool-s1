@@ -1,4 +1,4 @@
-import { getUserFromSessionStorage, handleConnectionError, listenResponse } from './apiHelp';
+import { generateRequestId, getUserFromSessionStorage, handleConnectionError, listenResponse } from './apiHelp';
 import { navigateTo, wait } from './router';
 
 const SERVER_URL = 'localhost:4000';
@@ -6,6 +6,37 @@ const SERVER_URL = 'localhost:4000';
 export const connectionData = {
   socket: null as WebSocket | null,
 };
+
+export function getActiveUsers() {
+  const request = {
+    id: `${generateRequestId()}USER-ACTIVE`,
+    type: 'USER_ACTIVE',
+    payload: null,
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+}
+
+export function getInactiveUsers() {
+  const request = {
+    id: `${generateRequestId()}USER-INACTIVE`,
+    type: 'USER_INACTIVE',
+    payload: null,
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+}
+
+export function updateAllUsers() {
+  getActiveUsers();
+  getInactiveUsers();
+}
 
 export function logoutUser() {
   const currentUser = getUserFromSessionStorage();

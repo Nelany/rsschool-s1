@@ -31,13 +31,7 @@ export const Main = {
     <div class="main__main">
       <div class="main__people dark-background">
       <input type="text" class="input people-name" id="peopleName" name="peopleName" placeholder="Enter name">
-      <ul class="main__people-list">
-      <li class="main__people-one">Dfgbnm gfddsz</li>
-      <li class="main__people-one">Dfgbnmgfd fdeswaz</li>
-      <li class="main__people-one">1234567890</li>
-      <li class="main__people-one">Dfgbnmgfd</li>
-
-      </ul>
+      <ul class="main__people-list"></ul>
       </div>
 
 
@@ -105,7 +99,7 @@ export const Main = {
   </div>`,
 
   draw() {
-    console.warn(checkLogin(), 'checkLogin');
+    console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
 
     if (checkLogin()) {
       ContentTemplate.draw();

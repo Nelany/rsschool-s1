@@ -115,6 +115,10 @@
         }
       }
 
+      .offline {
+        opacity: 0.5;
+      }
+
       .main__people-list::-webkit-scrollbar {
         width: 5px;
         background-color: rgba(18, 1, 26, 0.749);

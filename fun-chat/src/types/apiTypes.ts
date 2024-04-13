@@ -53,3 +53,53 @@ export interface UserLogoutResponse extends GeneralRequest {
     };
   };
 }
+
+export interface UsersActiveRequest {
+  id: string;
+  type: 'USER_ACTIVE';
+  payload: null;
+}
+
+export interface UsersActiveResponse {
+  id: string;
+  type: 'USER_ACTIVE';
+  payload: {
+    users: [];
+  };
+}
+
+export interface UsersInactiveRequest {
+  id: string;
+  type: 'USER_INACTIVE';
+  payload: null;
+}
+
+export interface UsersInactiveResponse {
+  id: string;
+  type: 'USER_INACTIVE';
+  payload: {
+    users: [];
+  };
+}
+
+export interface UserExternalLoginResponse {
+  id: null;
+  type: 'USER_EXTERNAL_LOGIN';
+  payload: {
+    user: {
+      login: string;
+      isLogined: boolean;
+    };
+  };
+}
+
+export interface UserExternalLogoutResponse {
+  id: null;
+  type: 'USER_EXTERNAL_LOGOUT';
+  payload: {
+    user: {
+      login: string;
+      isLogined: boolean;
+    };
+  };
+}
