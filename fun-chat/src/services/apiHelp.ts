@@ -12,6 +12,7 @@ import {
   MSGSHistoryResponse,
   MSGDeliver,
   MSGReadResponse,
+  MSGDeleteResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
 import { MSGRead, connectionData, getMSGSHistory, startSocket } from './api';
@@ -96,6 +97,17 @@ function drawMSGIcon(from: string, isToDraw: boolean) {
   }
 }
 
+function handleMSGDeleteResponse(response: MSGDeleteResponse) {
+  const messageId = response.payload.message.id;
+  const { isDeleted } = response.payload.message.status;
+  if (isDeleted) {
+    const message = document.querySelector(`#container${messageId}`);
+    if (message instanceof HTMLElement) {
+      message.remove();
+    }
+  }
+}
+
 function handleMSGReadResponse(response: MSGReadResponse) {
   const messageId = response.payload.message.id;
   const status = response.payload.message.status.isReaded;
@@ -123,6 +135,8 @@ function handleMSGDeliverResponse(response: MSGDeliver) {
 function handleMSGSendResponse(response: MSGSend) {
   let messageClass = OUTGOING;
   let sender = 'You';
+  let forIncomingMSG = '';
+
   // const { id } = response;
   const message = response?.payload?.message || response;
   const messageId = message.id;
@@ -145,6 +159,7 @@ function handleMSGSendResponse(response: MSGSend) {
   if (from === connectionData.selectedUser) {
     messageClass = INCOMING;
     sender = from;
+    forIncomingMSG = 'hidden-for-incoming';
 
     if (!isReaded) {
       MSGRead(messageId);
@@ -160,7 +175,17 @@ function handleMSGSendResponse(response: MSGSend) {
   </div>
 </div>
 <div class="message-text">${text}</div>
-<div class="message-footer"><div id="isreaded${messageId}" class="${markerStatus}"></div><div id="status${messageId}" class="message-status">${statusText}</div>
+
+<div class="message-footer">
+  <div class="message-tools">
+    <div id="delete${messageId}" class="tool delete-message ${forIncomingMSG}">X</div>
+    <div id="change${messageId}" class="tool change-message change ${forIncomingMSG}">Change</div>
+    <div id="changed${messageId}" class="tool change-message changed hidden">Changed</div>
+
+  </div>
+
+  <div id="isreaded${messageId}" class="${markerStatus} ${forIncomingMSG}"></div>
+  <div id="status${messageId}" class="message-status ${forIncomingMSG}">${statusText}</div>
 </div></div>`;
 
   if (to === connectionData.selectedUser || from === connectionData.selectedUser) {
@@ -358,6 +383,10 @@ export function listenResponse(event: MessageEvent) {
   const response = JSON.parse(event.data);
 
   switch (response.type) {
+    case 'MSG_DELETE':
+      handleMSGDeleteResponse(response);
+      break;
+
     case 'MSG_READ':
       handleMSGReadResponse(response);
       break;

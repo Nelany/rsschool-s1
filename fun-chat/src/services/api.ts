@@ -8,6 +8,23 @@ export const connectionData = {
   selectedUser: '',
 };
 
+export function MSGDelete(messageId: string) {
+  const request = {
+    id: `messageId${connectionData.selectedUser}MSGDELETE`,
+    type: 'MSG_DELETE',
+    payload: {
+      message: {
+        id: messageId,
+      },
+    },
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+}
+
 export function MSGRead(messageId: string) {
   const request = {
     id: `${connectionData.selectedUser}MSGREAD`,

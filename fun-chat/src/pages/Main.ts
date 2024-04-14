@@ -1,10 +1,24 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { connectionData, getMSGSHistory, logoutUser, sendMSG, updateAllUsers } from '../services/api';
+import { MSGDelete, connectionData, getMSGSHistory, logoutUser, sendMSG, updateAllUsers } from '../services/api';
 import { OFFLINE, ONLINE, checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
+
+function listenDelete() {
+  const chat = document.querySelector('.main__chat-main');
+  if (chat instanceof HTMLElement) {
+    chat.addEventListener('click', (event: Event) => {
+      if (event.target instanceof HTMLElement && event.target.classList.contains('delete-message')) {
+        const { id } = event.target;
+        const prefix = 'delete';
+        const messageId = id.substring(prefix.length);
+        MSGDelete(messageId);
+      }
+    });
+  }
+}
 
 function listenSend() {
   const sendButton = document.querySelector('.button-send');
@@ -109,7 +123,9 @@ export const Main = {
           <div class="main__chat-status"></div>
         </div>
 
-        <div class="main__chat-main"><div class="main__please-select">Please select a recipient!</div></div>
+        <div class="main__chat-main">
+          <div class="main__please-select">Please select a recipient!</div>
+        </div>
 
         <div class="main__chat-footer">
         <textarea rows="10" class="input message-input disabled" placeholder="Enter message"></textarea>
@@ -169,6 +185,7 @@ export const Main = {
       updateAllUsers();
       listenUsers();
       listenSend();
+      listenDelete();
     } else {
       console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
       navigateTo('login');

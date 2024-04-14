@@ -187,3 +187,26 @@ export interface MSGReadResponse {
     };
   };
 }
+
+export interface MSGDeleteRequest {
+  id: string;
+  type: 'MSG_DELETE';
+  payload: {
+    message: {
+      id: string;
+    };
+  };
+}
+
+export interface MSGDeleteResponse {
+  id: string;
+  type: 'MSG_DELETE';
+  payload: {
+    message: {
+      id: string;
+      status: {
+        isDeleted: boolean;
+      };
+    };
+  };
+}
