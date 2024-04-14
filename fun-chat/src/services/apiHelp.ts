@@ -13,6 +13,7 @@ import {
   MSGDeliver,
   MSGReadResponse,
   MSGDeleteResponse,
+  MSGEditResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
 import { MSGRead, connectionData, getMSGSHistory, startSocket } from './api';
@@ -97,6 +98,26 @@ function drawMSGIcon(from: string, isToDraw: boolean) {
   }
 }
 
+function handleMSGEditResponse(response: MSGEditResponse) {
+  const messageId = response.payload.message.id;
+  const { isEdited } = response.payload.message.status;
+
+  if (isEdited) {
+    const editMarker = document.querySelector(`#edited${messageId}`);
+    if (editMarker instanceof HTMLElement) {
+      editMarker.classList.remove('hidden');
+    }
+
+    const { text } = response.payload.message;
+    if (text) {
+      const message = document.querySelector(`#text${messageId}`);
+      if (message instanceof HTMLElement) {
+        message.textContent = text;
+      }
+    }
+  }
+}
+
 function handleMSGDeleteResponse(response: MSGDeleteResponse) {
   const messageId = response.payload.message.id;
   const { isDeleted } = response.payload.message.status;
@@ -174,13 +195,13 @@ function handleMSGSendResponse(response: MSGSend) {
 
   </div>
 </div>
-<div class="message-text">${text}</div>
+<div id="text${messageId}" class="message-text">${text}</div>
 
 <div class="message-footer">
   <div class="message-tools">
     <div id="delete${messageId}" class="tool delete-message ${forIncomingMSG}">X</div>
-    <div id="change${messageId}" class="tool change-message change ${forIncomingMSG}">Change</div>
-    <div id="changed${messageId}" class="tool change-message changed hidden">Changed</div>
+    <div id="edit${messageId}" class="tool edit-message edit ${forIncomingMSG}">Edit</div>
+    <div id="edited${messageId}" class="tool edit-message edited hidden">Edited</div>
 
   </div>
 
@@ -192,6 +213,11 @@ function handleMSGSendResponse(response: MSGSend) {
     const chat = document.querySelector('.main__chat-main');
     if (!chat) {
       return;
+    }
+
+    const firstMessage = document.querySelector('.main__please-select');
+    if (firstMessage) {
+      firstMessage.remove();
     }
 
     chat.insertAdjacentHTML('beforeend', template);
@@ -383,6 +409,10 @@ export function listenResponse(event: MessageEvent) {
   const response = JSON.parse(event.data);
 
   switch (response.type) {
+    case 'MSG_EDIT':
+      handleMSGEditResponse(response);
+      break;
+
     case 'MSG_DELETE':
       handleMSGDeleteResponse(response);
       break;

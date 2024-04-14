@@ -1,10 +1,125 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
-import { MSGDelete, connectionData, getMSGSHistory, logoutUser, sendMSG, updateAllUsers } from '../services/api';
+import {
+  MSGDelete,
+  MSGEdit,
+  connectionData,
+  getMSGSHistory,
+  logoutUser,
+  sendMSG,
+  updateAllUsers,
+} from '../services/api';
 import { OFFLINE, ONLINE, checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
+
+function showEditButtons() {
+  const sendButton = document.querySelector('.button-send');
+  if (sendButton instanceof HTMLElement) {
+    sendButton.classList.add('hidden');
+  }
+  const editContainer = document.querySelector('.edit-buttons-container');
+  if (editContainer instanceof HTMLElement) {
+    editContainer.classList.remove('hidden');
+  }
+  const editCancel = document.querySelector('.button-edit-cancel');
+  if (editCancel instanceof HTMLElement) {
+    editCancel.classList.remove('hidden');
+  }
+  const editOk = document.querySelector('.button-edit-ok');
+  if (editOk instanceof HTMLElement) {
+    editOk.classList.remove('hidden');
+  }
+}
+
+function hideEditOptions() {
+  const sendButton = document.querySelector('.button-send');
+  if (sendButton instanceof HTMLElement) {
+    sendButton.classList.remove('hidden');
+  }
+  const editContainer = document.querySelector('.edit-buttons-container');
+  if (editContainer instanceof HTMLElement) {
+    editContainer.classList.add('hidden');
+  }
+  const editCancel = document.querySelector('.button-edit-cancel');
+  if (editCancel instanceof HTMLElement) {
+    editCancel.classList.add('hidden');
+  }
+  const editOk = document.querySelector('.button-edit-ok');
+  if (editOk instanceof HTMLElement) {
+    editOk.classList.add('hidden');
+  }
+
+  const textArea = document.querySelector('.message-input');
+  if (textArea instanceof HTMLTextAreaElement) {
+    textArea.value = '';
+  }
+
+  connectionData.editedMessageId = '';
+}
+
+function listenEditOptions() {
+  const chatFooter = document.querySelector('.main__chat-footer');
+  if (chatFooter instanceof HTMLElement) {
+    chatFooter.addEventListener('click', (event: Event) => {
+      if (event.target instanceof HTMLElement && event.target.classList.contains('button-edit-ok')) {
+        const textArea = document.querySelector('.message-input');
+        if (textArea instanceof HTMLTextAreaElement) {
+          const newMessageText = textArea.value.trim();
+          if (newMessageText) {
+            MSGEdit(connectionData.editedMessageId, newMessageText);
+            hideEditOptions();
+          }
+        }
+      }
+
+      if (event.target instanceof HTMLElement && event.target.classList.contains('button-edit-cancel')) {
+        hideEditOptions();
+      }
+    });
+  }
+
+  const textArea = document.querySelector('.message-input');
+  if (textArea instanceof HTMLTextAreaElement) {
+    textArea.addEventListener('keydown', (e) => {
+      if (connectionData.editedMessageId && e instanceof KeyboardEvent && e.key === 'Enter') {
+        e.preventDefault();
+        const newMessageText = textArea.value.trim();
+        if (newMessageText) {
+          MSGEdit(connectionData.editedMessageId, newMessageText);
+          hideEditOptions();
+        }
+      }
+    });
+  }
+}
+
+function listenEdit() {
+  const chat = document.querySelector('.main__chat-main');
+  if (chat instanceof HTMLElement) {
+    chat.addEventListener('click', (event: Event) => {
+      if (event.target instanceof HTMLElement && event.target.classList.contains('edit-message')) {
+        const { id } = event.target;
+        const prefix = 'edit';
+        const messageId = id.substring(prefix.length);
+        const messageElement = document.querySelector(`#text${messageId}`);
+        if (messageElement instanceof HTMLElement) {
+          const messageText = messageElement.textContent;
+          if (messageText) {
+            const textArea = document.querySelector('.message-input');
+            if (textArea instanceof HTMLTextAreaElement) {
+              textArea.classList.remove('disabled');
+              textArea.value = messageText;
+            }
+            connectionData.editedMessageId = messageId;
+            showEditButtons();
+          }
+        }
+      }
+    });
+  }
+}
 
 function listenDelete() {
   const chat = document.querySelector('.main__chat-main');
@@ -24,6 +139,17 @@ function listenSend() {
   const sendButton = document.querySelector('.button-send');
   if (sendButton instanceof HTMLElement) {
     sendButton.addEventListener('click', sendMSG);
+  }
+
+  const textArea = document.querySelector('.message-input');
+  if (textArea instanceof HTMLTextAreaElement) {
+    textArea.addEventListener('keydown', (event) => {
+      if (connectionData.editedMessageId === '' && event instanceof KeyboardEvent && event.key === 'Enter') {
+        event.preventDefault();
+        sendMSG();
+        textArea.value = '';
+      }
+    });
   }
 }
 
@@ -130,6 +256,12 @@ export const Main = {
         <div class="main__chat-footer">
         <textarea rows="10" class="input message-input disabled" placeholder="Enter message"></textarea>
         <div class="button button-send disabled">send</div>
+
+        <div class="edit-buttons-container">
+          <div class="button button-edit button-edit-cancel hidden">X</div>
+          <div class="button button-edit button-edit-ok hidden">V</div>
+        </div>
+
         </div>
       </div>
     </div>
@@ -186,6 +318,8 @@ export const Main = {
       listenUsers();
       listenSend();
       listenDelete();
+      listenEdit();
+      listenEditOptions();
     } else {
       console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
       navigateTo('login');

@@ -6,11 +6,30 @@ const SERVER_URL = 'localhost:4000';
 export const connectionData = {
   socket: null as WebSocket | null,
   selectedUser: '',
+  editedMessageId: '',
 };
+
+export function MSGEdit(messageId: string, messageNewText: string) {
+  const request = {
+    id: `${messageId}${connectionData.selectedUser}MSGEDIT`,
+    type: 'MSG_EDIT',
+    payload: {
+      message: {
+        id: messageId,
+        text: messageNewText,
+      },
+    },
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+}
 
 export function MSGDelete(messageId: string) {
   const request = {
-    id: `messageId${connectionData.selectedUser}MSGDELETE`,
+    id: `${messageId}${connectionData.selectedUser}MSGDELETE`,
     type: 'MSG_DELETE',
     payload: {
       message: {

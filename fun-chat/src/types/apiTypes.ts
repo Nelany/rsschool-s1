@@ -210,3 +210,28 @@ export interface MSGDeleteResponse {
     };
   };
 }
+
+export interface MSGEditRequest {
+  id: string;
+  type: 'MSG_EDIT';
+  payload: {
+    message: {
+      id: string;
+      text: string;
+    };
+  };
+}
+
+export interface MSGEditResponse {
+  id: string;
+  type: 'MSG_EDIT';
+  payload: {
+    message: {
+      id: string;
+      text: string;
+      status: {
+        isEdited: boolean;
+      };
+    };
+  };
+}

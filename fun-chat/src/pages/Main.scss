@@ -280,7 +280,7 @@
                 text-align: center;
               }
 
-              .change-message {
+              .edit-message {
                 letter-spacing: 1px;
                 font-size: 12px;
               }
@@ -296,7 +296,7 @@
                 box-shadow: 2px 2px 8px rgb(255, 0, 0);
               }
 
-              .changed {
+              .edited {
                 pointer-events: none;
               }
 
@@ -398,6 +398,25 @@
             width: 80px;
             font-size: 15px;
           }
+        }
+
+        .edit-buttons-container {
+          display: flex;
+          gap: 5px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .button-edit {
+          width: 35px;
+        }
+
+        .button-edit-cancel {
+          background-color: rgba(255, 34, 0, 0.444);
+        }
+
+        .hidden {
+          display: none;
         }
       }
     }
