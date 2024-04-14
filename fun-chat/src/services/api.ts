@@ -8,11 +8,28 @@ export const connectionData = {
   selectedUser: '',
 };
 
+export function MSGRead(messageId: string) {
+  const request = {
+    id: `${connectionData.selectedUser}MSGREAD`,
+    type: 'MSG_READ',
+    payload: {
+      message: {
+        id: messageId,
+      },
+    },
+  };
+
+  const { socket } = connectionData;
+  if (socket) {
+    socket.send(JSON.stringify(request));
+  }
+}
+
 export function getMSGSHistory() {
   const login = connectionData.selectedUser;
 
   const request = {
-    id: `${connectionData.selectedUser}`,
+    id: `${login}`,
     type: 'MSG_FROM_USER',
     payload: {
       user: {

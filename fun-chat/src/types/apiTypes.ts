@@ -164,3 +164,26 @@ export interface MSGDeliver {
     };
   };
 }
+
+export interface MSGReadRequest {
+  id: string;
+  type: 'MSG_READ';
+  payload: {
+    message: {
+      id: string;
+    };
+  };
+}
+
+export interface MSGReadResponse {
+  id: string;
+  type: 'MSG_READ';
+  payload: {
+    message: {
+      id: string;
+      status: {
+        isReaded: boolean;
+      };
+    };
+  };
+}

@@ -11,9 +11,10 @@ import {
   MSGSend,
   MSGSHistoryResponse,
   MSGDeliver,
+  MSGReadResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
-import { connectionData, startSocket } from './api';
+import { MSGRead, connectionData, startSocket } from './api';
 import { navigateTo, wait } from './router';
 
 const RECEIVED = 'received';
@@ -22,6 +23,8 @@ const READED = 'marker-status hidden';
 const NOT_READED = 'marker-status';
 const OUTGOING = 'outgoing-message';
 const INCOMING = 'incoming-message';
+export const ONLINE = 'online';
+export const OFFLINE = '';
 
 export function generateRequestId(): string {
   return Math.random().toString(36).substring(2, 11);
@@ -58,14 +61,28 @@ function formateDate(date: Date) {
   return formattedDate;
 }
 
+function handleMSGReadResponse(response: MSGReadResponse) {
+  console.warn('READ');
+  const messageId = response.payload.message.id;
+  const status = response.payload.message.status.isReaded;
+  if (status) {
+    const messageStatus = document.querySelector(`#isreaded${messageId}`);
+    if (messageStatus instanceof HTMLElement) {
+      messageStatus.classList.add('hidden');
+    }
+  }
+}
+
 function handleMSGDeliverResponse(response: MSGDeliver) {
-  console.warn(RECEIVED);
   const messageId = response.payload.message.id;
   const status = response.payload.message.status.isDelivered;
+  console.warn(status);
+
   if (status) {
-    const messageStatus = document.querySelector(`#${messageId}status`);
+    const messageStatus = document.querySelector(`#status${messageId}`);
     if (messageStatus instanceof HTMLElement) {
       messageStatus.textContent = RECEIVED;
+      console.warn('RECEIVED');
     }
   }
 }
@@ -89,15 +106,15 @@ function handleMSGSendResponse(response: MSGSend) {
   const markerStatus = isReaded ? READED : NOT_READED;
 
   if (from === connectionData.selectedUser) {
-    const chat = document.querySelector('.main__chat-main');
-    if (!chat) {
-      return;
-    }
     messageClass = INCOMING;
     sender = from;
+
+    if (!isReaded) {
+      MSGRead(messageId);
+    }
   }
 
-  const template = `<div id="${messageId}" class="message-container ${messageClass}">
+  const template = `<div id="container${messageId}" class="message-container ${messageClass}">
 <div class="message-info">
   <div class="message-sender">${sender}</div>
   <div class="message-date">
@@ -106,7 +123,7 @@ function handleMSGSendResponse(response: MSGSend) {
   </div>
 </div>
 <div class="message-text">${text}</div>
-<div class="message-footer"><div class="${markerStatus}"></div><div id="${messageId}status" class="message-status">${statusText}</div>
+<div class="message-footer"><div id="isreaded${messageId}" class="${markerStatus}"></div><div id="status${messageId}" class="message-status">${statusText}</div>
 </div></div>`;
 
   if (to === connectionData.selectedUser || from === connectionData.selectedUser) {
@@ -122,6 +139,7 @@ function handleMSGSendResponse(response: MSGSend) {
     }
   }
 }
+
 function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
   if (response) {
     const { id } = response;
@@ -140,6 +158,7 @@ function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
     }
   }
 }
+
 function handleLoginResponse(response: UserLoginResponse) {
   const { login, isLogined } = response.payload.user;
   if (isLogined) {
@@ -222,6 +241,13 @@ function handleUserExternalLoginResponse(response: UserExternalLoginResponse) {
   listItem.classList.add('main__people-one');
   listItem.textContent = userName;
   userList.insertBefore(listItem, userList.firstChild || null);
+
+  if (userName === connectionData.selectedUser) {
+    const userStatus = document.querySelector('.main__chat-status');
+    if (userStatus) {
+      userStatus.textContent = ONLINE;
+    }
+  }
 }
 
 function handleUserExternalLogoutResponse(response: UserExternalLogoutResponse) {
@@ -246,6 +272,13 @@ function handleUserExternalLogoutResponse(response: UserExternalLogoutResponse) 
 
   listItem.textContent = userName;
   userList.appendChild(listItem);
+
+  if (userName === connectionData.selectedUser) {
+    const userStatus = document.querySelector('.main__chat-status');
+    if (userStatus) {
+      userStatus.textContent = OFFLINE;
+    }
+  }
 }
 
 function handleActiveResponse(response: UsersActiveResponse) {
@@ -274,6 +307,10 @@ export function listenResponse(event: MessageEvent) {
   const response = JSON.parse(event.data);
 
   switch (response.type) {
+    case 'MSG_READ':
+      handleMSGReadResponse(response);
+      break;
+
     case 'MSG_DELIVER':
       handleMSGDeliverResponse(response);
       break;

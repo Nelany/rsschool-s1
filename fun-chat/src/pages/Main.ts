@@ -1,7 +1,7 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
 import { connectionData, getMSGSHistory, logoutUser, sendMSG, updateAllUsers } from '../services/api';
-import { checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
+import { OFFLINE, ONLINE, checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
@@ -39,9 +39,9 @@ function listenUsers() {
           getMSGSHistory();
           selectedName.textContent = target.textContent;
           if (!target.classList.contains('offline')) {
-            selectedStatus.textContent = 'online';
+            selectedStatus.textContent = ONLINE;
           } else {
-            selectedStatus.textContent = '';
+            selectedStatus.textContent = OFFLINE;
           }
         }
       }
@@ -64,6 +64,7 @@ export function clearStorage() {
 }
 
 function logoutButtonHandler() {
+  connectionData.selectedUser = '';
   logoutUser();
   clearStorage();
   navigateTo('login');
