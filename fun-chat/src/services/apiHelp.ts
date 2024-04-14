@@ -97,7 +97,6 @@ function drawMSGIcon(from: string, isToDraw: boolean) {
 }
 
 function handleMSGReadResponse(response: MSGReadResponse) {
-  console.warn('READ');
   const messageId = response.payload.message.id;
   const status = response.payload.message.status.isReaded;
   if (status) {
@@ -112,13 +111,11 @@ function handleMSGReadResponse(response: MSGReadResponse) {
 function handleMSGDeliverResponse(response: MSGDeliver) {
   const messageId = response.payload.message.id;
   const status = response.payload.message.status.isDelivered;
-  console.warn(status);
 
   if (status) {
     const messageStatus = document.querySelector(`#status${messageId}`);
     if (messageStatus instanceof HTMLElement) {
       messageStatus.textContent = RECEIVED;
-      console.warn('RECEIVED');
     }
   }
 }
@@ -142,10 +139,6 @@ function handleMSGSendResponse(response: MSGSend) {
   const markerStatus = isReaded ? READED : NOT_READED;
 
   if (!isReaded && !(from === connectionData.selectedUser) && !(to === connectionData.selectedUser)) {
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    console.warn('MESSAGEMESSAGEMESSAGE');
     drawMSGIcon(from, true);
   }
 
@@ -268,6 +261,10 @@ function renderInactiveUserList(users: User[]) {
     users.forEach((user) => {
       const listItem = document.createElement('li');
       listItem.classList.add('main__people-one');
+      const sessionUser = getUserFromSessionStorage();
+      if (sessionUser && !(user.login === sessionUser.login)) {
+        checkMSGS(user.login);
+      }
       listItem.classList.add('offline');
       listItem.textContent = user.login;
       userList.appendChild(listItem);

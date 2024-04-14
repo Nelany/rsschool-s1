@@ -37,6 +37,15 @@ function listenUsers() {
         ) {
           connectionData.selectedUser = target.textContent;
           getMSGSHistory();
+
+          const sendButton = document.querySelector('.button-send');
+          const messageArea = document.querySelector('.message-input');
+          if (sendButton instanceof HTMLElement && messageArea instanceof HTMLTextAreaElement) {
+            sendButton.classList.remove('disabled');
+            messageArea.classList.remove('disabled');
+            messageArea.value = '';
+          }
+
           selectedName.textContent = target.textContent;
           if (!target.classList.contains('offline')) {
             selectedStatus.textContent = ONLINE;
@@ -95,50 +104,11 @@ export const Main = {
           <div class="main__chat-status"></div>
         </div>
 
-        <div class="main__chat-main">
-
-          <div class="message-container incoming-message">
-            <div class="message-info">
-              <div class="message-sender">Vasia</div>
-              <div class="message-date">
-                <div class="message-day">12.04.2024,</div>
-                <div class="message-time">09:19:15</div>
-              </div>
-            </div>
-            <div class="message-text">Hello, darling!</div>
-            <div class="message-status"><div class="marker-status"></div>received</div>
-          </div>
-
-          <div class="message-container outgoing-message">
-            <div class="message-info">
-              <div class="message-sender">You</div>
-              <div class="message-date">
-                <div class="message-day">12.04.2024,</div>
-                <div class="message-time">09:19:15</div>
-              </div>
-            </div>
-            <div class="message-text">Hello, Honney! How are you?</div>
-            <div class="message-status"><div class="marker-status hidden"></div>sent</div>
-          </div>
-
-          <div class="message-container incoming-message">
-            <div class="message-info">
-              <div class="message-sender">Vasia</div>
-              <div class="message-date">
-                <div class="message-day">12.04.2024,</div>
-                <div class="message-time">09:19:15</div>
-              </div>
-            </div>
-            <div class="message-text">Hello, darling!</div>
-            <div class="message-status">received</div>
-          </div>
-
-
-        </div>
+        <div class="main__chat-main"><div class="main__please-select">Please select a recipient!</div></div>
 
         <div class="main__chat-footer">
-        <textarea rows="10" class="input message-input" placeholder="Enter message"></textarea>
-        <div class="button button-send">send</div>
+        <textarea rows="10" class="input message-input disabled" placeholder="Enter message"></textarea>
+        <div class="button button-send disabled">send</div>
         </div>
       </div>
     </div>
