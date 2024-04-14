@@ -36,6 +36,11 @@ function listenUsers() {
           !(target.textContent === currentUser.login)
         ) {
           connectionData.selectedUser = target.textContent;
+          const messagesContainer = document.querySelector('.main__chat-main');
+          if (messagesContainer) {
+            const firstMessageTemplate = '<div class="main__please-select">Please send your first message!</div>';
+            messagesContainer.innerHTML = firstMessageTemplate;
+          }
           getMSGSHistory();
 
           const sendButton = document.querySelector('.button-send');

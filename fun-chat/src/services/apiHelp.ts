@@ -186,7 +186,8 @@ function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
       if (!chat) {
         return;
       }
-      chat.innerHTML = '';
+      const firstMessageTemplate = '<div class="main__please-select">Please send your first message!</div>';
+      chat.innerHTML = firstMessageTemplate;
     }
     const { messages } = response.payload;
     messages.forEach((message) => {
@@ -237,10 +238,9 @@ function renderActiveUserList(users: User[]) {
       const sessionUser = getUserFromSessionStorage();
       if (sessionUser && !(user.login === sessionUser.login)) {
         checkMSGS(user.login);
+        listItem.textContent = user.login;
+        userList.insertBefore(listItem, userList.firstChild || null);
       }
-
-      listItem.textContent = user.login;
-      userList.insertBefore(listItem, userList.firstChild || null);
     });
   }
 }
@@ -264,10 +264,11 @@ function renderInactiveUserList(users: User[]) {
       const sessionUser = getUserFromSessionStorage();
       if (sessionUser && !(user.login === sessionUser.login)) {
         checkMSGS(user.login);
+
+        listItem.classList.add('offline');
+        listItem.textContent = user.login;
+        userList.appendChild(listItem);
       }
-      listItem.classList.add('offline');
-      listItem.textContent = user.login;
-      userList.appendChild(listItem);
     });
   }
 }
