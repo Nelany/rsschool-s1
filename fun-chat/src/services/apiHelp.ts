@@ -14,7 +14,7 @@ import {
   MSGReadResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
-import { MSGRead, connectionData, startSocket } from './api';
+import { MSGRead, connectionData, getMSGSHistory, startSocket } from './api';
 import { navigateTo, wait } from './router';
 
 const RECEIVED = 'received';
@@ -61,6 +61,41 @@ function formateDate(date: Date) {
   return formattedDate;
 }
 
+export function getUserFromSessionStorage(): SessionData | null {
+  const userDataJSON = sessionStorage.getItem('currentUser');
+
+  if (userDataJSON) {
+    const userData = JSON.parse(userDataJSON);
+
+    return userData;
+  }
+  return null;
+}
+
+export function checkLogin() {
+  const currentUser = getUserFromSessionStorage();
+  if (currentUser && currentUser.isLogined) {
+    return true;
+  }
+  return false;
+}
+
+function drawMSGIcon(from: string, isToDraw: boolean) {
+  const sessionUser = getUserFromSessionStorage();
+  if (sessionUser && !(from === sessionUser.login)) {
+    const allUsers = document.querySelectorAll('.main__people-one');
+    allUsers.forEach((user) => {
+      if (user instanceof HTMLElement && user.textContent === from) {
+        if (isToDraw) {
+          user.classList.add('sender');
+        } else {
+          user.classList.remove('sender');
+        }
+      }
+    });
+  }
+}
+
 function handleMSGReadResponse(response: MSGReadResponse) {
   console.warn('READ');
   const messageId = response.payload.message.id;
@@ -69,6 +104,7 @@ function handleMSGReadResponse(response: MSGReadResponse) {
     const messageStatus = document.querySelector(`#isreaded${messageId}`);
     if (messageStatus instanceof HTMLElement) {
       messageStatus.classList.add('hidden');
+      drawMSGIcon(connectionData.selectedUser, false);
     }
   }
 }
@@ -104,6 +140,14 @@ function handleMSGSendResponse(response: MSGSend) {
   // const {isEdited} = response.payload.message.status;
   const statusText = isDelivered ? RECEIVED : SENT;
   const markerStatus = isReaded ? READED : NOT_READED;
+
+  if (!isReaded && !(from === connectionData.selectedUser) && !(to === connectionData.selectedUser)) {
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    console.warn('MESSAGEMESSAGEMESSAGE');
+    drawMSGIcon(from, true);
+  }
 
   if (from === connectionData.selectedUser) {
     messageClass = INCOMING;
@@ -150,13 +194,16 @@ function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
         return;
       }
       chat.innerHTML = '';
-      const { messages } = response.payload;
-
-      messages.forEach((message) => {
-        handleMSGSendResponse(message);
-      });
     }
+    const { messages } = response.payload;
+    messages.forEach((message) => {
+      handleMSGSendResponse(message);
+    });
   }
+}
+
+function checkMSGS(user: string) {
+  getMSGSHistory(user);
 }
 
 function handleLoginResponse(response: UserLoginResponse) {
@@ -181,7 +228,7 @@ export function handleLogoutResponse(response: UserLogoutResponse) {
 function renderActiveUserList(users: User[]) {
   const userList = document.querySelector('.main__people-list');
 
-  const renderedUsers = document.querySelectorAll('.main__people-one');
+  const renderedUsers = document.querySelectorAll('.main__people-one sender');
   if (renderedUsers) {
     renderedUsers.forEach((user) => {
       if (!user.classList.contains('offline')) {
@@ -194,11 +241,17 @@ function renderActiveUserList(users: User[]) {
     users.reverse().forEach((user) => {
       const listItem = document.createElement('li');
       listItem.classList.add('main__people-one');
+      const sessionUser = getUserFromSessionStorage();
+      if (sessionUser && !(user.login === sessionUser.login)) {
+        checkMSGS(user.login);
+      }
+
       listItem.textContent = user.login;
       userList.insertBefore(listItem, userList.firstChild || null);
     });
   }
 }
+
 function renderInactiveUserList(users: User[]) {
   const userList = document.querySelector('.main__people-list');
 
@@ -355,23 +408,4 @@ export function listenResponse(event: MessageEvent) {
       handleUnknownResponse(response);
       break;
   }
-}
-
-export function getUserFromSessionStorage(): SessionData | null {
-  const userDataJSON = sessionStorage.getItem('currentUser');
-
-  if (userDataJSON) {
-    const userData = JSON.parse(userDataJSON);
-
-    return userData;
-  }
-  return null;
-}
-
-export function checkLogin() {
-  const currentUser = getUserFromSessionStorage();
-  if (currentUser && currentUser.isLogined) {
-    return true;
-  }
-  return false;
 }

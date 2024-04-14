@@ -25,8 +25,8 @@ export function MSGRead(messageId: string) {
   }
 }
 
-export function getMSGSHistory() {
-  const login = connectionData.selectedUser;
+export function getMSGSHistory(login = connectionData.selectedUser) {
+  // const login = connectionData.selectedUser;
 
   const request = {
     id: `${login}`,
