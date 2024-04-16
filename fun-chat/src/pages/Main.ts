@@ -14,6 +14,31 @@ import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
 
+function listenSearch() {
+  const input = document.querySelector('.people-name');
+
+  if (input instanceof HTMLInputElement)
+    input.addEventListener('input', (event) => {
+      if (event.target instanceof HTMLInputElement) {
+        const searchText = event.target.value.trim().toLowerCase();
+
+        const listItems = document.querySelectorAll('.main__people-one');
+
+        listItems.forEach((item) => {
+          if (item.textContent && item instanceof HTMLElement) {
+            const listItemText = item.textContent.trim().toLowerCase();
+
+            if (listItemText.startsWith(searchText)) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          }
+        });
+      }
+    });
+}
+
 function showEditButtons() {
   const sendButton = document.querySelector('.button-send');
   if (sendButton instanceof HTMLElement) {
@@ -84,11 +109,15 @@ function listenEditOptions() {
   if (textArea instanceof HTMLTextAreaElement) {
     textArea.addEventListener('keydown', (e) => {
       if (connectionData.editedMessageId && e instanceof KeyboardEvent && e.key === 'Enter') {
-        e.preventDefault();
-        const newMessageText = textArea.value.trim();
-        if (newMessageText) {
-          MSGEdit(connectionData.editedMessageId, newMessageText);
-          hideEditOptions();
+        if (e.shiftKey) {
+          textArea.value += '\n';
+        } else {
+          e.preventDefault();
+          const newMessageText = textArea.value.trim();
+          if (newMessageText) {
+            MSGEdit(connectionData.editedMessageId, newMessageText);
+            hideEditOptions();
+          }
         }
       }
     });
@@ -145,9 +174,13 @@ function listenSend() {
   if (textArea instanceof HTMLTextAreaElement) {
     textArea.addEventListener('keydown', (event) => {
       if (connectionData.editedMessageId === '' && event instanceof KeyboardEvent && event.key === 'Enter') {
-        event.preventDefault();
-        sendMSG();
-        textArea.value = '';
+        if (event.shiftKey) {
+          textArea.value += '\n';
+        } else {
+          event.preventDefault();
+          sendMSG();
+          textArea.value = '';
+        }
       }
     });
   }
@@ -238,8 +271,8 @@ export const Main = {
 
     <div class="main__main">
       <div class="main__people dark-background">
-      <input type="text" class="input people-name" id="peopleName" name="peopleName" placeholder="Enter name">
-      <ul class="main__people-list"></ul>
+        <input type="text" class="input people-name" id="peopleName" name="peopleName" placeholder="Enter name">
+        <ul class="main__people-list"></ul>
       </div>
 
 
@@ -320,6 +353,7 @@ export const Main = {
       listenDelete();
       listenEdit();
       listenEditOptions();
+      listenSearch();
     } else {
       console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
       navigateTo('login');
