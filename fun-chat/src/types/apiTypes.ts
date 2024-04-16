@@ -134,6 +134,19 @@ export interface MSGSend {
   };
 }
 
+// export interface Message {
+//   id: string;
+//   from: string;
+//   to: string;
+//   text: string;
+//   datetime: number;
+//   status: {
+//     isDelivered: boolean;
+//     isReaded: boolean;
+//     isEdited: boolean;
+//   };
+// }
+
 export interface MSGSHistoryRequest {
   id: string;
   type: 'MSG_FROM_USER';

@@ -90,8 +90,15 @@ function drawMSGIcon(from: string, isToDraw: boolean) {
       if (user instanceof HTMLElement && user.textContent === from) {
         if (isToDraw) {
           user.classList.add('sender');
+          const messageCounter = user.getAttribute('data-counter');
+          if (messageCounter) {
+            const messages = parseInt(messageCounter, 10) + 1;
+            user.setAttribute('data-counter', `${messages}`);
+          }
         } else {
           user.classList.remove('sender');
+
+          user.setAttribute('data-counter', '0');
         }
       }
     });
@@ -241,9 +248,33 @@ function handleMSGHistoryResponse(response: MSGSHistoryResponse) {
       chat.innerHTML = firstMessageTemplate;
     }
     const { messages } = response.payload;
-    messages.forEach((message) => {
+    let messageCounter = 0;
+    let sender = '';
+
+    messages.forEach((message: MSGSend) => {
+      const sessionUser = getUserFromSessionStorage();
+      if (sessionUser) {
+        const sessionUserName = sessionUser.login;
+        const messageItem = message?.payload?.message || message;
+
+        if (sessionUserName === messageItem.to && !messageItem.status.isReaded) {
+          messageCounter += 1;
+          sender = messageItem.from;
+        }
+      }
       handleMSGSendResponse(message);
     });
+
+    if (messageCounter !== 0) {
+      const people = document.querySelectorAll('.main__people-one');
+      if (people) {
+        people.forEach((person) => {
+          if (person instanceof HTMLElement && sender && person.textContent === sender) {
+            person.setAttribute('data-counter', `${messageCounter}`);
+          }
+        });
+      }
+    }
   }
 }
 
@@ -288,6 +319,7 @@ function renderActiveUserList(users: User[]) {
       listItem.classList.add('main__people-one');
       const sessionUser = getUserFromSessionStorage();
       if (sessionUser && !(user.login === sessionUser.login)) {
+        listItem.setAttribute('data-counter', '0');
         checkMSGS(user.login);
         listItem.textContent = user.login;
         userList.insertBefore(listItem, userList.firstChild || null);
@@ -314,6 +346,7 @@ function renderInactiveUserList(users: User[]) {
       listItem.classList.add('main__people-one');
       const sessionUser = getUserFromSessionStorage();
       if (sessionUser && !(user.login === sessionUser.login)) {
+        listItem.setAttribute('data-counter', '0');
         checkMSGS(user.login);
 
         listItem.classList.add('offline');
@@ -332,16 +365,29 @@ function handleUserExternalLoginResponse(response: UserExternalLoginResponse) {
   }
 
   const renderedUsers = document.querySelectorAll('.main__people-one');
+  let messages = '0';
+  let sender = 'not';
+
   if (renderedUsers) {
     renderedUsers.forEach((user) => {
       if (user.textContent === userName) {
+        if (user.classList.contains('sender')) {
+          sender = 'sender';
+        }
+        const dataCounter = user.getAttribute('data-counter');
+        if (dataCounter) {
+          messages = dataCounter;
+        }
         user.remove();
       }
     });
   }
   const listItem = document.createElement('li');
   listItem.classList.add('main__people-one');
+  listItem.classList.add(sender);
+
   listItem.textContent = userName;
+  listItem.setAttribute('data-counter', messages);
   userList.insertBefore(listItem, userList.firstChild || null);
 
   if (userName === connectionData.selectedUser) {
@@ -359,10 +405,20 @@ function handleUserExternalLogoutResponse(response: UserExternalLogoutResponse) 
     return;
   }
 
+  let messages = '0';
+  let sender = 'not';
+
   const renderedUsers = document.querySelectorAll('.main__people-one');
   if (renderedUsers) {
     renderedUsers.forEach((user) => {
       if (user.textContent === userName) {
+        if (user.classList.contains('sender')) {
+          sender = 'sender';
+        }
+        const dataCounter = user.getAttribute('data-counter');
+        if (dataCounter) {
+          messages = dataCounter;
+        }
         user.remove();
       }
     });
@@ -373,6 +429,10 @@ function handleUserExternalLogoutResponse(response: UserExternalLogoutResponse) 
   listItem.classList.add('offline');
 
   listItem.textContent = userName;
+  listItem.classList.add(sender);
+
+  listItem.setAttribute('data-counter', messages);
+
   userList.appendChild(listItem);
 
   if (userName === connectionData.selectedUser) {
