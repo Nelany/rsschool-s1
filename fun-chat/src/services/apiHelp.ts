@@ -1,3 +1,5 @@
+import { BreakLine } from '../components/BreakLine/BreakLine';
+import { Popup } from '../components/popup/Popup';
 import { clearStorage } from '../pages/Main';
 import {
   GeneralRequest,
@@ -16,7 +18,7 @@ import {
   MSGEditResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
-import { MSGRead, connectionData, getMSGSHistory, startSocket } from './api';
+import { connectionData, getMSGSHistory, startSocket } from './api';
 import { navigateTo, wait } from './router';
 
 const RECEIVED = 'received';
@@ -36,6 +38,19 @@ export function handleConnectionError(event: Event): void {
   wait();
   console.error('Ошибка соединения WebSocket:', event);
   startSocket();
+}
+
+export function breakLineScroll() {
+  const chat = document.querySelector('.main__chat-main');
+  const breakLine = document.querySelector('.break-line-container');
+
+  if (breakLine instanceof HTMLElement && chat) {
+    const position = breakLine.offsetTop - 180;
+
+    chat.scrollTop = position;
+  } else if (chat instanceof HTMLElement) {
+    chat.scrollTop = chat.scrollHeight + 20;
+  }
 }
 
 export function loginTrueSessionStorageUser() {
@@ -144,6 +159,12 @@ function handleMSGReadResponse(response: MSGReadResponse) {
     if (messageStatus instanceof HTMLElement) {
       messageStatus.classList.add('hidden');
       drawMSGIcon(connectionData.selectedUser, false);
+      BreakLine.remove();
+      connectionData.isBreakLine = false;
+      const MSGElement = document.getElementById(`container${messageId}`);
+      if (MSGElement instanceof HTMLElement) {
+        MSGElement.classList.remove('unread-incoming');
+      }
     }
   }
 }
@@ -164,6 +185,7 @@ function handleMSGSendResponse(response: MSGSend) {
   let messageClass = OUTGOING;
   let sender = 'You';
   let forIncomingMSG = '';
+  let forIncomingUnread = '';
 
   // const { id } = response;
   const message = response?.payload?.message || response;
@@ -180,7 +202,7 @@ function handleMSGSendResponse(response: MSGSend) {
   const statusText = isDelivered ? RECEIVED : SENT;
   const markerStatus = isReaded ? READED : NOT_READED;
 
-  if (!isReaded && !(from === connectionData.selectedUser) && !(to === connectionData.selectedUser)) {
+  if (!isReaded && !(to === connectionData.selectedUser)) {
     drawMSGIcon(from, true);
   }
 
@@ -188,13 +210,17 @@ function handleMSGSendResponse(response: MSGSend) {
     messageClass = INCOMING;
     sender = from;
     forIncomingMSG = 'hidden-for-incoming';
+    forIncomingUnread = 'unread-incoming';
 
     if (!isReaded) {
-      MSGRead(messageId);
+      if (!connectionData.isBreakLine) {
+        BreakLine.draw();
+        connectionData.isBreakLine = true;
+      }
     }
   }
 
-  const template = `<div id="container${messageId}" class="message-container ${messageClass}">
+  const template = `<div id="container${messageId}" class="message-container ${messageClass} ${forIncomingUnread}">
 <div class="message-info">
   <div class="message-sender">${sender}</div>
   <div class="message-date">
@@ -228,10 +254,7 @@ function handleMSGSendResponse(response: MSGSend) {
     }
 
     chat.insertAdjacentHTML('beforeend', template);
-    const messageContainer = document.querySelector('.main__chat-main');
-    if (messageContainer instanceof HTMLElement) {
-      messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
+    breakLineScroll();
   }
 }
 
@@ -454,7 +477,7 @@ function handleInactiveResponse(response: UsersInactiveResponse) {
 }
 
 export function handleError(error: string): void {
-  navigateTo('login');
+  Popup.open(`Oh dear! ${error}!`);
 
   console.error('Ошибка:', error);
 }

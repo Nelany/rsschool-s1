@@ -1,5 +1,12 @@
-import { generateRequestId, getUserFromSessionStorage, handleConnectionError, listenResponse } from './apiHelp';
-import { navigateTo, wait } from './router';
+import { BreakLine } from '../components/BreakLine/BreakLine';
+import {
+  breakLineScroll,
+  generateRequestId,
+  getUserFromSessionStorage,
+  handleConnectionError,
+  listenResponse,
+} from './apiHelp';
+import { navigateTo } from './router';
 
 const SERVER_URL = 'localhost:4000';
 
@@ -7,6 +14,7 @@ export const connectionData = {
   socket: null as WebSocket | null,
   selectedUser: '',
   editedMessageId: '',
+  isBreakLine: false,
 };
 
 export function MSGEdit(messageId: string, messageNewText: string) {
@@ -44,7 +52,7 @@ export function MSGDelete(messageId: string) {
   }
 }
 
-export function MSGRead(messageId: string) {
+export function MSGReadRequest(messageId: string) {
   const request = {
     id: `${connectionData.selectedUser}MSGREAD`,
     type: 'MSG_READ',
@@ -102,6 +110,8 @@ export function sendMSG() {
   }
 
   messageArea.value = '';
+  BreakLine.remove();
+  breakLineScroll();
 
   const request = {
     id: currentUser.id,
@@ -174,7 +184,7 @@ export function logoutUser() {
     socket.send(JSON.stringify(request));
   }
 
-  wait();
+  // wait();
 }
 
 export function loginUser() {
@@ -200,7 +210,7 @@ export function loginUser() {
     socket.send(JSON.stringify(request));
   }
 
-  wait();
+  // wait();
 }
 
 export function startSocket() {

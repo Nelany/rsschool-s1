@@ -1,5 +1,6 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
+import { Popup } from '../components/popup/Popup';
 import { loginUser } from '../services/api';
 import { generateRequestId } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
@@ -130,5 +131,6 @@ export const Login = {
       loginInput.addEventListener('input', validateForm);
       passwordInput.addEventListener('input', validateForm);
     }
+    Popup.draw();
   },
 };

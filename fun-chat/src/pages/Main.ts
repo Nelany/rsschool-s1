@@ -1,5 +1,7 @@
+import { BreakLine, listenReadMessages, sendMSGReadRequest } from '../components/BreakLine/BreakLine';
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
+import { Popup } from '../components/popup/Popup';
 import {
   MSGDelete,
   MSGEdit,
@@ -9,7 +11,7 @@ import {
   sendMSG,
   updateAllUsers,
 } from '../services/api';
-import { OFFLINE, ONLINE, checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
+import { OFFLINE, ONLINE, breakLineScroll, checkLogin, getUserFromSessionStorage } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
@@ -179,7 +181,10 @@ function listenSend() {
         } else {
           event.preventDefault();
           sendMSG();
+          sendMSGReadRequest();
           textArea.value = '';
+          BreakLine.remove();
+          breakLineScroll();
         }
       }
     });
@@ -263,6 +268,7 @@ export const Main = {
       <div class="main__header-tittles">
         <div class="main__user-name">User: <span class="user-name">Vasia123456789 1234567890</span>
         </div>
+
         <div class="main__tittle">FUN CHAT</div>
       </div>
 
@@ -354,6 +360,8 @@ export const Main = {
       listenEdit();
       listenEditOptions();
       listenSearch();
+      listenReadMessages();
+      Popup.draw();
     } else {
       console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
       navigateTo('login');
