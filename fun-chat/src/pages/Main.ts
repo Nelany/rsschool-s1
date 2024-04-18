@@ -1,6 +1,13 @@
 import { BreakLine, listenReadMessages, sendMSGReadRequest } from '../components/BreakLine/BreakLine';
 import { Button } from '../components/button/Button';
-import { ContentTemplate } from '../components/content/Content';
+import {
+  ContentTemplate,
+  scheduleLetFly1,
+  scheduleLetFly2,
+  scheduleLetFly5,
+  scheduleLetFly6,
+  scheduleLetFly7,
+} from '../components/content/Content';
 import { Popup } from '../components/popup/Popup';
 import {
   MSGDelete,
@@ -361,6 +368,13 @@ export const Main = {
       listenEditOptions();
       listenSearch();
       listenReadMessages();
+
+      scheduleLetFly1();
+      setTimeout(scheduleLetFly2, 2000);
+      setTimeout(scheduleLetFly5, 4000);
+      setTimeout(scheduleLetFly6, 6000);
+      setTimeout(scheduleLetFly7, 8000);
+
       Popup.draw();
     } else {
       console.warn(checkLogin(), 'checkLoginНЕзарегЕще');

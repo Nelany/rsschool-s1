@@ -18,7 +18,7 @@ import {
   MSGEditResponse,
 } from '../types/apiTypes';
 import { User } from '../types/types';
-import { connectionData, getMSGSHistory, startSocket } from './api';
+import { connectionData, getMSGSHistory, startSocket, updateAllUsers } from './api';
 import { navigateTo, wait } from './router';
 
 const RECEIVED = 'received';
@@ -140,6 +140,8 @@ function handleMSGEditResponse(response: MSGEditResponse) {
   }
 }
 
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 function handleMSGDeleteResponse(response: MSGDeleteResponse) {
   const messageId = response.payload.message.id;
   const { isDeleted } = response.payload.message.status;
@@ -148,6 +150,8 @@ function handleMSGDeleteResponse(response: MSGDeleteResponse) {
     if (message instanceof HTMLElement) {
       message.remove();
     }
+
+    updateAllUsers();
   }
 }
 

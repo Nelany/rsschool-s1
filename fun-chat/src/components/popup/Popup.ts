@@ -1,3 +1,4 @@
+import { clearStorage } from '../../pages/Main';
 import { Button } from '../button/Button';
 import { Tag } from '../tag/Tag';
 import './Popup.scss';
@@ -50,6 +51,9 @@ export const Popup = {
     if (tittleElement && popup) {
       tittleElement.textContent = tittle;
       popup.classList.add('open');
+      if (tittle === 'Oh dear! a user with this login is already authorized!') {
+        clearStorage();
+      }
     }
   },
 

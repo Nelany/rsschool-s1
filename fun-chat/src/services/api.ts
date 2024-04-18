@@ -36,8 +36,13 @@ export function MSGEdit(messageId: string, messageNewText: string) {
 }
 
 export function MSGDelete(messageId: string) {
+  const sessionUser = getUserFromSessionStorage();
+  if (!sessionUser) {
+    return;
+  }
+
   const request = {
-    id: `${messageId}${connectionData.selectedUser}MSGDELETE`,
+    id: `MSGDELETE${sessionUser.login}`,
     type: 'MSG_DELETE',
     payload: {
       message: {
@@ -157,6 +162,10 @@ export function getInactiveUsers() {
 }
 
 export function updateAllUsers() {
+  const peopleList = document.querySelector('.main__people-list');
+  if (peopleList instanceof HTMLElement) {
+    peopleList.innerHTML = '';
+  }
   getActiveUsers();
   getInactiveUsers();
 }
