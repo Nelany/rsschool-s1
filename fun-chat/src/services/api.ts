@@ -232,7 +232,7 @@ export function startSocket() {
 
   connectionData.socket.addEventListener('message', listenResponse);
 
-  connectionData.socket.addEventListener('error', (event: Event) => {
-    handleConnectionError(event);
+  connectionData.socket.addEventListener('error', () => {
+    handleConnectionError();
   });
 }

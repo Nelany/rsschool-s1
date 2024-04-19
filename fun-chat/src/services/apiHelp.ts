@@ -34,9 +34,8 @@ export function generateRequestId(): string {
   return Math.random().toString(36).substring(2, 11);
 }
 
-export function handleConnectionError(event: Event): void {
+export function handleConnectionError(): void {
   wait();
-  console.error('Ошибка соединения WebSocket:', event);
   startSocket();
 }
 
@@ -188,8 +187,8 @@ function handleMSGSendResponse(response: MSGSend) {
   let sender = 'You';
   let forIncomingMSG = '';
   let forIncomingUnread = '';
+  let forEdited = 'hidden';
 
-  // const { id } = response;
   const message = response?.payload?.message || response;
   const messageId = message.id;
   const { from } = message;
@@ -200,9 +199,13 @@ function handleMSGSendResponse(response: MSGSend) {
   const date = formateDate(newDate);
   const { isDelivered } = message.status;
   const { isReaded } = message.status;
-  // const {isEdited} = response.payload.message.status;
+  const { isEdited } = message.status;
   const statusText = isDelivered ? RECEIVED : SENT;
   const markerStatus = isReaded ? READED : NOT_READED;
+
+  if (isEdited) {
+    forEdited = '';
+  }
 
   if (!isReaded && !(to === connectionData.selectedUser)) {
     drawMSGIcon(from, true);
@@ -236,7 +239,7 @@ function handleMSGSendResponse(response: MSGSend) {
   <div class="message-tools">
     <div id="delete${messageId}" class="tool delete-message ${forIncomingMSG}">X</div>
     <div id="edit${messageId}" class="tool edit-message edit ${forIncomingMSG}">Edit</div>
-    <div id="edited${messageId}" class="tool edit-message edited hidden">Edited</div>
+    <div id="edited${messageId}" class="tool edit-message edited ${forEdited}">Edited</div>
 
   </div>
 
@@ -308,22 +311,24 @@ function checkMSGS(user: string) {
 }
 
 function handleLoginResponse(response: UserLoginResponse) {
-  const { login, isLogined } = response.payload.user;
+  const { isLogined } = response.payload.user;
   if (isLogined) {
     loginTrueSessionStorageUser();
     navigateTo('main');
-    console.log(`Пользователь '${login}' вошел в систему: ${isLogined}`);
   } else {
     clearStorage();
     navigateTo('login');
-    console.log(`Пользователь '${login}' НЕ в системе, isLogined: ${isLogined}`);
   }
 }
 
 export function handleLogoutResponse(response: UserLogoutResponse) {
   const { login, isLogined } = response.payload.user;
-
-  console.log(`Пользователь '${login}' вышел из системы, isLogined: ${isLogined}`);
+  const sessionUser = getUserFromSessionStorage();
+  if (sessionUser && sessionUser.login === login && !isLogined) {
+    connectionData.selectedUser = '';
+    clearStorage();
+    navigateTo('login');
+  }
 }
 
 function renderActiveUserList(users: User[]) {
@@ -480,13 +485,9 @@ function handleInactiveResponse(response: UsersInactiveResponse) {
 
 export function handleError(error: string): void {
   Popup.open(`Oh dear! ${error}!`);
-
-  console.error('Ошибка:', error);
 }
 
 export function handleUnknownResponse(response: GeneralRequest): void {
-  navigateTo('login');
-
   console.error('Неизвестный тип ответа:', response.type);
 }
 

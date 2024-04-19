@@ -268,10 +268,7 @@ export function clearStorage() {
 }
 
 function logoutButtonHandler() {
-  connectionData.selectedUser = '';
   logoutUser();
-  clearStorage();
-  navigateTo('login');
 }
 
 export const Main = {
@@ -327,8 +324,6 @@ export const Main = {
   </div>`,
 
   draw() {
-    console.warn(checkLogin(), 'checkLoginЗарег');
-
     if (checkLogin()) {
       ContentTemplate.draw();
 
@@ -382,7 +377,6 @@ export const Main = {
 
       Popup.draw();
     } else {
-      console.warn(checkLogin(), 'checkLoginНЕзарегЕще');
       navigateTo('login');
     }
   },
