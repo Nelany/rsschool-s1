@@ -30,7 +30,7 @@ export function MSGEdit(messageId: string, messageNewText: string) {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
 }
@@ -52,7 +52,7 @@ export function MSGDelete(messageId: string) {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
 }
@@ -69,14 +69,12 @@ export function MSGReadRequest(messageId: string) {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
 }
 
 export function getMSGSHistory(login = connectionData.selectedUser) {
-  // const login = connectionData.selectedUser;
-
   const request = {
     id: `${login}`,
     type: 'MSG_FROM_USER',
@@ -88,9 +86,15 @@ export function getMSGSHistory(login = connectionData.selectedUser) {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
+}
+
+function addSpaceAfterTenChars(inputString: string): string {
+  const regex: RegExp = /(?:[^a-zA-Zа-яА-Я0-9\n]){10}/g;
+
+  return inputString.replace(regex, (match) => `${match} `);
 }
 
 export function sendMSG() {
@@ -109,10 +113,11 @@ export function sendMSG() {
     return;
   }
 
-  const message = messageArea.value.trim();
+  let message = messageArea.value.trim();
   if (!message) {
     return;
   }
+  message = addSpaceAfterTenChars(message);
 
   messageArea.value = '';
   BreakLine.remove();
@@ -130,7 +135,7 @@ export function sendMSG() {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
 }
@@ -143,7 +148,7 @@ export function getActiveUsers() {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
 }
@@ -156,7 +161,7 @@ export function getInactiveUsers() {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
 }
@@ -189,11 +194,9 @@ export function logoutUser() {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
-
-  // wait();
 }
 
 export function loginUser() {
@@ -215,11 +218,9 @@ export function loginUser() {
   };
 
   const { socket } = connectionData;
-  if (socket) {
+  if (socket && socket.readyState === socket.OPEN) {
     socket.send(JSON.stringify(request));
   }
-
-  // wait();
 }
 
 export function startSocket() {

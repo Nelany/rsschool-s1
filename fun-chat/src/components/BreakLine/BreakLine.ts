@@ -47,11 +47,6 @@ export function sendMSGReadRequest() {
 export function listenReadMessages() {
   const chat = document.querySelector('.main__chat-main');
   if (chat) {
-    const sendMessageButton = document.querySelector('.button-send');
-    if (sendMessageButton) {
-      sendMessageButton.addEventListener('click', sendMSGReadRequest);
-    }
-
     chat.addEventListener('click', sendMSGReadRequest);
     chat.addEventListener('wheel', sendMSGReadRequest);
   }

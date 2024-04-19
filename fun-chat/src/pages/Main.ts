@@ -187,8 +187,11 @@ function listenSend() {
           textArea.value += '\n';
         } else {
           event.preventDefault();
-          sendMSG();
+
           sendMSGReadRequest();
+
+          sendMSG();
+
           textArea.value = '';
           BreakLine.remove();
           breakLineScroll();
@@ -218,7 +221,8 @@ function listenUsers() {
           target.classList.contains('main__people-one') &&
           target.textContent &&
           currentUser.login &&
-          !(target.textContent === currentUser.login)
+          !(target.textContent === currentUser.login) &&
+          !(connectionData.selectedUser === target.textContent)
         ) {
           connectionData.selectedUser = target.textContent;
           const messagesContainer = document.querySelector('.main__chat-main');
