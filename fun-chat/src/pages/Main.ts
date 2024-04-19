@@ -4,9 +4,11 @@ import {
   ContentTemplate,
   scheduleLetFly1,
   scheduleLetFly2,
+  scheduleLetFly3,
   scheduleLetFly5,
   scheduleLetFly6,
   scheduleLetFly7,
+  scheduleLetFly8,
 } from '../components/content/Content';
 import { Popup } from '../components/popup/Popup';
 import {
@@ -374,6 +376,8 @@ export const Main = {
       setTimeout(scheduleLetFly5, 4000);
       setTimeout(scheduleLetFly6, 6000);
       setTimeout(scheduleLetFly7, 8000);
+      setTimeout(scheduleLetFly3, 10000);
+      setTimeout(scheduleLetFly8, 12000);
 
       Popup.draw();
     } else {

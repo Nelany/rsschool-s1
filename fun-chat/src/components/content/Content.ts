@@ -10,7 +10,7 @@ export const ContentTemplate = {
 
     Tag.draw('.body', {
       tag: 'img',
-      classes: 'flying-butterfly butterfly-fat flying-butterfly1',
+      classes: 'flying-butterfly butterfly-fat butterfly-purple flying-butterfly1',
       src: './butterfly.png',
     });
 
@@ -36,6 +36,18 @@ export const ContentTemplate = {
       tag: 'img',
       classes: 'flying-butterfly butterfly-fat flying-butterfly7',
       src: './butterfly7.png',
+    });
+
+    Tag.draw('.body', {
+      tag: 'img',
+      classes: 'flying-butterfly butterfly-fat flying-butterfly3',
+      src: './butterfly3.png',
+    });
+
+    Tag.draw('.body', {
+      tag: 'img',
+      classes: 'flying-butterfly butterfly-fat flying-butterfly8',
+      src: './butterfly8.png',
     });
 
     Tag.draw('.body', {
@@ -82,7 +94,7 @@ export function letFly1() {
   const butterfly1 = document.querySelector('.flying-butterfly1');
 
   if (butterfly1) {
-    butterfly1.className = `flying-butterfly butterfly-fat flying-butterfly1 ${randomAnimation()}`;
+    butterfly1.className = `flying-butterfly butterfly-fat  butterfly-purple flying-butterfly1 ${randomAnimation()}`;
   }
 }
 
@@ -114,6 +126,22 @@ export function letFly7() {
 
   if (butterfly7) {
     butterfly7.className = `flying-butterfly butterfly-fat flying-butterfly7 ${randomAnimation()}`;
+  }
+}
+
+export function letFly3() {
+  const butterfly3 = document.querySelector('.flying-butterfly3');
+
+  if (butterfly3) {
+    butterfly3.className = `flying-butterfly butterfly-fat flying-butterfly3 ${randomAnimation()}`;
+  }
+}
+
+export function letFly8() {
+  const butterfly8 = document.querySelector('.flying-butterfly8');
+
+  if (butterfly8) {
+    butterfly8.className = `flying-butterfly butterfly-fat flying-butterfly8 ${randomAnimation()}`;
   }
 }
 
@@ -150,4 +178,18 @@ export function scheduleLetFly7() {
     letFly7();
     setInterval(letFly7, 25000);
   }, 10000);
+}
+
+export function scheduleLetFly3() {
+  setTimeout(() => {
+    letFly3();
+    setInterval(letFly3, 25000);
+  }, 12000);
+}
+
+export function scheduleLetFly8() {
+  setTimeout(() => {
+    letFly8();
+    setInterval(letFly8, 25000);
+  }, 14000);
 }
