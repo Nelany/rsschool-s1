@@ -1,11 +1,33 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
+import { Popup } from '../components/popup/Popup';
+import { loginUser } from '../services/api';
+import { generateRequestId } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import './Login.scss';
+
+function saveUserToSessionStorage() {
+  const loginInput = document.querySelector('.login');
+  const passwordInput = document.querySelector('.password');
+
+  if (loginInput instanceof HTMLInputElement && passwordInput instanceof HTMLInputElement) {
+    const login = loginInput.value;
+    const password = passwordInput.value;
+    const id = `${login}${generateRequestId()}`;
+
+    const credentials = { id, login, password, isLogined: false };
+
+    const credentialsJSON = JSON.stringify(credentials);
+
+    sessionStorage.setItem('currentUser', credentialsJSON);
+  }
+}
 
 function loginButtonHandler() {
   const loginButton = document.querySelector('.login-button');
   if (loginButton && !loginButton.classList.contains('disabled')) {
+    saveUserToSessionStorage();
+    loginUser();
     navigateTo('main');
   }
 }
@@ -15,35 +37,35 @@ export function aboutButtonHandler() {
 }
 
 function validateForm() {
-  const firstNameInput = document.querySelector('.first-name');
+  const loginInput = document.querySelector('.login');
   const passwordInput = document.querySelector('.password');
   const loginButton = document.querySelector('.login-button');
 
   if (
-    firstNameInput instanceof HTMLInputElement &&
+    loginInput instanceof HTMLInputElement &&
     passwordInput instanceof HTMLInputElement &&
     loginButton instanceof HTMLElement
   ) {
-    const firstName = firstNameInput.value;
+    const login = loginInput.value;
     const password = passwordInput.value;
-    const isFirstNameValid = firstName.length >= 4;
+    const isFirstNameValid = login.length >= 4;
     const isPasswordValid = password.length >= 4 && /[A-Z]/.test(password);
 
     if (isFirstNameValid && isPasswordValid) {
       loginButton.classList.remove('disabled');
-      firstNameInput.classList.remove('invalid');
+      loginInput.classList.remove('invalid');
       passwordInput.classList.remove('invalid');
     } else {
       loginButton.classList.add('disabled');
 
       if (!isFirstNameValid) {
-        firstNameInput.classList.add('invalid');
+        loginInput.classList.add('invalid');
       }
       if (!isPasswordValid) {
         passwordInput.classList.add('invalid');
       }
       if (isFirstNameValid) {
-        firstNameInput.classList.remove('invalid');
+        loginInput.classList.remove('invalid');
       }
       if (isPasswordValid) {
         passwordInput.classList.remove('invalid');
@@ -54,8 +76,8 @@ function validateForm() {
 
 export const Login = {
   formTemplate: `<form class="login-form">
-  <label for="firstName">Name:</label>
-  <input type="text" class="input first-name" id="firstName" name="firstName" minlength="4" title="Please enter at least 4 characters" required>
+  <label for="login">Name:</label>
+  <input type="text" class="input login" id="login" name="login" minlength="4" title="Please enter at least 4 characters" required>
   <div class="invalid-message name-message">Please enter at least 4 characters.</div>
 
   <label for="password">Password:</label>
@@ -97,17 +119,18 @@ export const Login = {
       }
     );
 
-    const firstNameInput = document.querySelector('.first-name');
+    const loginInput = document.querySelector('.login');
     const passwordInput = document.querySelector('.password');
     const loginButton = document.querySelector('.login-button');
 
     if (
       loginButton instanceof HTMLElement &&
-      firstNameInput instanceof HTMLInputElement &&
+      loginInput instanceof HTMLInputElement &&
       passwordInput instanceof HTMLInputElement
     ) {
-      firstNameInput.addEventListener('input', validateForm);
+      loginInput.addEventListener('input', validateForm);
       passwordInput.addEventListener('input', validateForm);
     }
+    Popup.draw();
   },
 };

@@ -1,35 +1,68 @@
+import { clearStorage } from '../../pages/Main';
+import { Button } from '../button/Button';
+import { Tag } from '../tag/Tag';
 import './Popup.scss';
 
 export const Popup = {
   draw() {
-    const template = `<div class="popup">
-        <div class="popup__text">
-        <h5 class="popup__tittle popup__name">Lamborghini Aventador</h5>
-        <h5 class="popup__tittle">went first!</h5>
-        <h5 class="popup__tittle popup__time">(1.11s)</h5>
-        <h5 class="popup__tittle ps">Please, press reset to continue!</h5>
+    const template = `<div class="popup close-popup">
+        <div class="popup__content">
+
+        </div>
       </div>`;
 
-    document.body.insertAdjacentHTML('beforeend', template);
-  },
-
-  open(id: number, time: number) {
-    const popup = document.querySelector('.popup');
-    const nameElement = document.querySelector('.popup__name');
-    const timeElement = document.querySelector('.popup__time');
-    const carName = document.querySelector(`[data-id="name-${id}"]`);
-
-    if (!nameElement || !timeElement || !popup || !carName) {
-      return;
+    const tittleTemplate = `<h5 class="popup__tittle">Hello dear!:*:)</h5>`;
+    const content = document.querySelector('.content');
+    if (content) {
+      content.insertAdjacentHTML('beforeend', template);
     }
 
-    nameElement.textContent = carName.textContent;
-    timeElement.textContent = `(${time}s)`;
-    popup.classList.add('open');
+    Button.draw(
+      '.popup__content',
+      {
+        text: 'Close',
+        classes: 'close-popup-button',
+      },
+      {
+        type: 'click',
+        selector: '.close-popup-button',
+        handler: Popup.close,
+      }
+    );
+
+    const popupContent = document.querySelector('.popup__content');
+    if (popupContent) {
+      popupContent.insertAdjacentHTML('beforeend', tittleTemplate);
+    }
+    const popupClose = document.querySelector('.close-popup');
+    if (popupClose) {
+      popupClose.addEventListener('click', Popup.close);
+    }
+    Tag.draw('.popup__content', {
+      tag: 'img',
+      classes: 'smile',
+      src: './emoticon2.png',
+    });
+  },
+
+  open(tittle: string) {
+    const popup = document.querySelector('.popup');
+    const tittleElement = document.querySelector('.popup__tittle');
+    if (tittleElement && popup) {
+      tittleElement.textContent = tittle;
+      popup.classList.add('open');
+      if (tittle === 'Oh dear! a user with this login is already authorized!') {
+        clearStorage();
+      }
+    }
   },
 
   close() {
     const popup = document.querySelector('.popup');
-    popup?.classList.remove('open');
+    const tittleElement = document.querySelector('.popup__tittle');
+    if (tittleElement && popup) {
+      popup.classList.remove('open');
+      tittleElement.textContent = '';
+    }
   },
 };

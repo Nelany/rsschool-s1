@@ -1,9 +1,9 @@
 import './global.scss';
-// import { Login } from './pages/Login';
+import { startSocket } from './services/api';
 import { locationHandler } from './services/router';
 
 function loadApp() {
-  // Login.draw();
+  startSocket();
   window.addEventListener('hashchange', locationHandler);
   locationHandler();
 }
