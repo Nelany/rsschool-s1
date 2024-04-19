@@ -92,7 +92,7 @@ export function getMSGSHistory(login = connectionData.selectedUser) {
 }
 
 function addSpaceAfterTenChars(inputString: string): string {
-  const regex: RegExp = /(?:[^a-zA-Zа-яА-Я0-9\n]){10}/g;
+  const regex: RegExp = /(?:[^a-zA-Zа-яА-Я0-9\n ]){10}/g;
 
   return inputString.replace(regex, (match) => `${match} `);
 }

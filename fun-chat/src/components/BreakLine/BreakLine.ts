@@ -37,7 +37,6 @@ export function sendMSGReadRequest() {
         const { id } = MSGContainer;
         const prefix = 'container';
         const messageId = id.substring(prefix.length);
-        console.warn(MSGContainer.classList.toString(), 'НЕПРОЧИТАНО');
         MSGReadRequest(messageId);
       }
     });

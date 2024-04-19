@@ -230,6 +230,7 @@ function listenUsers() {
             const firstMessageTemplate = '<div class="main__please-select">Please send your first message!</div>';
             messagesContainer.innerHTML = firstMessageTemplate;
           }
+          connectionData.isBreakLine = false;
           getMSGSHistory();
 
           const sendButton = document.querySelector('.button-send');

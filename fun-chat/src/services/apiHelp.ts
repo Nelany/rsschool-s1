@@ -140,8 +140,6 @@ function handleMSGEditResponse(response: MSGEditResponse) {
   }
 }
 
-// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 function handleMSGDeleteResponse(response: MSGDeleteResponse) {
   const messageId = response.payload.message.id;
   const { isDeleted } = response.payload.message.status;

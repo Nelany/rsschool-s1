@@ -27,6 +27,15 @@
       text-shadow: 2px 2px 8px rgb(255, 0, 0);
     }
 
+    .main__user-name {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .user-name {
+      word-break: break-all;
+    }
+
     .main__tittle {
       display: flex;
       align-items: center;
@@ -175,6 +184,7 @@
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid rgb(194, 216, 0);
+        word-break: break-all;
       }
 
       .main__chat-main {
