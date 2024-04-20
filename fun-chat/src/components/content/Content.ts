@@ -4,8 +4,14 @@ import './Content.scss';
 export const ContentTemplate = {
   draw() {
     document.body.innerHTML = '';
+
     Tag.draw('.body', {
       classes: 'content',
+    });
+
+    Tag.draw('.body', {
+      classes: 'second-hint invisible',
+      text: 'Catch the same butterfly!',
     });
 
     Tag.draw('.body', {
@@ -91,7 +97,7 @@ export const ContentTemplate = {
     Tag.draw('.body', {
       tag: 'div',
       classes: 'hint invisible',
-      text: 'catch a butterfly!',
+      text: 'Catch the butterfly!',
     });
   },
 };

@@ -26,6 +26,7 @@ export function letFlyButton() {
 
 let intervalId: ReturnType<typeof setInterval>;
 let timeoutId: ReturnType<typeof setTimeout>;
+let timeout2Id: ReturnType<typeof setTimeout>;
 
 export function intervalLetFlyButton() {
   const newButterfly = document.querySelector('.chat-onn');
@@ -39,7 +40,6 @@ export function intervalLetFlyButton() {
       newNewButterfly.style.transition = 'top 0s, left 0s, width 0.4s, height 0.4s, transform 0.4s';
       newNewButterfly.style.top = '';
       newNewButterfly.style.left = '';
-      console.warn('setInterval');
 
       letFlyButton();
 
@@ -48,25 +48,40 @@ export function intervalLetFlyButton() {
   }, 10000);
 }
 
+export function clearMainButterfly() {
+  const butterfly = document.querySelector('.return-chat');
+
+  if (butterfly instanceof HTMLElement) {
+    clearTimeout(timeoutId);
+    clearTimeout(timeout2Id);
+    clearInterval(intervalId);
+    butterfly.className = `flying-butterfly butterfly-button-img chat-onn invisible`;
+    butterfly.style.transition = 'top 0s, left 0s, width 0.4s, height 0.4s, transform 0.4s';
+
+    butterfly.style.top = '';
+    butterfly.style.left = '';
+  }
+}
+
 export function returnChat(event: Event) {
   if (event.target instanceof HTMLElement && event.target.classList.contains('chat-onn')) {
     const chat = document.querySelector('.main');
     const butterfly = document.querySelector('.return-chat');
     const hint = document.querySelector('.hint');
+    const secondHint = document.querySelector('.second-hint');
 
-    if (hint instanceof HTMLElement && chat instanceof HTMLElement && butterfly instanceof HTMLElement) {
+    if (
+      butterfly instanceof HTMLElement &&
+      secondHint instanceof HTMLElement &&
+      hint instanceof HTMLElement &&
+      chat instanceof HTMLElement
+    ) {
       hint.classList.add('invisible');
       chat.classList.remove('invisible');
-      console.warn(intervalId);
-      clearTimeout(timeoutId);
-      clearInterval(intervalId);
 
-      console.warn(intervalId);
-      butterfly.className = `flying-butterfly butterfly-button-img chat-onn invisible`;
-      butterfly.style.transition = 'top 0s, left 0s, width 0.4s, height 0.4s, transform 0.4s';
+      secondHint.classList.add('invisible');
 
-      butterfly.style.top = '';
-      butterfly.style.left = '';
+      clearMainButterfly();
     }
   }
 }
@@ -80,16 +95,27 @@ function listenButterflyButton() {
       const newButterfly = document.querySelector('.chat-onn');
       const chat = document.querySelector('.main');
       const hint = document.querySelector('.hint');
-      if (hint instanceof HTMLElement && newButterfly instanceof HTMLElement && chat instanceof HTMLElement) {
+      const secondHint = document.querySelector('.second-hint');
+      if (
+        secondHint instanceof HTMLElement &&
+        hint instanceof HTMLElement &&
+        newButterfly instanceof HTMLElement &&
+        chat instanceof HTMLElement
+      ) {
         newButterfly.style.left = `${left}px`;
         newButterfly.style.top = `${top}px`;
+
+        secondHint.classList.remove('invisible');
+        setTimeout(() => {
+          secondHint.classList.add('invisible');
+        }, 5000);
 
         newButterfly.classList.remove('invisible');
         newButterfly.classList.add('grow');
         newButterfly.classList.add('return-chat');
         chat.classList.add('invisible');
         hint.classList.remove('invisible');
-        setTimeout(() => {
+        timeout2Id = setTimeout(() => {
           newButterfly.style.transition = 'top 10s, left 10s, width 0.4s, height 0.4s, transform 0.4s';
 
           newButterfly.style.top = '60%';
@@ -352,6 +378,9 @@ function logoutButtonHandler() {
 
 export const Main = {
   template: `<div class="main">
+
+  <div class="first-hint">Click on the butterfly button!</div>
+
     <header class="main__header dark-background">
       <div class="main__header-tittles">
         <div class="main__user-name">User: <span class="user-name">Vasia123456789 1234567890</span>

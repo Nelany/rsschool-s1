@@ -10,7 +10,7 @@ import {
   scheduleLetFly8,
 } from '../components/content/Content';
 import { Popup } from '../components/popup/Popup';
-import { clearStorage } from '../pages/Main';
+import { clearMainButterfly, clearStorage } from '../pages/Main';
 import {
   GeneralRequest,
   SessionData,
@@ -346,6 +346,7 @@ export function handleLogoutResponse(response: UserLogoutResponse) {
     connectionData.selectedUser = '';
     clearStorage();
     clearTimeOutNInterval();
+    clearMainButterfly();
     navigateTo('login');
   }
 }

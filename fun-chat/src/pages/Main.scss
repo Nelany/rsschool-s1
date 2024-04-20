@@ -8,6 +8,11 @@
   gap: 10px;
   transition: all 0.4s;
 
+  .first-hint {
+    width: 100%;
+    text-align: center;
+  }
+
   .main__header {
     display: flex;
     align-items: center;
