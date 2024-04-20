@@ -1,5 +1,6 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
+import { Popup } from '../components/popup/Popup';
 import './About.scss';
 
 function backButtonHandler() {
@@ -29,5 +30,7 @@ export const About = {
         handler: backButtonHandler,
       }
     );
+
+    Popup.draw();
   },
 };

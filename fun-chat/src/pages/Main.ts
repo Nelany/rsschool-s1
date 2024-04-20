@@ -1,16 +1,6 @@
 import { BreakLine, listenReadMessages, sendMSGReadRequest } from '../components/BreakLine/BreakLine';
 import { Button } from '../components/button/Button';
-import {
-  ContentTemplate,
-  randomAnimation,
-  scheduleLetFly1,
-  scheduleLetFly2,
-  scheduleLetFly3,
-  scheduleLetFly5,
-  scheduleLetFly6,
-  scheduleLetFly7,
-  scheduleLetFly8,
-} from '../components/content/Content';
+import { ContentTemplate, randomAnimation } from '../components/content/Content';
 import { Popup } from '../components/popup/Popup';
 import {
   MSGDelete,
@@ -35,21 +25,26 @@ export function letFlyButton() {
 }
 
 let intervalId: ReturnType<typeof setInterval>;
+let timeoutId: ReturnType<typeof setTimeout>;
 
 export function intervalLetFlyButton() {
   const newButterfly = document.querySelector('.chat-onn');
-  if (!(newButterfly instanceof HTMLElement)) {
+  if (!(newButterfly instanceof HTMLElement) || newButterfly.classList.contains('invisible')) {
     return;
   }
 
-  setTimeout(() => {
-    newButterfly.style.transition = 'top 0s, left 0s, width 0.4s, height 0.4s, transform 0.4s';
-    newButterfly.style.top = '';
-    newButterfly.style.left = '';
+  timeoutId = setTimeout(() => {
+    const newNewButterfly = document.querySelector('.chat-onn');
+    if (newNewButterfly instanceof HTMLElement && !newNewButterfly.classList.contains('invisible')) {
+      newNewButterfly.style.transition = 'top 0s, left 0s, width 0.4s, height 0.4s, transform 0.4s';
+      newNewButterfly.style.top = '';
+      newNewButterfly.style.left = '';
+      console.warn('setInterval');
 
-    letFlyButton();
+      letFlyButton();
 
-    intervalId = setInterval(letFlyButton, 25000);
+      intervalId = setInterval(letFlyButton, 25000);
+    }
   }, 10000);
 }
 
@@ -62,8 +57,16 @@ export function returnChat(event: Event) {
     if (hint instanceof HTMLElement && chat instanceof HTMLElement && butterfly instanceof HTMLElement) {
       hint.classList.add('invisible');
       chat.classList.remove('invisible');
+      console.warn(intervalId);
+      clearTimeout(timeoutId);
       clearInterval(intervalId);
+
+      console.warn(intervalId);
       butterfly.className = `flying-butterfly butterfly-button-img chat-onn invisible`;
+      butterfly.style.transition = 'top 0s, left 0s, width 0.4s, height 0.4s, transform 0.4s';
+
+      butterfly.style.top = '';
+      butterfly.style.left = '';
     }
   }
 }
@@ -446,14 +449,6 @@ export const Main = {
       listenReadMessages();
 
       listenButterflyButton();
-
-      scheduleLetFly1();
-      setTimeout(scheduleLetFly2, 2000);
-      setTimeout(scheduleLetFly5, 4000);
-      setTimeout(scheduleLetFly6, 6000);
-      setTimeout(scheduleLetFly7, 8000);
-      setTimeout(scheduleLetFly3, 10000);
-      setTimeout(scheduleLetFly8, 12000);
 
       Popup.draw();
     } else {

@@ -1,4 +1,14 @@
 import { BreakLine } from '../components/BreakLine/BreakLine';
+import {
+  clearTimeOutNInterval,
+  scheduleLetFly1,
+  scheduleLetFly2,
+  scheduleLetFly3,
+  scheduleLetFly5,
+  scheduleLetFly6,
+  scheduleLetFly7,
+  scheduleLetFly8,
+} from '../components/content/Content';
 import { Popup } from '../components/popup/Popup';
 import { clearStorage } from '../pages/Main';
 import {
@@ -315,9 +325,17 @@ function handleLoginResponse(response: UserLoginResponse) {
   if (isLogined) {
     loginTrueSessionStorageUser();
     navigateTo('main');
+    scheduleLetFly1();
+    scheduleLetFly2();
+    scheduleLetFly5();
+    scheduleLetFly6();
+    scheduleLetFly7();
+    scheduleLetFly3();
+    scheduleLetFly8();
   } else {
     clearStorage();
     navigateTo('login');
+    clearTimeOutNInterval();
   }
 }
 
@@ -327,6 +345,7 @@ export function handleLogoutResponse(response: UserLogoutResponse) {
   if (sessionUser && sessionUser.login === login && !isLogined) {
     connectionData.selectedUser = '';
     clearStorage();
+    clearTimeOutNInterval();
     navigateTo('login');
   }
 }

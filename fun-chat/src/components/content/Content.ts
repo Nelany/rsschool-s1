@@ -157,51 +157,83 @@ export function letFly8() {
   }
 }
 
+let timeout1: ReturnType<typeof setTimeout>;
+let interval1: ReturnType<typeof setInterval>;
+let timeout2: ReturnType<typeof setTimeout>;
+let interval2: ReturnType<typeof setInterval>;
+let timeout5: ReturnType<typeof setTimeout>;
+let interval5: ReturnType<typeof setInterval>;
+let timeout6: ReturnType<typeof setTimeout>;
+let interval6: ReturnType<typeof setInterval>;
+let timeout7: ReturnType<typeof setTimeout>;
+let interval7: ReturnType<typeof setInterval>;
+let timeout3: ReturnType<typeof setTimeout>;
+let interval3: ReturnType<typeof setInterval>;
+let timeout8: ReturnType<typeof setTimeout>;
+let interval8: ReturnType<typeof setInterval>;
+
 export function scheduleLetFly1() {
-  setTimeout(() => {
+  timeout1 = setTimeout(() => {
     letFly1();
-    setInterval(letFly1, 25000);
+    interval1 = setInterval(letFly1, 25000);
   }, 2000);
 }
 
 export function scheduleLetFly2() {
-  setTimeout(() => {
+  timeout2 = setTimeout(() => {
     letFly2();
-    setInterval(letFly2, 25000);
+    interval2 = setInterval(letFly2, 25000);
   }, 4000);
 }
 
 export function scheduleLetFly5() {
-  setTimeout(() => {
+  timeout5 = setTimeout(() => {
     letFly5();
-    setInterval(letFly5, 25000);
+    interval5 = setInterval(letFly5, 25000);
   }, 6000);
 }
 
 export function scheduleLetFly6() {
-  setTimeout(() => {
+  timeout6 = setTimeout(() => {
     letFly6();
-    setInterval(letFly6, 25000);
+    interval6 = setInterval(letFly6, 25000);
   }, 8000);
 }
 
 export function scheduleLetFly7() {
-  setTimeout(() => {
+  timeout7 = setTimeout(() => {
     letFly7();
-    setInterval(letFly7, 25000);
+    interval7 = setInterval(letFly7, 25000);
   }, 10000);
 }
 
 export function scheduleLetFly3() {
-  setTimeout(() => {
+  timeout3 = setTimeout(() => {
     letFly3();
-    setInterval(letFly3, 25000);
+    interval3 = setInterval(letFly3, 25000);
   }, 12000);
 }
 
 export function scheduleLetFly8() {
-  setTimeout(() => {
+  timeout8 = setTimeout(() => {
     letFly8();
-    setInterval(letFly8, 25000);
+    interval8 = setInterval(letFly8, 25000);
   }, 14000);
+}
+
+export function clearTimeOutNInterval() {
+  clearTimeout(timeout1);
+  clearInterval(interval1);
+  clearTimeout(timeout2);
+  clearInterval(interval2);
+  clearTimeout(timeout3);
+  clearInterval(interval3);
+  clearTimeout(timeout5);
+  clearInterval(interval5);
+  clearTimeout(timeout6);
+  clearInterval(interval6);
+  clearTimeout(timeout7);
+  clearInterval(interval7);
+  clearTimeout(timeout8);
+  clearInterval(interval8);
 }
