@@ -51,6 +51,12 @@ export const ContentTemplate = {
     });
 
     Tag.draw('.body', {
+      tag: 'img',
+      classes: 'flying-butterfly butterfly-button-img chat-onn invisible',
+      src: './butterfly4.png',
+    });
+
+    Tag.draw('.body', {
       tag: 'div',
       classes: 'flowers-container',
     });
@@ -80,6 +86,12 @@ export const ContentTemplate = {
       tag: 'img',
       classes: 'flowers',
       src: './flowers2.png',
+    });
+
+    Tag.draw('.body', {
+      tag: 'div',
+      classes: 'hint invisible',
+      text: 'catch a butterfly!',
     });
   },
 };

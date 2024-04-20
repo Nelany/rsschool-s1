@@ -2,6 +2,7 @@ import { BreakLine, listenReadMessages, sendMSGReadRequest } from '../components
 import { Button } from '../components/button/Button';
 import {
   ContentTemplate,
+  randomAnimation,
   scheduleLetFly1,
   scheduleLetFly2,
   scheduleLetFly3,
@@ -24,6 +25,79 @@ import { OFFLINE, ONLINE, breakLineScroll, checkLogin, getUserFromSessionStorage
 import { navigateTo } from '../services/router';
 import { aboutButtonHandler } from './Login';
 import './Main.scss';
+
+export function letFlyButton() {
+  const butterflyButton = document.querySelector('.chat-onn');
+
+  if (butterflyButton) {
+    butterflyButton.className = `flying-butterfly butterfly-button-img chat-onn grow return-chat ${randomAnimation()}`;
+  }
+}
+
+let intervalId: ReturnType<typeof setInterval>;
+
+export function intervalLetFlyButton() {
+  const newButterfly = document.querySelector('.chat-onn');
+  if (!(newButterfly instanceof HTMLElement)) {
+    return;
+  }
+
+  setTimeout(() => {
+    newButterfly.style.transition = 'top 0s, left 0s, width 0.4s, height 0.4s, transform 0.4s';
+    newButterfly.style.top = '';
+    newButterfly.style.left = '';
+
+    letFlyButton();
+
+    intervalId = setInterval(letFlyButton, 25000);
+  }, 10000);
+}
+
+export function returnChat(event: Event) {
+  if (event.target instanceof HTMLElement && event.target.classList.contains('chat-onn')) {
+    const chat = document.querySelector('.main');
+    const butterfly = document.querySelector('.return-chat');
+    const hint = document.querySelector('.hint');
+
+    if (hint instanceof HTMLElement && chat instanceof HTMLElement && butterfly instanceof HTMLElement) {
+      hint.classList.add('invisible');
+      chat.classList.remove('invisible');
+      clearInterval(intervalId);
+      butterfly.className = `flying-butterfly butterfly-button-img chat-onn invisible`;
+    }
+  }
+}
+
+function listenButterflyButton() {
+  const butterfly = document.querySelector('.chat-off');
+  if (butterfly instanceof HTMLElement) {
+    butterfly.addEventListener('click', () => {
+      const { left, top } = butterfly.getBoundingClientRect();
+
+      const newButterfly = document.querySelector('.chat-onn');
+      const chat = document.querySelector('.main');
+      const hint = document.querySelector('.hint');
+      if (hint instanceof HTMLElement && newButterfly instanceof HTMLElement && chat instanceof HTMLElement) {
+        newButterfly.style.left = `${left}px`;
+        newButterfly.style.top = `${top}px`;
+
+        newButterfly.classList.remove('invisible');
+        newButterfly.classList.add('grow');
+        newButterfly.classList.add('return-chat');
+        chat.classList.add('invisible');
+        hint.classList.remove('invisible');
+        setTimeout(() => {
+          newButterfly.style.transition = 'top 10s, left 10s, width 0.4s, height 0.4s, transform 0.4s';
+
+          newButterfly.style.top = '60%';
+          newButterfly.style.left = '-10%';
+        }, 100);
+
+        intervalLetFlyButton();
+      }
+    });
+  }
+}
 
 function listenSearch() {
   const input = document.querySelector('.people-name');
@@ -280,7 +354,7 @@ export const Main = {
         <div class="main__user-name">User: <span class="user-name">Vasia123456789 1234567890</span>
         </div>
 
-        <div class="main__tittle">FUN CHAT</div>
+        <div class="main__tittle-butterfly-container"><img class="butterfly butterfly-button-img chat-off" src="./butterfly4.png"><div class="main__tittle">FUN CHAT</div></div>
       </div>
 
       <div class="main__header-buttons"></div>
@@ -370,6 +444,8 @@ export const Main = {
       listenEditOptions();
       listenSearch();
       listenReadMessages();
+
+      listenButterflyButton();
 
       scheduleLetFly1();
       setTimeout(scheduleLetFly2, 2000);
