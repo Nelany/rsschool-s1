@@ -23,7 +23,8 @@ function saveUserToSessionStorage() {
   }
 }
 
-function loginButtonHandler() {
+function loginButtonHandler(event: Event) {
+  event.preventDefault();
   const loginButton = document.querySelector('.login-button');
   if (loginButton && !loginButton.classList.contains('disabled')) {
     saveUserToSessionStorage();
