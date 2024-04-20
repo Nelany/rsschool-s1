@@ -1,5 +1,6 @@
 import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
+import { Popup } from '../components/popup/Popup';
 import './About.scss';
 
 function backButtonHandler() {
@@ -7,7 +8,7 @@ function backButtonHandler() {
 }
 
 export const About = {
-  template: `<div class="about-message">Welcome to Fun Chat - your place for fun and engaging conversations! Join Fun Chat today and discover a world of interesting conversations and new acquaintances!</div>`,
+  template: `<div class="about-message">Welcome to Fun Chat - your place for fun and engaging conversations! Join Fun Chat today and discover a world of interesting conversations and new acquaintances! <div class="about-message-ps">!!!!!!!!!! P.S.: Click on the butterfly button to enjoy the silence! Catch her to return to your friends! ;)</div></div>`,
   draw() {
     ContentTemplate.draw();
 
@@ -29,5 +30,7 @@ export const About = {
         handler: backButtonHandler,
       }
     );
+
+    Popup.draw();
   },
 };
