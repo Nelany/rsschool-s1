@@ -49,7 +49,7 @@ function validateForm() {
   ) {
     const login = loginInput.value;
     const password = passwordInput.value;
-    const isFirstNameValid = login.length >= 4;
+    const isFirstNameValid = login.length >= 4 && login.length <= 10;
     const isPasswordValid = password.length >= 4 && /[A-Z]/.test(password);
 
     if (isFirstNameValid && isPasswordValid) {
@@ -78,8 +78,8 @@ function validateForm() {
 export const Login = {
   formTemplate: `<form class="login-form">
   <label for="login">Name:</label>
-  <input type="text" class="input login" id="login" name="login" minlength="4" title="Please enter at least 4 characters" required>
-  <div class="invalid-message name-message">Please enter at least 4 characters.</div>
+  <input type="text" class="input login" id="login" name="login" minlength="4" maxlength="10" title="Please enter a minimum of 4 and a maximum of 10 characters." required>
+  <div class="invalid-message name-message">Please enter a minimum of 4 and a maximum of 10 characters.</div>
 
   <label for="password">Password:</label>
   <input type="password" class="input password" id="password" name="password" minlength="4" pattern=".*[A-Z].*" title="Please enter at least 4 characters and one capital letter" required>
