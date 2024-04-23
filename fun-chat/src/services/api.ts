@@ -17,6 +17,15 @@ export const connectionData = {
   isBreakLine: false,
 };
 
+function checkSocket(request: string) {
+  const { socket } = connectionData;
+  if (socket && socket.readyState === socket.OPEN) {
+    socket.send(request);
+  } else if (!socket || socket.readyState === socket.CLOSED) {
+    handleConnectionError();
+  }
+}
+
 export function MSGEdit(messageId: string, messageNewText: string) {
   const request = {
     id: `${messageId}${connectionData.selectedUser}MSGEDIT`,
@@ -29,10 +38,8 @@ export function MSGEdit(messageId: string, messageNewText: string) {
     },
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function MSGDelete(messageId: string) {
@@ -51,10 +58,8 @@ export function MSGDelete(messageId: string) {
     },
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function MSGReadRequest(messageId: string) {
@@ -68,10 +73,8 @@ export function MSGReadRequest(messageId: string) {
     },
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function getMSGSHistory(login = connectionData.selectedUser) {
@@ -85,10 +88,8 @@ export function getMSGSHistory(login = connectionData.selectedUser) {
     },
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 function addSpaceAfterTenChars(inputString: string): string {
@@ -134,10 +135,8 @@ export function sendMSG() {
     },
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function getActiveUsers() {
@@ -147,10 +146,8 @@ export function getActiveUsers() {
     payload: null,
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function getInactiveUsers() {
@@ -160,10 +157,8 @@ export function getInactiveUsers() {
     payload: null,
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function updateAllUsers() {
@@ -193,10 +188,8 @@ export function logoutUser() {
     },
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function loginUser() {
@@ -217,10 +210,8 @@ export function loginUser() {
     },
   };
 
-  const { socket } = connectionData;
-  if (socket && socket.readyState === socket.OPEN) {
-    socket.send(JSON.stringify(request));
-  }
+  const requestStr = JSON.stringify(request);
+  checkSocket(requestStr);
 }
 
 export function startSocket() {
