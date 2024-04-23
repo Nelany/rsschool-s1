@@ -29,7 +29,7 @@ function loginButtonHandler(event: Event) {
   if (loginButton && !loginButton.classList.contains('disabled')) {
     saveUserToSessionStorage();
     loginUser();
-    navigateTo('main');
+    navigateTo('main', true);
   }
 }
 

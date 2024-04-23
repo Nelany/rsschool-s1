@@ -53,8 +53,13 @@ export function locationHandler() {
   document.querySelector('meta[name="description"]')!.setAttribute('content', currentRoute.description);
 }
 
-export function navigateTo(location: string) {
-  window.history.pushState({}, '', `${BASE_URL}#${location}`);
+export function navigateTo(location: string, isClear?: boolean) {
+  if (isClear) {
+    window.history.replaceState({ state: null }, '');
+  } else {
+    window.history.pushState({}, '', `${BASE_URL}#${location}`);
+  }
+
   locationHandler();
 }
 
