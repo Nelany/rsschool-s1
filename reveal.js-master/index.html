@@ -1,40 +1,326 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
 
-		<title>reveal.js</title>
+    <title>Authentication vs. Authorization</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+    <meta
+      name="description"
+      content="A framework for easily creating beautiful presentations using HTML" />
+    <meta name="author" content="Nelany" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent" />
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
+
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <a href="https://github.com/Nelany"> @Nelany </a>
+          <h3 style="color: aqua">
+            Authentication vs. Authorization: Differences, Methods, and
+            Techniques
+          </h3>
+          <p>
+            <small><a href="https://rs.school/">RS-School,</a> 2024</small>
+          </p>
+        </section>
+
+        <section>
+          <h3 style="color: aqua">Authentication and authorization</h3>
+          <p>
+            are two critical concepts in access control, used in identity and
+            access management (IAM).
+          </p>
+
+          <img
+            src="https://cdn.iz.ru/sites/default/files/styles/900x506/public/news-2018-04/Depositphotos_23185896_original.jpg?itok=vEzrJqO2"
+            alt=""
+            style="
+              height: 360px;
+              margin: 0 auto 1rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+
+          <!-- <img
+            src="https://miro.medium.com/v2/resize:fit:700/1*fEMbtwbXAUgwjC9z49ql2Q.png"
+            alt=""
+            style="
+              height: 360px;
+              margin: 0 auto 1rem auto;
+              background: transparent;
+            "
+            class="demo-logo" /> -->
+        </section>
+
+        <section>
+          <h3 style="color: aqua">Authentication</h3>
+          <p>
+            is the process of verifying that a user is who they claim to be.
+          </p>
+          <h3 style="color: aqua">Authorization</h3>
+          <p>
+            is the process of determining if a user is allowed to perform
+            certain actions or access certain resources or data.
+          </p>
+
+          <!-- <img
+            src="https://miro.medium.com/v2/resize:fit:700/1*wWNYvHov_hpboLXRY-oWiw.png"
+            alt=""
+            style="
+              height: 480px;
+              margin: 0 auto 1rem auto;
+              background: transparent;
+            "
+            class="demo-logo" /> -->
+        </section>
+
+        <section>
+          <h3 style="color: aqua">What Is Authentication?</h3>
+          <p>
+            Often confused with Authorization, Authentication is essentially
+            verifying the true identity of an entity.
+          </p>
+
+          <img
+            src="https://dlcdnwebimgs.asus.com/gain/40468343-19f3-418a-8e77-c85e8922a334/w618"
+            alt=""
+            style="
+              height: 280px;
+              margin: 0 auto 1rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+        </section>
+
+        <section>
+          <h4 style="color: aqua">Why Is User Authentication Important?</h4>
+          <img
+            src="https://czholding.ru/wp-content/uploads/2020/10/mask-3829017_960_720-optimized.jpg"
+            alt=""
+            style="
+              height: 280px;
+              margin: 0 auto 1rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+          <p>- Enables you to verify the identity of any user.</p>
+          <p>- Controls access to protected resources.</p>
+          <p>- Reduces the risk of information theft and damage to systems.</p>
+        </section>
+
+        <section>
+          <h3 style="color: aqua">Types of Authentication</h3>
+          <p>- Passwords</p>
+          <p>- One-time Password (OTP)</p>
+          <p>- Token authentication</p>
+          <p>- Single Sign-on (SSO)</p>
+          <p>- Biometric authentication</p>
+          <p>- Multi-Factor Authentication (MFA)</p>
+          <p>- Passwordless authentication</p>
+        </section>
+
+        <section>
+          <h3 style="color: aqua">What Is Authorization?</h3>
+          <div
+            style="
+              display: flex;
+              gap: 60px;
+              align-items: center;
+              margin: 50px 0 0 0;
+            ">
+            <img
+              src="https://spbfokus.ru/wp-content/themes/base/images/focus/-1_1.jpg"
+              alt=""
+              style="
+                height: 380px;
+                margin: 0 auto 1rem auto;
+                background: transparent;
+              "
+              class="demo-logo" />
+
+            <p>
+              It is the process of determining whether an authenticated user can
+              access a particular resource or perform a specific action.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h4 style="color: aqua">Why Is User Authorization Important?</h4>
+          <img
+            src="https://businessman.ru/static/img/a/24955/175730/8419.png"
+            alt=""
+            style="
+              height: 280px;
+              margin: 0 auto 1rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+
+          <p>- Protects resources by controlling access to them.</p>
+          <p>
+            - Limits access to resources in accordance with specified factors.
+          </p>
+        </section>
+
+        <section>
+          <h3 style="color: aqua">Types of Authorization</h3>
+          <p>- Discretionary Access Control (DAC)</p>
+          <p>- Mandatory Access Control (MAC)</p>
+          <p>- Role-Based Access Control (RBAC)</p>
+          <p>- Attribute-based Access Control (ABAC)</p>
+        </section>
+
+        <section>
+          <h4 style="color: aqua">
+            Authentication vs Authorization: The Differences
+          </h4>
+          <div style="display: flex; gap: 60px; align-items: center">
+            <img
+              src="https://bankstoday.net/wp-content/uploads/2019/06/Depositphotos_66997577_l-2015.jpg"
+              alt=""
+              style="
+                height: 310px;
+                margin: 0 auto 1rem auto;
+                background: transparent;
+              "
+              class="demo-logo" />
+
+            <div style="text-align: left; font-size: 30px">
+              <p>- Basic function</p>
+              <p>- How it works</p>
+              <p>- When it happens</p>
+              <p>- How it transfers information</p>
+              <p>- Common standards and methods</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4 style="color: aqua">
+            Which Comes First, Authentication or Authorization?
+          </h4>
+
+          <img
+            src="https://miro.medium.com/v2/resize:fit:700/1*JH_zgTUniy7SToLA_g1mUA.png"
+            alt="reveal.js logo"
+            style="
+              height: 480px;
+              margin: 0 auto 4rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+        </section>
+
+        <section>
+          <h3 style="color: aqua">
+            How Web Applications Manage and Remember Users
+          </h3>
+          <p>- Session-Based Approach</p>
+          <p>- Token-Based Approach</p>
+        </section>
+
+        <section>
+          <img
+            src="https://miro.medium.com/v2/resize:fit:700/1*xTSvExyyXRR_rxyP1PHWQQ.png"
+            alt="reveal.js logo"
+            style="
+              height: 580px;
+              margin: 0 auto 4rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+        </section>
+
+        <section>
+          <img
+            src="https://miro.medium.com/v2/resize:fit:700/1*K5EWV1_J_ZmVGvFRPu7j8Q.png"
+            alt="reveal.js logo"
+            style="
+              height: 580px;
+              margin: 0 auto 4rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+        </section>
+
+        <section>
+          <h4 style="color: aqua; font-size: 30px">Explaining JWT Token</h4>
+          <img
+            src="https://miro.medium.com/v2/resize:fit:700/1*33KOjF72XMY0sjrjg3cbhQ.png"
+            alt="reveal.js logo"
+            style="
+              height: 530px;
+              margin: 0 auto 4rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+          <p style="font-size: 20px; margin: -50px 0 0 0">
+            It adheres to the RFC7519 standard, which defines a standardized way
+            for two parties to communicate information securely on the internet.
+          </p>
+        </section>
+
+        <section>
+          <h4 style="color: aqua; font-size: 30px">
+            In conclusion, security is one of the most essential part in the
+            application. Authentication and authorization are integral to the
+            security of digital systems.
+          </h4>
+
+          <img
+            src="https://etu.ru/assets/images/Faculty-FKTI/csnd/02_information_security.jpg"
+            alt="reveal.js logo"
+            style="
+              height: 500px;
+              margin: 0 auto 4rem auto;
+              background: transparent;
+            "
+            class="demo-logo" />
+        </section>
+
+        
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/search/search.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // Also available as an ES module, see:
+      // https://revealjs.com/initialization/
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [
+          RevealZoom,
+          RevealNotes,
+          RevealSearch,
+          RevealMarkdown,
+          RevealHighlight,
+        ],
+      });
+    </script>
+  </body>
 </html>
