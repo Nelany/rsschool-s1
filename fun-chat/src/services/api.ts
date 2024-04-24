@@ -223,6 +223,8 @@ export function startSocket() {
 
   connectionData.socket.addEventListener('message', listenResponse);
 
+  connectionData.socket.addEventListener('close', handleConnectionError);
+
   connectionData.socket.addEventListener('error', () => {
     handleConnectionError();
   });
