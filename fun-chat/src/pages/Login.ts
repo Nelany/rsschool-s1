@@ -2,7 +2,7 @@ import { Button } from '../components/button/Button';
 import { ContentTemplate } from '../components/content/Content';
 import { Popup } from '../components/popup/Popup';
 import { loginUser } from '../services/api';
-import { generateRequestId } from '../services/apiHelp';
+import { generateRequestId, getUserFromSessionStorage } from '../services/apiHelp';
 import { navigateTo } from '../services/router';
 import './Login.scss';
 
@@ -49,7 +49,7 @@ function validateForm() {
   ) {
     const login = loginInput.value;
     const password = passwordInput.value;
-    const isFirstNameValid = login.length >= 4 && login.length <= 10;
+    const isFirstNameValid = login.length >= 4 && login.length <= 11;
     const isPasswordValid = password.length >= 4 && /[A-Z]/.test(password);
 
     if (isFirstNameValid && isPasswordValid) {
@@ -78,8 +78,8 @@ function validateForm() {
 export const Login = {
   formTemplate: `<form class="login-form">
   <label for="login">Name:</label>
-  <input type="text" class="input login" id="login" name="login" minlength="4" maxlength="10" title="Please enter a minimum of 4 and a maximum of 10 characters." required>
-  <div class="invalid-message name-message">Please enter a minimum of 4 and a maximum of 10 characters.</div>
+  <input type="text" class="input login" id="login" name="login" minlength="4" maxlength="11" title="Please enter a minimum of 4 and a maximum of 10 characters." required>
+  <div class="invalid-message name-message">Please enter a minimum of 4 and a maximum of 11 characters.</div>
 
   <label for="password">Password:</label>
   <input type="password" class="input password" id="password" name="password" minlength="4" pattern=".*[A-Z].*" title="Please enter at least 4 characters and one capital letter" required>
@@ -87,6 +87,12 @@ export const Login = {
 </form>`,
 
   draw() {
+    const currentUser = getUserFromSessionStorage();
+    if (currentUser && currentUser.isLogined) {
+      navigateTo('main');
+      return;
+    }
+
     ContentTemplate.draw();
     const content = document.querySelector('.content');
     if (!content) {
