@@ -439,6 +439,7 @@ export const Main = {
       if (!content) {
         return;
       }
+      connectionData.selectedUser = '';
       content.insertAdjacentHTML('beforeend', Main.template);
 
       Button.draw(
