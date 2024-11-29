@@ -5,8 +5,8 @@ import { Login } from '../pages/Login';
 import { Main } from '../pages/Main';
 import { NotFound } from '../pages/NotFound';
 
-// const BASE_URL = 'http://localhost:8080/';
-const BASE_URL = 'https://nelany-fun-chat.netlify.app/';
+const BASE_URL = 'http://localhost:8080/';
+// const BASE_URL = 'https://nelany-fun-chat.netlify.app/';
 
 const routes = {
   '404': {

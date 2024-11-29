@@ -8,7 +8,7 @@ import {
 } from './apiHelp';
 import { navigateTo } from './router';
 
-const SERVER_URL = 'localhost:4000';
+const SERVER_URL = 'road-factual-team.glitch.me';
 
 export const connectionData = {
   socket: null as WebSocket | null,
