@@ -8,7 +8,7 @@ import {
 } from './apiHelp';
 import { navigateTo } from './router';
 
-const SERVER_URL = 'road-factual-team.glitch.me';
+const SERVER_URL = 'road-factual-team.glitch.me/';
 
 export const connectionData = {
   socket: null as WebSocket | null,
@@ -215,7 +215,7 @@ export function loginUser() {
 }
 
 export function startSocket() {
-  connectionData.socket = new WebSocket(`ws://${SERVER_URL}`);
+  connectionData.socket = new WebSocket(`wss://${SERVER_URL}`);
 
   connectionData.socket.addEventListener('open', () => {
     loginUser();
